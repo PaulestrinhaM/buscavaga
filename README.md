@@ -8,8 +8,8 @@ sem servidor.
 
 Buscar vaga na mão é improdutivo: o board repete anúncio antigo, a vaga boa some
 rápido e quem olha na primeira hora leva vantagem sobre quem olha duas vezes por
-dia. Este projeto substitui a checagem manual por um ciclo automático a cada três
-horas.
+dia. Este projeto substitui a checagem manual por um ciclo automático todo dia às
+7h de Brasília (10h UTC no `.github/workflows/radar.yml`).
 
 ## Como funciona
 
@@ -19,7 +19,7 @@ horas.
 | Filtra | Três níveis de confiança no título, mais bloqueio de senioridade, ruído e anúncio velho |
 | Pontua | Score 0 a 10 por soma de sinais conhecidos: cargo, ferramentas, senioridade, local |
 | Deduplica | Por link normalizado e por empresa mais título, pegando a mesma vaga republicada |
-| Notifica | Score 8 ou mais vai na hora; o resto entra no resumo diário ranqueado |
+| Notifica | Score 8 ou mais vira uma mensagem por vaga; o resto (score 5+) vai num resumo ranqueado logo em seguida |
 | Mede | Relatório de vistas, notificadas e score médio por fonte |
 
 ### O filtro em três níveis

@@ -141,3 +141,23 @@ Joinville" passava como se fosse remota.
 Não usei o FTS5 do SQLite de fato: as vagas são avaliadas em memória antes de irem
 ao banco, e o FTS5 não tem stemmer para português, então o ganho seria só sintaxe.
 A sintaxe dos termos em `config.py` é a mesma, para facilitar se um dia migrar.
+
+## Triagem por IA testada e GitHub (2026-09-28)
+
+Teste local com 1.327 vagas reais (Gupy e Adzuna), 54 aprovadas pela regra. A IA
+nunca tinha funcionado de fato, por três motivos, todos corrigidos em `triagem.py`:
+
+- `gemini-2.0-flash` foi desativado pelo Google. Agora `MODELO_IA` usa o apelido
+  `gemini-flash-latest`, com `gemini-flash-lite-latest` de reserva.
+- O modelo gasta tokens "pensando" antes de responder: com `maxOutputTokens` 4000 o
+  JSON saía cortado e o código caía no filtro por regra sem avisar. Agora são 16000,
+  `thinkingLevel: low`, resposta forçada em JSON e erro explícito em `MAX_TOKENS`.
+- 503 ("alta demanda") é frequente no free tier. Agora há três novas tentativas
+  (5, 15 e 30 s) antes de passar para o modelo reserva.
+
+Também: vagas acima de `MAX_VAGAS_IA` passavam sem avaliação; agora vão em lotes. E
+nota decimal da IA ("7.5") não quebra mais o ciclo.
+
+Workflow: um ciclo por dia às 07h de Brasília, com a coleta e o resumo na mesma
+execução. Os testes rodam a cada push e antes do radar. O banco foi zerado antes do
+primeiro commit, porque tinha vagas gravadas pelas regras antigas.
