@@ -17,11 +17,13 @@ RESUMO = "vai para o resumo"
 SCORE_BAIXO = "gravada, score baixo demais para enviar"
 CORTADA_IA = "cortada pela IA"
 ADIADA = "adiada: IA indisponivel, tenta de novo no proximo ciclo"
+FORA_DO_LIMITE = "repescagem: acima do teto deste ciclo, fica para o proximo"
 JA_VISTA = "ja vista em ciclo anterior"
 REPETIDA = "repetida neste ciclo (outra fonte)"
 DESCARTADA_REGRA = "descartada pelo filtro por regra"
 
-ORDEM = [ENVIADA_NA_HORA, RESUMO, SCORE_BAIXO, CORTADA_IA, ADIADA, JA_VISTA, REPETIDA, DESCARTADA_REGRA]
+ORDEM = [ENVIADA_NA_HORA, RESUMO, SCORE_BAIXO, CORTADA_IA, ADIADA, FORA_DO_LIMITE, JA_VISTA,
+         REPETIDA, DESCARTADA_REGRA]
 
 
 def _motivo_agrupado(motivo: str) -> str:

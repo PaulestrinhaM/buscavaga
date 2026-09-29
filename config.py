@@ -68,12 +68,14 @@ BLOQUEIO_SENIORIDADE = [
     "senior", "sr", "snr", "coordenador", "coordenadora", "gerente",
     "head", "tech lead", "team lead", "principal", "staff", "diretor",
     "director", "supervisor", "manager", "lider", "leader", "iii", "iv",
+    "lead", "coordinator", "vp", "vice president", "chief", "architect",
+    "arquiteto", "arquiteta",
 ]
 # So na trilha de dados, e so se o titulo nao aceitar junior ("Junior/Pleno", "Jr/Pl").
 # Especialista entra aqui porque na trilha Jr > Pl > Sr > Especialista fica acima de
 # senior; em operacoes "Especialista em CRM" e nome de cargo, nao nivel.
 BLOQUEIO_PLENO = [
-    "pleno", "plena", "pl", "mid-level", "mid level", "midlevel",
+    "pleno", "plena", "pl", "mid-level", "mid level", "midlevel", "mid", "ii",
     "especialista", "specialist",
 ]
 # Expressoes que contem "pl" como palavra mas nao falam de nivel.
@@ -187,7 +189,12 @@ TERMOS_BUSCA = [
     "analista de integracao",
 ]
 PAIS_ADZUNA = "br"
-PAGINAS_ADZUNA = 3      # 50 vagas por pagina, por termo de busca
+# Himalayas e em ingles: termos proprios, 20 vagas por termo, uma chamada cada.
+TERMOS_BUSCA_EN = [
+    "data analyst", "data engineer", "business intelligence", "analytics",
+    "crm", "marketing operations", "revenue operations", "marketing automation",
+]
+PAGINAS_ADZUNA = 2      # 50 vagas por pagina, por termo: 16 chamadas por ciclo no maximo
 PAGINAS_GUPY = 2        # 100 vagas por pagina, por termo de busca
 
 # Empresas com job board publico (Greenhouse / Lever / Ashby).
@@ -209,4 +216,11 @@ MODELO_IA_RESERVA = "gemini-flash-lite-latest"  # usado se o principal estiver s
 # Se a IA nao responder, a vaga espera o proximo ciclo em vez de ir so pela regra.
 # Sem isso, uma queda do Gemini manda de uma vez tudo o que a IA teria cortado.
 ADIAR_SE_IA_FALHAR = True
+# Repescagem: vaga cujo titulo nao bate com nenhum cargo, mas que passou em todos os
+# bloqueios rigidos (senioridade, local, data, afirmativa, area), vai para a IA ler a
+# descricao. Pega titulo vago que esconde o trabalho dele. Teto por ciclo para nao
+# sobrecarregar a cota; o excedente fica para o ciclo seguinte.
+REPESCAGEM = True
+MAX_REPESCAGEM = 80
+DESCRICAO_IA = 1200                  # caracteres da descricao enviados a IA, por vaga
 MAX_VAGAS_IA = 40                    # vagas por chamada; acima disso vira mais de um lote

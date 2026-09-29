@@ -17,50 +17,101 @@ ESPERAS = [5, 15, 30]      # segundos entre novas tentativas em 429/5xx
 
 # Governa o que a IA considera aceitavel numa vaga. Nao e a lista de competencias
 # do curriculo, onde a regra e mais estrita e ferramenta nao usada fica de fora.
-PERFIL = """Paulo Reis, Caxias do Sul (RS), Brasil.
-Dois anos como analista de integracao de sistemas numa agencia de marketing digital:
-integracao via API e webhook entre RD Station e CRMs (Pipedrive, Ploomes), n8n,
-administracao de CRM, atribuicao de origem de lead e de venda, automacao de relatorios
-em Python e pandas, paineis no Looker Studio.
-Pontos fortes:
-- Logica de CRM: estrutura de funil, campos, etapas, motivos de perda, roteamento de
-  leads, higiene e deduplicacao de base. Fez onboarding e manutencao de CRM para uma
-  carteira de cerca de vinte clientes simultaneos.
-- Marketing digital com dominio de inbound: automacao de marketing, segmentacao,
-  nutricao, lead scoring em ferramenta, atribuicao de origem.
-- Tagueamento e mensuracao: Google Tag Manager, GA4, parametrizacao de UTM, captura
-  first-party, conversoes em Google Ads, Meta e LinkedIn.
-- Clientes B2B do setor industrial, perfil predominante da serra gaucha.
-Cursando pos-graduacao em Data Science e Analytics na PUC-Rio, com projeto de lakehouse
-em arquitetura medalhao no Databricks com PySpark, e projeto academico de lead scoring
-em scikit-learn (nao sustenta vaga de ML). SQL em nivel intermediario.
-Ingles para leitura tecnica e conversacao.
-Salesforce, HubSpot e Power BI: nao usou, mas sao equivalentes diretos dos CRMs e da
-ferramenta de BI que ja opera; pedir essas ferramentas NAO e motivo de descarte.
-NAO tem: AWS, Airflow, Kafka, Docker em producao.
-Nao busca machine learning nem ciencia de dados.
-Nivel: junior estrito em dados, BI, engenharia de dados e analytics (sem experiencia
-formal na area); junior ou pleno em marketing/revenue/sales operations, CRM e
-integracao de sistemas (onde tem os dois anos). Aceita remoto de qualquer lugar do Brasil,
-ou qualquer modalidade em Caxias do Sul e vizinhas (Farroupilha, Bento Goncalves,
-Flores da Cunha, Sao Marcos, Garibaldi).
-Nao e elegivel a vagas afirmativas exclusivas (pessoas negras, mulheres, PcD,
-pessoas trans, 50+)."""
+# Base: dados validados do curriculo (skill curriculo-ats-paulo). Sem contato pessoal:
+# o repositorio e publico.
+PERFIL = """CANDIDATO: Paulo Reis, Caxias do Sul (RS), Brasil.
 
-INSTRUCAO = """Avalie cada vaga para este candidato. Responda APENAS um JSON valido,
-sem markdown, no formato:
+EXPERIENCIA
+- Analista de Integracao de Sistemas numa agencia de marketing digital, desde marco de
+  2024 (entrou como assistente e foi promovido). Trabalha na fronteira entre marketing,
+  vendas e tecnologia:
+  - camada de sincronizacao via API entre RD Station Marketing, RD CRM e RD Conversas:
+    resolucao de identidade de cliente, roteamento de leads, deduplicacao, criacao
+    condicional de negociacoes, atribuicao de venda por canal;
+  - cerca de 10 integracoes entre RD Station e CRMs externos (Pipedrive, Ploomes);
+  - webhooks e automacoes no n8n, com GTM e JavaScript;
+  - tracking e atribuicao de 26 contas de midia (Google Ads, Meta Ads) via Google Tag
+    Manager, com captura de origem first-party e parametrizacao de UTM;
+  - automacao de relatorios de leads e vendas por origem em Python (pandas);
+  - dashboards de KPI em codigo (Chart.js);
+  - onboarding e manutencao de CRM para uma carteira de cerca de vinte clientes:
+    funil, campos, etapas, motivos de perda, higiene e deduplicacao de base;
+  - inbound: automacao de marketing, segmentacao, nutricao, lead scoring em ferramenta;
+  - clientes B2B do setor industrial, perfil predominante da serra gaucha.
+- Jornalista (2021-2024): apuracao, investigacao, sintese e redacao. Comunicacao escrita
+  forte e habito de investigar causa e efeito.
+
+FORMACAO
+- Pos-graduacao em Data Science e Analytics na PUC-Rio (em andamento, ate 2027).
+  Engenharia de dados, modelagem e governanca sao conhecimento academico, nao pratica
+  profissional. Projeto academico de lead scoring em scikit-learn (nao sustenta vaga de ML).
+- Bacharel em Jornalismo.
+
+NIVEIS HONESTOS
+- Forte: Python (pandas, NumPy), integracao via API e webhooks, n8n, RD Station (inclusive
+  API), Google Tag Manager, Git/GitHub, IA generativa como copiloto, ingles avancado.
+- Intermediario: SQL (consultas, nunca avancado), Excel, atribuicao (UTM, last-click,
+  Google Analytics), espanhol.
+- Basico ou contato inicial: JavaScript, HTML, Looker Studio.
+- Salesforce, HubSpot e Power BI: nao usou, mas sao equivalentes diretos dos CRMs e da
+  ferramenta de BI que ja opera; pedir essas ferramentas NAO e motivo de descarte.
+- NAO tem: AWS, Airflow, Kafka, Docker em producao, deep learning.
+
+O QUE ELE BUSCA
+- Dados, BI, analytics e engenharia de dados: SO junior, estagio, trainee ou vaga sem
+  nivel declarado. Nao tem experiencia formal na area, mas e o alvo principal: vaga de
+  engenharia de dados junior ou sem nivel E desejada, e ele esta se formando nisso.
+- Marketing/revenue/sales operations, CRM, martech, automacao e integracao de sistemas:
+  junior ou pleno. E onde tem os dois anos de experiencia.
+- Local: remoto de qualquer lugar do Brasil, ou qualquer modalidade em Caxias do Sul e
+  vizinhas (Farroupilha, Bento Goncalves, Flores da Cunha, Sao Marcos, Garibaldi).
+- Nao busca machine learning nem ciencia de dados.
+- Nao e elegivel a vagas afirmativas exclusivas (pessoas negras, mulheres, PcD, pessoas
+  trans, 50+)."""
+
+INSTRUCAO = """Avalie cada vaga para este candidato. Leia a descricao, nao so o titulo:
+titulo vago ou generico ("Operacoes de Marketing", "Business Operations", "Analista MIS")
+pode esconder exatamente o trabalho que ele faz, e titulo bonito pode esconder outro.
+
+O campo "origem" diz como a vaga chegou ate voce:
+- "regra": o titulo ja bate com um cargo do perfil. Mantenha (vale=true) a menos que a
+  descricao traga um criterio ELIMINATORIO abaixo ou mostre uma area claramente
+  diferente. Descricao curta ou generica NAO e motivo de corte. Vaga sem nivel
+  declarado e aceitavel: so corte por senioridade se a descricao pedir nivel ou anos
+  de experiencia acima do aceito. Stack que ele ainda nao
+  usou (Azure, GCP, Snowflake, Databricks, Spark, Power BI, dbt) NAO e motivo de corte:
+  vaga junior pressupoe aprender; baixe a nota, nao corte.
+- "repescagem": o titulo nao bate com nenhum cargo conhecido. So marque vale=true se a
+  descricao mostrar, com clareza, que o dia a dia e o que ele faz (CRM, integracao,
+  automacao, dados de marketing, analise de dados, operacoes de receita). Na duvida,
+  vale=false.
+O campo "trilha" (dados ou operacoes) e so uma pista; decida a trilha pela descricao.
+
+Para cada vaga, nesta ordem:
+1. Procure na descricao qualquer criterio ELIMINATORIO (abaixo). Achou: vale=false,
+   qualquer que seja a origem. Cidade e modalidade sempre: presencial ou hibrido fora
+   da regiao elimina, mesmo que o resto seja perfeito.
+2. Passou: aplique a regra da origem ("regra" ou "repescagem").
+3. De a nota.
+
+Responda APENAS um JSON valido, sem markdown, no formato:
 {"vagas": [{"id": "<id>", "vale": true|false, "nota": 0-10, "motivo": "<ate 12 palavras>"}]}
 
-Criterios para vale=false:
-- exige nivel acima do aceito para a trilha da vaga (campo "trilha": dados ou
-  operacoes; ver "Nivel" acima), ou anos de
-  experiencia que ele nao tem; titulo que aceita junior ("Junior/Pleno") conta como junior
-- exige como requisito central AWS, Airflow, Kafka ou Docker em producao
-- vaga de machine learning ou ciencia de dados
-- presencial ou hibrido fora de Caxias do Sul e vizinhas (Porto Alegre inclusive)
-- vaga afirmativa exclusiva para um grupo (mencao a diversidade nao conta)
-- area diferente (desenvolvimento puro, automacao industrial, financeiro, RH)
-A nota mede o quanto a vaga aproveita a experiencia dele e o quanto ele preenche os requisitos."""
+ELIMINATORIO, sem excecao, mesmo que o resto combine perfeitamente:
+- Senioridade acima do aceito para a trilha: senior, especialista, lead, coordenacao,
+  gerencia, head, arquiteto, "II"/"III", e pleno na trilha de dados. Vale tambem quando a
+  descricao exige 4 anos ou mais de experiencia, ou "solida experiencia" na funcao, ou
+  lideranca de equipe. Titulo que aceita junior ("Junior/Pleno") conta como junior.
+- Presencial ou hibrido fora de Caxias do Sul e vizinhas (Porto Alegre inclusive). Local
+  "Brasil" nao garante remoto: confira a modalidade na descricao.
+- Vaga afirmativa exclusiva para um grupo (mencao a diversidade nao conta).
+- Machine learning ou ciencia de dados como funcao principal.
+- Requisito central de AWS, Airflow, Kafka ou Docker em producao.
+- Area diferente: desenvolvimento de software puro, automacao industrial, financeiro,
+  contabil, RH, vendas diretas, atendimento, logistica.
+
+A nota (0-10) mede o quanto a vaga aproveita a experiencia dele e o quanto ele preenche
+os requisitos. 8 ou mais: encaixe forte, vale candidatar hoje."""
 
 
 def _chamar_modelo(modelo: str, prompt: str, chave: str) -> str:
@@ -127,8 +178,9 @@ def triar(vagas: list) -> tuple[list, list, list]:
     vereditos: dict[str, dict] = {}
     for inicio in range(0, len(vagas), config.MAX_VAGAS_IA):
         lote = [
-            {"id": v.id, "titulo": v.titulo, "empresa": v.empresa, "trilha": v.trilha,
-             "local": v.local, "descricao": v.descricao[:600]}
+            {"id": v.id, "origem": "repescagem" if v.repescagem else "regra",
+             "titulo": v.titulo, "empresa": v.empresa, "trilha": v.trilha,
+             "local": v.local, "descricao": v.descricao[:config.DESCRICAO_IA]}
             for v in vagas[inicio:inicio + config.MAX_VAGAS_IA]
         ]
         prompt = (f"{PERFIL}\n\n{INSTRUCAO}\n\nVagas:\n"

@@ -101,11 +101,17 @@ versionado no Git. Rodando localmente, a planilha fica em `saida/`.
 | --- | --- | --- |
 | Gupy | Endpoint público do portal de vagas | Brasil, maior ATS do país |
 | Adzuna | API oficial, chave gratuita | Brasil, com faixa salarial |
+| Himalayas | API pública, sem chave | Vagas remotas abertas ao Brasil, com nível informado pela fonte |
+| Jobicy | API pública, sem chave | Vagas remotas abertas ao Brasil e à LATAM |
 | Remotive | Feed JSON público | Vagas remotas, categoria de dados |
 | RemoteOK | Feed JSON público | Vagas remotas |
 | Job boards | Greenhouse, Lever e Ashby por empresa | Empresas-alvo, direto na origem |
 
 Para acompanhar uma empresa específica, basta adicionar em `config.BOARDS`.
+
+Candidatas a próxima fonte, que exigem chave gratuita: **Careerjet** e **Jooble**, que
+agregam boards brasileiros. Catho, InfoJobs, Vagas.com, Indeed e LinkedIn não têm API
+pública; raspar esses sites viola os termos de uso deles.
 
 ## Como rodar
 
@@ -131,6 +137,14 @@ python main.py --relatorio              # precisão por fonte
 ```
 
 ### Triagem opcional por LLM
+
+**Repescagem.** Vaga cujo título não bate com nenhum cargo conhecido, mas que passou em
+todos os bloqueios rígidos (senioridade, local, data, afirmativa, área), também vai para
+a IA, marcada como `"origem": "repescagem"`. A IA lê a descrição e só aprova se o dia a
+dia for claramente o que o candidato faz. Pega título vago como "Operações de Marketing"
+ou "Customer Success Operations". Teto de `MAX_REPESCAGEM` vagas por ciclo; o
+excedente fica para o ciclo seguinte. Sem veredito da IA, vaga de repescagem nunca é
+enviada.
 
 Com `USAR_IA = True` em `config.py` e uma `GEMINI_API_KEY` no `.env`, o radar faz uma
 segunda passagem avaliando cada vaga contra o perfil descrito em `triagem.py`. A IA
@@ -162,7 +176,7 @@ se a triagem por IA estiver ligada, `GEMINI_API_KEY`.
 python -m pytest tests/ -v
 ```
 
-134 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
+148 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
 identidade usada na deduplicação. Rodam em CI a cada push.
 
 ## Limitações conhecidas

@@ -537,7 +537,7 @@ def test_toda_vaga_coletada_aparece_uma_vez_no_registro(tmp_path, monkeypatch):
 
 
 # --------------------------------------------------- IA: cortada nao volta, falha adia
-def _ciclo_com_ia(tmp_path, monkeypatch, triar, vagas):
+def _ciclo_com_ia(tmp_path, monkeypatch, triar, vagas, adiar=True):
     import auditoria
     import db as _db
     import main as _main
@@ -548,7 +548,7 @@ def _ciclo_com_ia(tmp_path, monkeypatch, triar, vagas):
     monkeypatch.setattr(_main.notificador, "vaga_urgente", lambda v: enviadas.append(v) or True)
     monkeypatch.setattr(_main.notificador, "alerta", lambda t: alertas.append(t) or True)
     monkeypatch.setattr(_main.triagem, "triar", triar)
-    monkeypatch.setattr(_main.config, "ADIAR_SE_IA_FALHAR", True)
+    monkeypatch.setattr(_main.config, "ADIAR_SE_IA_FALHAR", adiar)
     monkeypatch.setattr("time.sleep", lambda s: None)
     monkeypatch.setattr(_main, "TODAS", {"falsa": lambda: [Vaga(*a, publicada_em=datetime.now(timezone.utc)) for a in vagas]})
     con = _db.conectar()
@@ -600,3 +600,63 @@ def test_grupo_no_titulo_indica_vaga_exclusiva(titulo):
 ])
 def test_grupo_no_titulo_com_ressalva_passa(titulo):
     assert filtro.avaliar(v(titulo))
+
+
+# --------------------------------------------------- senioridade que escapava
+@pytest.mark.parametrize("titulo", [
+    "Data Analytics Lead",
+    "Lead Analyst - Process Analytics",
+    "Digital Marketing Coordinator",
+    "VP of Revenue Operations",
+    "Data Architect",
+    "Arquiteto de Dados",
+    "Mid Data Engineer",
+    "Analista de Dados II",
+])
+def test_senioridade_em_ingles_e_nivel_ii_bloqueiam(titulo):
+    assert not filtro.avaliar(v(titulo))
+
+
+# --------------------------------------------------- repescagem pela IA
+def test_titulo_vago_sem_bloqueio_vira_repescagem():
+    vaga = v("Operacoes de Marketing", local="Remoto")
+    assert not filtro.avaliar(vaga)
+    assert vaga.repescagem
+
+
+@pytest.mark.parametrize("titulo,local", [
+    ("Operacoes de Marketing Senior", "Remoto"),       # senioridade e rigida
+    ("Operacoes de Marketing", "Sao Paulo, SP (hybrid)"),  # local e rigido
+    ("Vendedor Interno", "Remoto"),                    # area e rigida
+])
+def test_bloqueio_rigido_nao_vai_para_repescagem(titulo, local):
+    vaga = v(titulo, local=local)
+    assert not filtro.avaliar(vaga)
+    assert not vaga.repescagem
+
+
+def test_repescagem_so_e_enviada_com_aval_da_ia(tmp_path, monkeypatch):
+    import main as _main
+    monkeypatch.setattr(_main.config, "USAR_IA", True)
+    monkeypatch.setattr(_main.config, "REPESCAGEM", True)
+    vagas = [("Operacoes de Marketing", "A", "Remoto", "http://a/1", "f")]
+
+    vistas = []
+    def aprovar(vs):
+        vistas.extend(vs)
+        for x in vs:
+            x.score = 9
+        return vs, [], []
+    _, enviadas, _ = _ciclo_com_ia(tmp_path, monkeypatch, aprovar, vagas)
+    assert [x.titulo for x in vistas] == ["Operacoes de Marketing"]
+    assert [x.titulo for x in enviadas] == ["Operacoes de Marketing"]
+
+
+def test_repescagem_sem_veredito_nunca_sai_pela_regra(tmp_path, monkeypatch):
+    import main as _main
+    monkeypatch.setattr(_main.config, "USAR_IA", True)
+    monkeypatch.setattr(_main.config, "REPESCAGEM", True)
+    vagas = [("Operacoes de Marketing", "A", "Remoto", "http://a/1", "f")]
+    falhar = lambda vs: ([], [], vs)
+    gravadas, enviadas, _ = _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas, adiar=False)
+    assert enviadas == [] and gravadas == {}

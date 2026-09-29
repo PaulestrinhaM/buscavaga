@@ -223,6 +223,10 @@ def avaliar(vaga: Vaga) -> bool:
     aprovada, nivel, motivo = classificar(vaga)
     if not aprovada:
         vaga.motivo = motivo
+        # passou em todos os bloqueios rigidos, so o titulo nao foi reconhecido:
+        # candidata a repescagem, onde a IA le a descricao
+        vaga.trilha = trilha(vaga.titulo_norm)
+        vaga.repescagem = local_aceito(vaga)
         return False
 
     if not local_aceito(vaga):

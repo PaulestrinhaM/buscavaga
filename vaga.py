@@ -30,6 +30,7 @@ class Vaga:
     motivo: str = ""
     nivel_confianca: str = ""
     trilha: str = ""           # "dados" ou "operacoes": decide a senioridade aceita
+    repescagem: bool = False   # titulo nao reconhecido, mas passou nos bloqueios: a IA le
     extras: dict = field(default_factory=dict)
 
     @property

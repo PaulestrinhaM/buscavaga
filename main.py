@@ -37,6 +37,8 @@ def rodar_ciclo(con, apenas=None) -> dict:
     # de qualquer uma ser gravada no banco
     vistas_no_ciclo: set[str] = set()
     registros: list[tuple[str, object]] = []   # (etapa, vaga): tudo que o ciclo viu
+    repescagem: list = []
+    repescar = config.USAR_IA and config.REPESCAGEM
 
     for nome, coletor in fontes.items():
         try:
@@ -50,10 +52,11 @@ def rodar_ciclo(con, apenas=None) -> dict:
         aprovadas_fonte = 0
         for vaga in resultado:
             coletadas += 1
-            if not filtro.avaliar(vaga):
+            aprovada = filtro.avaliar(vaga)
+            if not aprovada and not (repescar and vaga.repescagem):
                 registros.append((auditoria.DESCARTADA_REGRA, vaga))
                 continue
-            aprovadas_fonte += 1
+            aprovadas_fonte += 1 if aprovada else 0
             if vaga.id in vistas_no_ciclo or vaga.id_conteudo in vistas_no_ciclo:
                 registros.append((auditoria.REPETIDA, vaga))
                 continue
@@ -61,7 +64,7 @@ def rodar_ciclo(con, apenas=None) -> dict:
                 registros.append((auditoria.JA_VISTA, vaga))
                 continue
             vistas_no_ciclo.update({vaga.id, vaga.id_conteudo})
-            novas.append(vaga)
+            (novas if aprovada else repescagem).append(vaga)
 
         aprovadas += aprovadas_fonte
         db.registrar_ciclo(con, nome, len(resultado), aprovadas_fonte)
@@ -71,18 +74,21 @@ def rodar_ciclo(con, apenas=None) -> dict:
     if fontes and len(falhas) >= len(fontes) / 2:
         notificador.alerta(f"{len(falhas)} de {len(fontes)} fontes falharam: {', '.join(falhas)}")
 
-    novas, cortadas, nao_avaliadas = triagem.triar(novas)
+    # repescagem vai junto para a IA, ate o teto do ciclo
+    registros += [(auditoria.FORA_DO_LIMITE, v) for v in repescagem[config.MAX_REPESCAGEM:]]
+    novas, cortadas, nao_avaliadas = triagem.triar(novas + repescagem[:config.MAX_REPESCAGEM])
     # cortada fica gravada para nao voltar no proximo ciclo, mas nunca e enviada
     for vaga in cortadas:
         db.registrar(con, vaga, notificada=db.CORTADA_IA)
         registros.append((auditoria.CORTADA_IA, vaga))
-    if nao_avaliadas and config.ADIAR_SE_IA_FALHAR:
+    # repescagem so existe com aval da IA: sem veredito, nunca sai pela regra
+    adiadas = [v for v in nao_avaliadas if v.repescagem or config.ADIAR_SE_IA_FALHAR]
+    novas += [v for v in nao_avaliadas if v not in adiadas]
+    if adiadas:
         # nao grava: o proximo ciclo coleta de novo e tenta a IA outra vez
-        registros += [(auditoria.ADIADA, v) for v in nao_avaliadas]
-        notificador.alerta(f"IA indisponivel: {len(nao_avaliadas)} vagas ficam para a "
+        registros += [(auditoria.ADIADA, v) for v in adiadas]
+        notificador.alerta(f"IA indisponivel: {len(adiadas)} vagas ficam para a "
                            "proxima rodada, sem envio agora")
-    else:
-        novas += nao_avaliadas
     novas.sort(key=lambda v: v.score, reverse=True)
     import time
     urgentes = 0
