@@ -53,6 +53,16 @@ jobs:
       - name: Resumo
         run: python main.py --resumo
 
+      # todas as vagas do ciclo, com a etapa e o motivo de cada descarte
+      - name: Anexar planilha do ciclo
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vagas-do-ciclo
+          path: saida/vagas-do-ciclo.csv
+          retention-days: 30
+          if-no-files-found: ignore
+
       - name: Versionar o banco
         if: always()          # grava o que foi visto mesmo se o resumo falhar
         run: |

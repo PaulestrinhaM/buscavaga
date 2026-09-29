@@ -146,6 +146,8 @@ def test_dedup_no_mesmo_ciclo(tmp_path, monkeypatch):
     monkeypatch.setattr(_main.notificador, "alerta", lambda texto: True)
     monkeypatch.setattr(_main.triagem, "triar", lambda vagas: vagas)
     monkeypatch.setattr("time.sleep", lambda s: None)
+    import auditoria as _auditoria
+    monkeypatch.setattr(_auditoria, "PASTA", tmp_path / "saida")
 
     agora = datetime.now(timezone.utc)
 
@@ -486,3 +488,47 @@ def test_hibrida_no_feminino_tambem_e_hibrido():
     vaga = v("Engenheiro de Dados - hibrida em Joinville", local="Joinville, SC",
              descricao="Trabalho remoto parcial")
     assert not filtro.avaliar(vaga)
+
+
+# --------------------------------------------------- registro do ciclo
+def test_toda_vaga_coletada_aparece_uma_vez_no_registro(tmp_path, monkeypatch):
+    """Nada some sem explicacao: cada vaga coletada tem uma etapa e um motivo."""
+    import csv
+    import auditoria
+    import db as _db
+    import main as _main
+
+    monkeypatch.setattr(_db, "CAMINHO", tmp_path / "t.db")
+    monkeypatch.setattr(auditoria, "PASTA", tmp_path / "saida")
+    monkeypatch.setattr(_main.notificador, "vaga_urgente", lambda vaga: True)
+    monkeypatch.setattr(_main.notificador, "alerta", lambda texto: True)
+    monkeypatch.setattr("time.sleep", lambda s: None)
+
+    def triar_falso(vagas):
+        for x in vagas:
+            if "Engenheiro" in x.titulo:
+                x.motivo = "IA: exige AWS"
+        return [x for x in vagas if "Engenheiro" not in x.titulo]
+    monkeypatch.setattr(_main.triagem, "triar", triar_falso)
+
+    agora = datetime.now(timezone.utc)
+    def falsa():
+        return [
+            Vaga("Analista de Dados Junior", "A", "Remoto", "http://a/1", "f", publicada_em=agora),
+            Vaga("analista de dados junior", "a", "Remoto", "http://b/1", "f", publicada_em=agora),
+            Vaga("Engenheiro de Dados", "B", "Remoto", "http://a/2", "f", publicada_em=agora),
+            Vaga("Vendedor", "C", "Remoto", "http://a/3", "f", publicada_em=agora),
+        ]
+    monkeypatch.setattr(_main, "TODAS", {"falsa": falsa})
+
+    con = _db.conectar()
+    _main.rodar_ciclo(con)
+    con.close()
+
+    with open(tmp_path / "saida" / "vagas-do-ciclo.csv", encoding="utf-8-sig") as arq:
+        linhas = list(csv.DictReader(arq, delimiter=";"))
+    etapas = sorted(l["etapa"] for l in linhas)
+    assert etapas == sorted([auditoria.ENVIADA_NA_HORA, auditoria.REPETIDA,
+                             auditoria.CORTADA_IA, auditoria.DESCARTADA_REGRA])
+    cortada = next(l for l in linhas if l["etapa"] == auditoria.CORTADA_IA)
+    assert cortada["motivo"] == "IA: exige AWS"

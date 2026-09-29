@@ -75,6 +75,25 @@ aspas exigem frase exata ('"analytics engineer"'). Palavras de ligação ficam e
 - **SQLite versionado no Git.** O histórico de deduplicação é o próprio commit,
   sem banco gerenciado nem custo.
 
+## Onde ver as vagas que não chegaram no Telegram
+
+O Telegram recebe só o que foi aprovado. Cada execução no GitHub Actions também
+registra **todas** as vagas coletadas, com a etapa em que cada uma parou:
+
+- **Resumo na página da execução** (aba Actions, clicar na execução): quantas vagas
+  pararam em cada etapa, a lista das cortadas pela IA com o motivo, e a contagem dos
+  motivos do filtro por regra.
+- **Planilha completa** em *Artifacts*, no fim da mesma página: `vagas-do-ciclo.csv`,
+  com etapa, motivo, score, título, empresa, local e link. Abre direto no Excel e fica
+  disponível por 30 dias.
+
+As etapas, na ordem do fluxo: enviada na hora, vai para o resumo, gravada com score
+baixo, cortada pela IA, já vista em ciclo anterior, repetida entre fontes e
+descartada pelo filtro por regra.
+
+Esse registro não vai para o banco: são cerca de 1.500 vagas por dia, e o banco é
+versionado no Git. Rodando localmente, a planilha fica em `saida/`.
+
 ## Fontes
 
 | Fonte | Acesso | Cobertura |

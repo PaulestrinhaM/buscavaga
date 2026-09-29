@@ -21,6 +21,7 @@ def carregar_env() -> None:
 
 carregar_env()
 
+import auditoria
 import config
 import db
 import filtro
@@ -35,6 +36,7 @@ def rodar_ciclo(con, apenas=None) -> dict:
     # dedup dentro do proprio ciclo: a mesma vaga pode vir de duas fontes antes
     # de qualquer uma ser gravada no banco
     vistas_no_ciclo: set[str] = set()
+    registros: list[tuple[str, object]] = []   # (etapa, vaga): tudo que o ciclo viu
 
     for nome, coletor in fontes.items():
         try:
@@ -49,11 +51,14 @@ def rodar_ciclo(con, apenas=None) -> dict:
         for vaga in resultado:
             coletadas += 1
             if not filtro.avaliar(vaga):
+                registros.append((auditoria.DESCARTADA_REGRA, vaga))
                 continue
             aprovadas_fonte += 1
             if vaga.id in vistas_no_ciclo or vaga.id_conteudo in vistas_no_ciclo:
+                registros.append((auditoria.REPETIDA, vaga))
                 continue
             if db.ja_vista(con, vaga):
+                registros.append((auditoria.JA_VISTA, vaga))
                 continue
             vistas_no_ciclo.update({vaga.id, vaga.id_conteudo})
             novas.append(vaga)
@@ -66,7 +71,10 @@ def rodar_ciclo(con, apenas=None) -> dict:
     if fontes and len(falhas) >= len(fontes) / 2:
         notificador.alerta(f"{len(falhas)} de {len(fontes)} fontes falharam: {', '.join(falhas)}")
 
+    antes_da_ia = novas
     novas = triagem.triar(novas)
+    mantidas = {id(v) for v in novas}
+    registros += [(auditoria.CORTADA_IA, v) for v in antes_da_ia if id(v) not in mantidas]
     novas.sort(key=lambda v: v.score, reverse=True)
     import time
     urgentes = 0
@@ -75,9 +83,15 @@ def rodar_ciclo(con, apenas=None) -> dict:
             enviou = notificador.vaga_urgente(vaga)
             db.registrar(con, vaga, notificada=enviou)
             urgentes += 1 if enviou else 0
+            registros.append((auditoria.ENVIADA_NA_HORA if enviou else auditoria.RESUMO, vaga))
             time.sleep(0.5)          # o Telegram limita rajada por chat
         else:
             db.registrar(con, vaga, notificada=False)
+            baixo = vaga.score < config.SCORE_MINIMO_NOTIFICAR
+            registros.append((auditoria.SCORE_BAIXO if baixo else auditoria.RESUMO, vaga))
+
+    planilha = auditoria.gravar(registros)
+    print(f"registro do ciclo em {planilha}")
 
     return {"coletadas": coletadas, "aprovadas": aprovadas,
             "novas": len(novas), "urgentes": urgentes, "falhas": falhas}

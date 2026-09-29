@@ -145,6 +145,7 @@ def triar(vagas: list) -> list:
             continue
         if not veredito.get("vale"):
             print(f"[triagem] cortada: {vaga.titulo[:45]} -> {veredito.get('motivo','')}")
+            vaga.motivo = f"IA: {veredito.get('motivo', '')}"
             continue
         try:
             vaga.score = round(float(veredito.get("nota", vaga.score)))
