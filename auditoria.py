@@ -16,11 +16,12 @@ ENVIADA_NA_HORA = "enviada na hora"
 RESUMO = "vai para o resumo"
 SCORE_BAIXO = "gravada, score baixo demais para enviar"
 CORTADA_IA = "cortada pela IA"
+ADIADA = "adiada: IA indisponivel, tenta de novo no proximo ciclo"
 JA_VISTA = "ja vista em ciclo anterior"
 REPETIDA = "repetida neste ciclo (outra fonte)"
 DESCARTADA_REGRA = "descartada pelo filtro por regra"
 
-ORDEM = [ENVIADA_NA_HORA, RESUMO, SCORE_BAIXO, CORTADA_IA, JA_VISTA, REPETIDA, DESCARTADA_REGRA]
+ORDEM = [ENVIADA_NA_HORA, RESUMO, SCORE_BAIXO, CORTADA_IA, ADIADA, JA_VISTA, REPETIDA, DESCARTADA_REGRA]
 
 
 def _motivo_agrupado(motivo: str) -> str:

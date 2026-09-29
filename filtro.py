@@ -119,6 +119,9 @@ def bloqueada(vaga: Vaga) -> str | None:
 
     corpo = normalizar(vaga.descricao)
     afirmativa = _exclusiva_afirmativa(titulo) or _exclusiva_afirmativa(corpo)
+    grupo_no_titulo = _contem_palavra(titulo, config.GRUPOS_NO_TITULO)
+    if grupo_no_titulo and not _contem_palavra(titulo, config.RESSALVAS_TITULO):
+        afirmativa = afirmativa or f"{grupo_no_titulo} no titulo"
     if afirmativa:
         return f"vaga afirmativa exclusiva ({afirmativa})"
     senioridade_corpo = _contem(corpo, config.SENIORIDADE_DESCRICAO)

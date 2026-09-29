@@ -71,10 +71,18 @@ def rodar_ciclo(con, apenas=None) -> dict:
     if fontes and len(falhas) >= len(fontes) / 2:
         notificador.alerta(f"{len(falhas)} de {len(fontes)} fontes falharam: {', '.join(falhas)}")
 
-    antes_da_ia = novas
-    novas = triagem.triar(novas)
-    mantidas = {id(v) for v in novas}
-    registros += [(auditoria.CORTADA_IA, v) for v in antes_da_ia if id(v) not in mantidas]
+    novas, cortadas, nao_avaliadas = triagem.triar(novas)
+    # cortada fica gravada para nao voltar no proximo ciclo, mas nunca e enviada
+    for vaga in cortadas:
+        db.registrar(con, vaga, notificada=db.CORTADA_IA)
+        registros.append((auditoria.CORTADA_IA, vaga))
+    if nao_avaliadas and config.ADIAR_SE_IA_FALHAR:
+        # nao grava: o proximo ciclo coleta de novo e tenta a IA outra vez
+        registros += [(auditoria.ADIADA, v) for v in nao_avaliadas]
+        notificador.alerta(f"IA indisponivel: {len(nao_avaliadas)} vagas ficam para a "
+                           "proxima rodada, sem envio agora")
+    else:
+        novas += nao_avaliadas
     novas.sort(key=lambda v: v.score, reverse=True)
     import time
     urgentes = 0

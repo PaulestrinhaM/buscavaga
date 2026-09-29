@@ -8,8 +8,9 @@ sem servidor.
 
 Buscar vaga na mão é improdutivo: o board repete anúncio antigo, a vaga boa some
 rápido e quem olha na primeira hora leva vantagem sobre quem olha duas vezes por
-dia. Este projeto substitui a checagem manual por um ciclo automático todo dia às
-7h de Brasília (10h UTC no `.github/workflows/radar.yml`).
+dia. Este projeto substitui a checagem manual por um ciclo automático três vezes
+por dia, às 7h, 12h e 18h de Brasília (`.github/workflows/radar.yml`). Mais que isso
+esbarra no limite mensal gratuito da Adzuna.
 
 ## Como funciona
 
@@ -35,7 +36,7 @@ Nada aprova por palavra-chave solta. Essa é a decisão central do projeto.
 Cargos e qualificadores casam por palavra-chave, como um índice full text: "analista
 de crm" vira {analista, crm} e casa "Analista CRM Jr" ou "Analista de Marketing
 Pleno - CRM", em qualquer ordem. A palavra tem que ser inteira ("bi" não casa em
-"mobilidade"), `*` aceita variação ("engenheir*" casa engenheiro e engenheira) e
+"mobilidade"), `*` aceita variação ("engenh*" casa engenheiro, engenheira e engenharia) e
 aspas exigem frase exata ('"analytics engineer"'). Palavras de ligação ficam em
 `PALAVRAS_IGNORADAS`.
 
@@ -88,7 +89,7 @@ registra **todas** as vagas coletadas, com a etapa em que cada uma parou:
   disponível por 30 dias.
 
 As etapas, na ordem do fluxo: enviada na hora, vai para o resumo, gravada com score
-baixo, cortada pela IA, já vista em ciclo anterior, repetida entre fontes e
+baixo, cortada pela IA, adiada (IA fora do ar), já vista em ciclo anterior, repetida entre fontes e
 descartada pelo filtro por regra.
 
 Esse registro não vai para o banco: são cerca de 1.500 vagas por dia, e o banco é
@@ -145,9 +146,11 @@ entra depois da regra e da deduplicação, nesta ordem:
 6. O que sobreviveu é notificado e gravado.
 
 Ou seja, a IA nunca vê o volume bruto, só as poucas dezenas que já passaram pela
-regra e são novidade. Isso cabe folgado na cota gratuita. Se a chamada falhar, o ciclo
-segue com o resultado da regra: a IA refina, nunca bloqueia. Vaga cortada pela IA não
-é gravada, então volta a ser avaliada no ciclo seguinte se ainda estiver no ar.
+regra e são novidade. Isso cabe folgado na cota gratuita. Vaga cortada pela IA fica
+gravada no banco, sem envio, para não voltar no ciclo seguinte. Se a IA não responder,
+as vagas daquele ciclo não são enviadas nem gravadas: esperam o próximo ciclo, e chega
+um aviso no Telegram (`ADIAR_SE_IA_FALHAR` em `config.py`). Enviar só pela regra
+quando a IA cai mandaria de uma vez tudo o que ela teria cortado.
 
 No GitHub Actions, cadastrar os mesmos valores em Settings, Secrets and variables,
 Actions: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` e,
@@ -159,7 +162,7 @@ se a triagem por IA estiver ligada, `GEMINI_API_KEY`.
 python -m pytest tests/ -v
 ```
 
-123 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
+134 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
 identidade usada na deduplicação. Rodam em CI a cada push.
 
 ## Limitações conhecidas

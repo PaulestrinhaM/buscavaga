@@ -5,7 +5,7 @@
 # vira {analista, crm} e casa "Analista CRM Jr", "Analista de Marketing Pleno - CRM"
 # ou "CRM - Analista", em qualquer ordem. PALAVRAS_IGNORADAS nao contam.
 # Palavra inteira: "bi" nao casa dentro de "mobilidade".
-# "*" no fim aceita variacao: "engenheir*" casa engenheiro, engenheira, engenharia.
+# "*" no fim aceita variacao: "engenh*" casa engenheiro, engenheira, engenharia.
 # Entre aspas vira frase exata, na ordem: '"analytics engineer"' nao casa
 # "Software Engineer (Lake Analytics Platform)". Mesma sintaxe do FTS5 do SQLite.
 PALAVRAS_IGNORADAS = [
@@ -18,7 +18,7 @@ PALAVRAS_IGNORADAS = [
 # e integracao tem dois anos (junior ou pleno). Quando o titulo casa as duas
 # trilhas, vence a de cargo com mais palavras-chave; empate fica em dados.
 CARGOS_DADOS = [
-    "analista de dado*", "engenheir* de dados",
+    "analista de dado*", "engenh* de dados",
     "analista de bi", "analista de business intelligence", "business intelligence",
     '"analytics engineer"', "data analyst", "data engineer",
     "analista de analytics", "analista de inteligencia de mercado",
@@ -102,6 +102,13 @@ GRUPOS_AFIRMATIVOS = [
 ]
 # "nao e exclusiva para PcD" nao e exclusiva.
 NEGACOES_AFIRMATIVA = ["nao", "nem"]
+# No TITULO a convencao e outra: "Analista CRM Jr - PcD" ou "Vaga Afirmativa" ja
+# indica vaga exclusiva, sem a palavra "exclusiva". Vale so para o titulo.
+GRUPOS_NO_TITULO = [
+    "pcd", "pcds", "pessoa com deficiencia", "pessoas com deficiencia",
+    "afirmativa", "afirmativas",
+]
+RESSALVAS_TITULO = ["tambem", "inclusive", "aberta", "elegivel", "nao exclusiva"]
 # Ruido recorrente em board de vaga.
 BLOQUEIO_RUIDO = [
     "vendedor", "vendedora", "comercial externo", "representante", "caixa",
@@ -199,4 +206,7 @@ EXIGIR_DATA = True      # sem data de publicacao, descarta: quase sempre e anunc
 USAR_IA = True                     # liga a segunda triagem por LLM
 MODELO_IA = "gemini-flash-latest"    # apelido do Flash atual: nao quebra quando o Google aposenta versao
 MODELO_IA_RESERVA = "gemini-flash-lite-latest"  # usado se o principal estiver sobrecarregado
+# Se a IA nao responder, a vaga espera o proximo ciclo em vez de ir so pela regra.
+# Sem isso, uma queda do Gemini manda de uma vez tudo o que a IA teria cortado.
+ADIAR_SE_IA_FALHAR = True
 MAX_VAGAS_IA = 40                    # vagas por chamada; acima disso vira mais de um lote

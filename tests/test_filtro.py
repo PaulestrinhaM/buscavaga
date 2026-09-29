@@ -144,7 +144,7 @@ def test_dedup_no_mesmo_ciclo(tmp_path, monkeypatch):
     # sem rede: o .env local tem credenciais reais de Telegram e Gemini
     monkeypatch.setattr(_main.notificador, "vaga_urgente", lambda vaga: True)
     monkeypatch.setattr(_main.notificador, "alerta", lambda texto: True)
-    monkeypatch.setattr(_main.triagem, "triar", lambda vagas: vagas)
+    monkeypatch.setattr(_main.triagem, "triar", lambda vagas: (vagas, [], []))
     monkeypatch.setattr("time.sleep", lambda s: None)
     import auditoria as _auditoria
     monkeypatch.setattr(_auditoria, "PASTA", tmp_path / "saida")
@@ -451,6 +451,7 @@ def test_mencao_a_grupo_sem_exclusividade_passa(descricao):
     ("Engenheiro(a) de Dados", "dados"),
     ("Engenheira de Dados Jr", "dados"),
     ("Analista de Engenharia de Dados", "dados"),
+    ("Engenharia de Dados (Databricks)", "dados"),
     ("Data & Analytics Analyst", "dados"),
 ])
 def test_cargo_casa_por_palavra_chave(titulo, trilha):
@@ -508,7 +509,8 @@ def test_toda_vaga_coletada_aparece_uma_vez_no_registro(tmp_path, monkeypatch):
         for x in vagas:
             if "Engenheiro" in x.titulo:
                 x.motivo = "IA: exige AWS"
-        return [x for x in vagas if "Engenheiro" not in x.titulo]
+        return ([x for x in vagas if "Engenheiro" not in x.titulo],
+                [x for x in vagas if "Engenheiro" in x.titulo], [])
     monkeypatch.setattr(_main.triagem, "triar", triar_falso)
 
     agora = datetime.now(timezone.utc)
@@ -532,3 +534,69 @@ def test_toda_vaga_coletada_aparece_uma_vez_no_registro(tmp_path, monkeypatch):
                              auditoria.CORTADA_IA, auditoria.DESCARTADA_REGRA])
     cortada = next(l for l in linhas if l["etapa"] == auditoria.CORTADA_IA)
     assert cortada["motivo"] == "IA: exige AWS"
+
+
+# --------------------------------------------------- IA: cortada nao volta, falha adia
+def _ciclo_com_ia(tmp_path, monkeypatch, triar, vagas):
+    import auditoria
+    import db as _db
+    import main as _main
+
+    monkeypatch.setattr(_db, "CAMINHO", tmp_path / "t.db")
+    monkeypatch.setattr(auditoria, "PASTA", tmp_path / "saida")
+    enviadas, alertas = [], []
+    monkeypatch.setattr(_main.notificador, "vaga_urgente", lambda v: enviadas.append(v) or True)
+    monkeypatch.setattr(_main.notificador, "alerta", lambda t: alertas.append(t) or True)
+    monkeypatch.setattr(_main.triagem, "triar", triar)
+    monkeypatch.setattr(_main.config, "ADIAR_SE_IA_FALHAR", True)
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    monkeypatch.setattr(_main, "TODAS", {"falsa": lambda: [Vaga(*a, publicada_em=datetime.now(timezone.utc)) for a in vagas]})
+    con = _db.conectar()
+    _main.rodar_ciclo(con)
+    gravadas = {r["titulo"]: r["notificada"] for r in con.execute("SELECT titulo, notificada FROM vagas")}
+    con.close()
+    return gravadas, enviadas, alertas
+
+
+def test_vaga_cortada_pela_ia_nao_volta_no_ciclo_seguinte(tmp_path, monkeypatch):
+    """Foi o bug de 2026-09-28: a cortada nao era gravada e voltava quando a IA caia."""
+    vagas = [("Engenheiro de Dados", "Banco", "Remoto", "http://a/1", "f")]
+    cortar = lambda vs: ([], vs, [])
+    gravadas, _, _ = _ciclo_com_ia(tmp_path, monkeypatch, cortar, vagas)
+    assert gravadas == {"Engenheiro de Dados": -1}
+
+    # segundo ciclo com a IA fora do ar: a vaga ja e conhecida e nao e enviada
+    falhar = lambda vs: ([], [], vs)
+    _, enviadas, _ = _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas)
+    assert enviadas == []
+
+
+def test_ia_fora_do_ar_adia_em_vez_de_enviar(tmp_path, monkeypatch):
+    vagas = [("Analista de Dados Junior", "A", "Remoto", "http://a/1", "f")]
+    falhar = lambda vs: ([], [], vs)
+    gravadas, enviadas, alertas = _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas)
+    assert enviadas == []
+    assert gravadas == {}              # nao grava: o proximo ciclo tenta de novo
+    assert any("IA indisponivel" in a for a in alertas)
+
+
+# --------------------------------------------------- grupo no titulo
+@pytest.mark.parametrize("titulo", [
+    "Analista CRM JR - PcD",
+    "Analista de Dados I - PcD",
+    "Analista de Dados (PCD)",
+    "Analista de BI | Vaga Afirmativa",
+    "Analista de Dados Jr - Pessoas com Deficiencia",
+])
+def test_grupo_no_titulo_indica_vaga_exclusiva(titulo):
+    vaga = v(titulo)
+    assert not filtro.avaliar(vaga)
+    assert "afirmativa" in vaga.motivo
+
+
+@pytest.mark.parametrize("titulo", [
+    "Analista de Dados Jr (vaga tambem para PcD)",
+    "Analista de Dados - aberta a PcD",
+])
+def test_grupo_no_titulo_com_ressalva_passa(titulo):
+    assert filtro.avaliar(v(titulo))

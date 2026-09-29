@@ -2,7 +2,10 @@ name: JobRadar
 
 on:
   schedule:
-    - cron: "0 10 * * *"      # todo dia 07h de Brasilia (10h UTC); o GitHub pode atrasar alguns minutos
+    # 07h, 12h e 18h de Brasilia (UTC-3, sem horario de verao); o GitHub pode atrasar
+    # alguns minutos. Nao passar de 3 por dia: com 24 chamadas por ciclo, a quarta
+    # execucao deixaria a Adzuna no limite mensal do plano gratuito (2.500).
+    - cron: "0 10,15,21 * * *"
   workflow_dispatch:          # botao "Run workflow" na aba Actions, para rodar na hora
   push:
     branches: [main]          # no push roda so os testes

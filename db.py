@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS vagas (
     motivo          TEXT,
     publicada_em    TEXT,
     vista_em        TEXT NOT NULL,
-    notificada      INTEGER DEFAULT 0
+    notificada      INTEGER DEFAULT 0   -- 1 enviada, 0 na fila do resumo, -1 cortada pela IA
 );
 CREATE INDEX IF NOT EXISTS idx_conteudo ON vagas(id_conteudo);
 CREATE INDEX IF NOT EXISTS idx_notificada ON vagas(notificada);
@@ -52,7 +52,10 @@ def ja_vista(con, vaga) -> bool:
     return cur.fetchone() is not None
 
 
-def registrar(con, vaga, notificada: bool = False) -> None:
+CORTADA_IA = -1   # gravada so para nao voltar a cada ciclo; nunca e enviada
+
+
+def registrar(con, vaga, notificada: bool | int = False) -> None:
     con.execute(
         """INSERT OR IGNORE INTO vagas
            (id, id_conteudo, titulo, empresa, local, link, fonte, score,
@@ -63,7 +66,7 @@ def registrar(con, vaga, notificada: bool = False) -> None:
             vaga.link, vaga.fonte, vaga.score, vaga.nivel_confianca, vaga.motivo,
             vaga.publicada_em.isoformat() if vaga.publicada_em else None,
             datetime.now(timezone.utc).isoformat(),
-            1 if notificada else 0,
+            notificada if notificada == CORTADA_IA else (1 if notificada else 0),
         ),
     )
     con.commit()
@@ -96,7 +99,7 @@ def precisao_por_fonte(con) -> list[sqlite3.Row]:
     cur = con.execute(
         """SELECT fonte,
                   COUNT(*)                      AS vistas,
-                  SUM(notificada)               AS notificadas,
+                  SUM(notificada = 1)           AS notificadas,
                   ROUND(AVG(score), 1)          AS score_medio
            FROM vagas GROUP BY fonte ORDER BY notificadas DESC"""
     )
@@ -108,6 +111,7 @@ def listar(con, dias: int = 7, score_min: int = 0) -> list[sqlite3.Row]:
     cur = con.execute(
         """SELECT * FROM vagas
            WHERE score >= ?
+             AND notificada >= 0
              AND vista_em >= datetime('now', ?)
            ORDER BY score DESC, vista_em DESC""",
         (score_min, f"-{dias} days"),

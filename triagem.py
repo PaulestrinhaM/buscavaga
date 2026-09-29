@@ -114,13 +114,14 @@ def _parsear(bruto: str) -> dict[str, dict]:
     return {str(v["id"]): v for v in dados.get("vagas", [])}
 
 
-def triar(vagas: list) -> list:
-    """Devolve as vagas aprovadas pela IA, com score e motivo atualizados.
+def triar(vagas: list) -> tuple[list, list, list]:
+    """(mantidas, cortadas, nao_avaliadas), com score e motivo atualizados.
 
-    Em qualquer falha devolve a lista original: a IA refina, nunca bloqueia.
+    Com a IA desligada, tudo e mantido. Com a IA ligada, vaga que a IA nao conseguiu
+    avaliar (API fora, resposta invalida) volta separada: quem chama decide se adia.
     """
     if not config.USAR_IA or not vagas:
-        return vagas
+        return vagas, [], []
 
     # lotes de MAX_VAGAS_IA: um lote que falha nao impede os outros
     vereditos: dict[str, dict] = {}
@@ -135,22 +136,23 @@ def triar(vagas: list) -> list:
         try:
             vereditos.update(_parsear(_chamar(prompt)))
         except Exception as e:
-            print(f"[triagem] IA indisponivel ({e}), lote de {len(lote)} segue pelo filtro por regra")
+            print(f"[triagem] IA indisponivel ({e}), lote de {len(lote)} sem avaliacao")
 
-    aprovadas = []
+    mantidas, cortadas, nao_avaliadas = [], [], []
     for vaga in vagas:
         veredito = vereditos.get(vaga.id)
         if veredito is None:
-            aprovadas.append(vaga)          # nao avaliada, nao descarta
+            nao_avaliadas.append(vaga)
             continue
         if not veredito.get("vale"):
             print(f"[triagem] cortada: {vaga.titulo[:45]} -> {veredito.get('motivo','')}")
             vaga.motivo = f"IA: {veredito.get('motivo', '')}"
+            cortadas.append(vaga)
             continue
         try:
             vaga.score = round(float(veredito.get("nota", vaga.score)))
         except (TypeError, ValueError):
             pass                            # nota ilegivel: fica o score da regra
         vaga.motivo = f"{vaga.motivo} | IA: {veredito.get('motivo','')}"
-        aprovadas.append(vaga)
-    return aprovadas
+        mantidas.append(vaga)
+    return mantidas, cortadas, nao_avaliadas
