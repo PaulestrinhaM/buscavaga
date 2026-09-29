@@ -1,0 +1,63 @@
+name: JobRadar
+
+on:
+  schedule:
+    - cron: "0 10 * * *"      # todo dia 07h de Brasilia (10h UTC); o GitHub pode atrasar alguns minutos
+  workflow_dispatch:          # botao "Run workflow" na aba Actions, para rodar na hora
+  push:
+    branches: [main]          # no push roda so os testes
+
+permissions:
+  contents: write             # necessario para versionar o banco
+
+concurrency:
+  group: radar                # duas execucoes ao mesmo tempo disputariam o banco
+  cancel-in-progress: false
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - run: python -m pytest tests/ -q
+
+  radar:
+    needs: testes             # teste quebrado nao roda o radar
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+      ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      # score 8+ sai na hora, uma mensagem por vaga
+      - name: Ciclo de coleta
+        run: python main.py
+
+      # o restante (score 5+) sai num resumo logo em seguida
+      - name: Resumo
+        run: python main.py --resumo
+
+      - name: Versionar o banco
+        if: always()          # grava o que foi visto mesmo se o resumo falhar
+        run: |
+          git config user.name "jobradar"
+          git config user.email "actions@github.com"
+          git add data/jobs.db
+          git diff --staged --quiet || git commit -m "radar: ciclo $(date -u +%Y-%m-%dT%H:%M)"
+          git push
