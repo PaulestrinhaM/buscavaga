@@ -566,18 +566,91 @@ def test_vaga_cortada_pela_ia_nao_volta_no_ciclo_seguinte(tmp_path, monkeypatch)
     assert gravadas == {"Engenheiro de Dados": -1}
 
     # segundo ciclo com a IA fora do ar: a vaga ja e conhecida e nao e enviada
-    falhar = lambda vs: ([], [], vs)
+    falhar = lambda vs, lote=None: ([], [], vs)
     _, enviadas, _ = _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas)
     assert enviadas == []
 
 
-def test_ia_fora_do_ar_adia_em_vez_de_enviar(tmp_path, monkeypatch):
+def _standby(tmp_path):
+    import db as _db
+    con = _db.conectar()
+    ids = [r["id"] for r in con.execute("SELECT id FROM standby")]
+    tentativas = [r["tentativas"] for r in con.execute("SELECT tentativas FROM standby")]
+    con.close()
+    return ids, tentativas
+
+
+def test_ia_fora_do_ar_manda_para_standby(tmp_path, monkeypatch):
+    """Nem enviada, nem descartada: fica guardada para nova tentativa."""
     vagas = [("Analista de Dados Junior", "A", "Remoto", "http://a/1", "f")]
-    falhar = lambda vs: ([], [], vs)
-    gravadas, enviadas, alertas = _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas)
+    falhar = lambda vs, lote=None: ([], [], vs)
+    gravadas, enviadas, _ = _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas)
     assert enviadas == []
-    assert gravadas == {}              # nao grava: o proximo ciclo tenta de novo
-    assert any("IA indisponivel" in a for a in alertas)
+    assert gravadas == {}
+    assert len(_standby(tmp_path)[0]) == 1
+
+
+def test_vaga_em_standby_nao_entra_de_novo_no_ciclo_seguinte(tmp_path, monkeypatch):
+    vagas = [("Analista de Dados Junior", "A", "Remoto", "http://a/1", "f")]
+    falhar = lambda vs, lote=None: ([], [], vs)
+    _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas)
+    vistas = []
+    registrar = lambda vs, lote=None: (vistas.extend(vs), (vs, [], []))[1]
+    _ciclo_com_ia(tmp_path, monkeypatch, registrar, vagas)
+    assert vistas == []                  # ja estava no stand-by: o ciclo nao repete
+    assert len(_standby(tmp_path)[0]) == 1
+
+
+def test_standby_aprovado_pela_ia_e_enviado_e_sai_da_fila(tmp_path, monkeypatch):
+    import db as _db
+    import main as _main
+    vagas = [("Analista de Dados Junior", "A", "Remoto", "http://a/1", "f")]
+    falhar = lambda vs, lote=None: ([], [], vs)
+    _, _, _ = _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas)
+
+    def aprovar(vs, lote=None):
+        for x in vs:
+            x.score = 9
+        return vs, [], []
+    enviadas = []
+    monkeypatch.setattr(_main.triagem, "triar", aprovar)
+    monkeypatch.setattr(_main.notificador, "vaga_urgente", lambda v: enviadas.append(v) or True)
+    con = _db.conectar()
+    r = _main.processar_standby(con)
+    con.close()
+    assert r["aprovadas"] == 1 and r["restantes"] == 0
+    assert [v.titulo for v in enviadas] == ["Analista de Dados Junior"]
+
+
+def test_standby_com_ia_ainda_fora_continua_esperando(tmp_path, monkeypatch):
+    import db as _db
+    import main as _main
+    vagas = [("Analista de Dados Junior", "A", "Remoto", "http://a/1", "f")]
+    falhar = lambda vs, lote=None: ([], [], vs)
+    _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas)
+    con = _db.conectar()
+    _main.processar_standby(con)
+    _main.processar_standby(con)
+    con.close()
+    ids, tentativas = _standby(tmp_path)
+    assert len(ids) == 1 and tentativas == [2]
+
+
+def test_standby_expirado_sai_da_fila_e_avisa(tmp_path, monkeypatch):
+    import db as _db
+    import main as _main
+    from vaga import Vaga
+    monkeypatch.setattr(_db, "CAMINHO", tmp_path / "t.db")
+    alertas = []
+    monkeypatch.setattr(_main.notificador, "alerta", lambda t: alertas.append(t) or True)
+    con = _db.conectar()
+    velha = Vaga("Analista de Dados", "A", "Remoto", "http://a/9", "f",
+                 publicada_em=datetime.now(timezone.utc) - timedelta(days=30))
+    _db.standby_guardar(con, velha)
+    r = _main.processar_standby(con)
+    con.close()
+    assert r["expiradas"] == 1 and r["restantes"] == 0
+    assert "http://a/9" in alertas[0]
 
 
 # --------------------------------------------------- grupo no titulo

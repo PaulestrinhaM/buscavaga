@@ -213,14 +213,17 @@ EXIGIR_DATA = True      # sem data de publicacao, descarta: quase sempre e anunc
 USAR_IA = True                     # liga a segunda triagem por LLM
 MODELO_IA = "gemini-flash-latest"    # apelido do Flash atual: nao quebra quando o Google aposenta versao
 MODELO_IA_RESERVA = "gemini-flash-lite-latest"  # usado se o principal estiver sobrecarregado
-# Se a IA nao responder, a vaga espera o proximo ciclo em vez de ir so pela regra.
-# Sem isso, uma queda do Gemini manda de uma vez tudo o que a IA teria cortado.
+# Se a IA nao responder, a vaga vai para o stand-by (tabela standby do banco) em vez
+# de ir so pela regra: sem isso, uma queda do Gemini manda de uma vez tudo o que a IA
+# teria cortado. O stand-by e tentado de novo a cada hora (python main.py --standby).
 ADIAR_SE_IA_FALHAR = True
+STANDBY_POR_RODADA = 60              # vagas do stand-by avaliadas por tentativa
+STANDBY_LOTE = 20                    # lote menor que o normal: prompt curto falha menos
 # Repescagem: vaga cujo titulo nao bate com nenhum cargo, mas que passou em todos os
 # bloqueios rigidos (senioridade, local, data, afirmativa, area), vai para a IA ler a
 # descricao. Pega titulo vago que esconde o trabalho dele. Teto por ciclo para nao
 # sobrecarregar a cota; o excedente fica para o ciclo seguinte.
 REPESCAGEM = True
-MAX_REPESCAGEM = 80
+MAX_REPESCAGEM = 80                  # acima disso, a repescagem vai para o stand-by
 DESCRICAO_IA = 1200                  # caracteres da descricao enviados a IA, por vaga
 MAX_VAGAS_IA = 40                    # vagas por chamada; acima disso vira mais de um lote

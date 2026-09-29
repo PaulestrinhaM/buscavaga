@@ -6,6 +6,9 @@ on:
     # alguns minutos. Nao passar de 3 por dia: com 24 chamadas por ciclo, a quarta
     # execucao deixaria a Adzuna no limite mensal do plano gratuito (2.500).
     - cron: "0 10,15,21 * * *"
+    # stand-by: nova tentativa da IA sobre vagas que ela nao conseguiu avaliar.
+    # Hora cheia + 30, fora da coleta. Com a fila vazia termina em segundos.
+    - cron: "30 * * * *"
   workflow_dispatch:          # botao "Run workflow" na aba Actions, para rodar na hora
   push:
     branches: [main]          # no push roda so os testes
@@ -31,7 +34,7 @@ jobs:
 
   radar:
     needs: testes             # teste quebrado nao roda o radar
-    if: github.event_name != 'push'
+    if: github.event_name != 'push' && github.event.schedule != '30 * * * *'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     env:
@@ -73,4 +76,34 @@ jobs:
           git config user.email "actions@github.com"
           git add data/jobs.db
           git diff --staged --quiet || git commit -m "radar: ciclo $(date -u +%Y-%m-%dT%H:%M)"
+          git pull --rebase -q
+          git push
+
+  standby:
+    if: github.event.schedule == '30 * * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Nova tentativa do stand-by
+        run: python main.py --standby
+
+      - name: Versionar o banco
+        run: |
+          git config user.name "jobradar"
+          git config user.email "actions@github.com"
+          git add data/jobs.db
+          git diff --staged --quiet && exit 0
+          git commit -m "radar: stand-by $(date -u +%Y-%m-%dT%H:%M)"
+          git pull --rebase -q
           git push

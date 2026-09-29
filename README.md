@@ -130,6 +130,7 @@ python main.py                          # um ciclo completo
 python main.py --testar-fontes          # testa cada fonte sem gravar nada
 python main.py --fontes gupy            # limita a fontes específicas
 python main.py --resumo                 # envia o resumo pendente
+python main.py --standby                # tenta de novo a IA sobre as vagas em stand-by
 python main.py --listar                 # tudo que o radar aprovou nos últimos 7 dias
 python main.py --listar --dias 30 --score-min 7
 python main.py --exportar vagas.csv     # exporta a lista para planilha
@@ -161,10 +162,16 @@ entra depois da regra e da deduplicação, nesta ordem:
 
 Ou seja, a IA nunca vê o volume bruto, só as poucas dezenas que já passaram pela
 regra e são novidade. Isso cabe folgado na cota gratuita. Vaga cortada pela IA fica
-gravada no banco, sem envio, para não voltar no ciclo seguinte. Se a IA não responder,
-as vagas daquele ciclo não são enviadas nem gravadas: esperam o próximo ciclo, e chega
-um aviso no Telegram (`ADIAR_SE_IA_FALHAR` em `config.py`). Enviar só pela regra
-quando a IA cai mandaria de uma vez tudo o que ela teria cortado.
+gravada no banco, sem envio, para não voltar no ciclo seguinte.
+
+**Stand-by.** Se a IA não conseguir avaliar uma vaga (API fora, cota, resposta
+inválida), a vaga não é enviada nem descartada: vai inteira, com a descrição, para a
+tabela `standby` do banco. A cada hora, no minuto 30, `python main.py --standby` tenta
+de novo, em lotes menores. Aprovada segue o fluxo normal; cortada é gravada como
+cortada; falhou de novo, continua esperando. Se o anúncio passar de `DIAS_MAX_ANUNCIO`
+dias sem avaliação, sai do stand-by e chega no Telegram com título e link, para olhar
+na mão. Enviar só pela regra quando a IA cai mandaria de uma vez tudo o que ela teria
+cortado.
 
 No GitHub Actions, cadastrar os mesmos valores em Settings, Secrets and variables,
 Actions: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` e,
@@ -176,7 +183,7 @@ se a triagem por IA estiver ligada, `GEMINI_API_KEY`.
 python -m pytest tests/ -v
 ```
 
-148 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
+152 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
 identidade usada na deduplicação. Rodam em CI a cada push.
 
 ## Limitações conhecidas

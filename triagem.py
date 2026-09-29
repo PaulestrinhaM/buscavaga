@@ -165,7 +165,7 @@ def _parsear(bruto: str) -> dict[str, dict]:
     return {str(v["id"]): v for v in dados.get("vagas", [])}
 
 
-def triar(vagas: list) -> tuple[list, list, list]:
+def triar(vagas: list, lote_max: int | None = None) -> tuple[list, list, list]:
     """(mantidas, cortadas, nao_avaliadas), com score e motivo atualizados.
 
     Com a IA desligada, tudo e mantido. Com a IA ligada, vaga que a IA nao conseguiu
@@ -175,13 +175,14 @@ def triar(vagas: list) -> tuple[list, list, list]:
         return vagas, [], []
 
     # lotes de MAX_VAGAS_IA: um lote que falha nao impede os outros
+    lote_max = lote_max or config.MAX_VAGAS_IA
     vereditos: dict[str, dict] = {}
-    for inicio in range(0, len(vagas), config.MAX_VAGAS_IA):
+    for inicio in range(0, len(vagas), lote_max):
         lote = [
             {"id": v.id, "origem": "repescagem" if v.repescagem else "regra",
              "titulo": v.titulo, "empresa": v.empresa, "trilha": v.trilha,
              "local": v.local, "descricao": v.descricao[:config.DESCRICAO_IA]}
-            for v in vagas[inicio:inicio + config.MAX_VAGAS_IA]
+            for v in vagas[inicio:inicio + lote_max]
         ]
         prompt = (f"{PERFIL}\n\n{INSTRUCAO}\n\nVagas:\n"
                   f"{json.dumps(lote, ensure_ascii=False)}")

@@ -74,41 +74,87 @@ def rodar_ciclo(con, apenas=None) -> dict:
     if fontes and len(falhas) >= len(fontes) / 2:
         notificador.alerta(f"{len(falhas)} de {len(fontes)} fontes falharam: {', '.join(falhas)}")
 
-    # repescagem vai junto para a IA, ate o teto do ciclo
-    registros += [(auditoria.FORA_DO_LIMITE, v) for v in repescagem[config.MAX_REPESCAGEM:]]
-    novas, cortadas, nao_avaliadas = triagem.triar(novas + repescagem[:config.MAX_REPESCAGEM])
-    # cortada fica gravada para nao voltar no proximo ciclo, mas nunca e enviada
-    for vaga in cortadas:
-        db.registrar(con, vaga, notificada=db.CORTADA_IA)
-        registros.append((auditoria.CORTADA_IA, vaga))
-    # repescagem so existe com aval da IA: sem veredito, nunca sai pela regra
-    adiadas = [v for v in nao_avaliadas if v.repescagem or config.ADIAR_SE_IA_FALHAR]
-    novas += [v for v in nao_avaliadas if v not in adiadas]
-    if adiadas:
-        # nao grava: o proximo ciclo coleta de novo e tenta a IA outra vez
-        registros += [(auditoria.ADIADA, v) for v in adiadas]
-        notificador.alerta(f"IA indisponivel: {len(adiadas)} vagas ficam para a "
-                           "proxima rodada, sem envio agora")
-    novas.sort(key=lambda v: v.score, reverse=True)
-    import time
-    urgentes = 0
-    for vaga in novas:
-        if vaga.score >= config.SCORE_ALTA_RELEVANCIA:
-            enviou = notificador.vaga_urgente(vaga)
-            db.registrar(con, vaga, notificada=enviou)
-            urgentes += 1 if enviou else 0
-            registros.append((auditoria.ENVIADA_NA_HORA if enviou else auditoria.RESUMO, vaga))
-            time.sleep(0.5)          # o Telegram limita rajada por chat
-        else:
-            db.registrar(con, vaga, notificada=False)
-            baixo = vaga.score < config.SCORE_MINIMO_NOTIFICAR
-            registros.append((auditoria.SCORE_BAIXO if baixo else auditoria.RESUMO, vaga))
+    # repescagem acima do teto nao vai para a IA agora: espera no stand-by
+    for vaga in repescagem[config.MAX_REPESCAGEM:]:
+        db.standby_guardar(con, vaga)
+        registros.append((auditoria.STANDBY, vaga))
+    mantidas, cortadas, nao_avaliadas = triagem.triar(novas + repescagem[:config.MAX_REPESCAGEM])
+    registros += _aplicar_vereditos(con, mantidas, cortadas, nao_avaliadas)
+    novas = [v for etapa, v in registros
+             if etapa in (auditoria.ENVIADA_NA_HORA, auditoria.RESUMO, auditoria.SCORE_BAIXO)]
+    urgentes = sum(1 for etapa, _ in registros if etapa == auditoria.ENVIADA_NA_HORA)
 
     planilha = auditoria.gravar(registros)
     print(f"registro do ciclo em {planilha}")
 
     return {"coletadas": coletadas, "aprovadas": aprovadas,
             "novas": len(novas), "urgentes": urgentes, "falhas": falhas}
+
+
+def _aplicar_vereditos(con, mantidas, cortadas, nao_avaliadas) -> list[tuple[str, object]]:
+    """Grava e notifica conforme o veredito da IA. Devolve (etapa, vaga) de cada uma."""
+    import time
+    registros = []
+    # cortada fica gravada para nao voltar no proximo ciclo, mas nunca e enviada
+    for vaga in cortadas:
+        db.registrar(con, vaga, notificada=db.CORTADA_IA)
+        registros.append((auditoria.CORTADA_IA, vaga))
+    # sem veredito: stand-by, nem enviada nem descartada. Repescagem sempre, porque so
+    # existe com aval da IA; vaga da regra so se ADIAR_SE_IA_FALHAR.
+    for vaga in nao_avaliadas:
+        if vaga.repescagem or config.ADIAR_SE_IA_FALHAR:
+            db.standby_guardar(con, vaga)
+            registros.append((auditoria.STANDBY, vaga))
+        else:
+            mantidas.append(vaga)
+    for vaga in sorted(mantidas, key=lambda v: v.score, reverse=True):
+        if vaga.score >= config.SCORE_ALTA_RELEVANCIA:
+            enviou = notificador.vaga_urgente(vaga)
+            db.registrar(con, vaga, notificada=enviou)
+            registros.append((auditoria.ENVIADA_NA_HORA if enviou else auditoria.RESUMO, vaga))
+            time.sleep(0.5)          # o Telegram limita rajada por chat
+        else:
+            db.registrar(con, vaga, notificada=False)
+            baixo = vaga.score < config.SCORE_MINIMO_NOTIFICAR
+            registros.append((auditoria.SCORE_BAIXO if baixo else auditoria.RESUMO, vaga))
+    return registros
+
+
+def processar_standby(con) -> dict:
+    """Nova tentativa da IA sobre o stand-by. Roda de hora em hora, entre os ciclos."""
+    vagas = db.standby_listar(con, config.STANDBY_POR_RODADA)
+    if not vagas:
+        print("stand-by vazio")
+        return {"tentadas": 0, "aprovadas": 0, "cortadas": 0, "expiradas": 0, "restantes": 0}
+
+    # anuncio que envelheceu esperando sai do stand-by, mas o usuario fica sabendo
+    expiradas = [v for v in vagas if (v.dias_desde_publicacao or 0) > config.DIAS_MAX_ANUNCIO]
+    for vaga in expiradas:
+        db.standby_remover(con, vaga)
+    if expiradas:
+        linhas = "\n".join(f"- {v.titulo} | {v.empresa}\n  {v.link}" for v in expiradas[:15])
+        notificador.alerta(f"{len(expiradas)} vagas sairam do stand-by sem avaliacao da IA "
+                           f"(anuncio passou de {config.DIAS_MAX_ANUNCIO} dias). "
+                           f"Vale olhar na mao:\n{linhas}")
+
+    pendentes = [v for v in vagas if v not in expiradas]
+    if config.USAR_IA:
+        mantidas, cortadas, falhas = triagem.triar(pendentes, config.STANDBY_LOTE)
+    else:
+        # IA desligada: vaga da regra segue, repescagem (que so existe com IA) sai
+        mantidas, cortadas, falhas = [v for v in pendentes if not v.repescagem], [], []
+    avaliadas = pendentes if not config.USAR_IA else mantidas + cortadas
+    for vaga in avaliadas:
+        db.standby_remover(con, vaga)
+    for vaga in falhas:
+        db.standby_falhou(con, vaga)       # continua esperando a proxima hora
+    # falhas ja estao no stand-by: nao passam de novo por _aplicar_vereditos
+    _aplicar_vereditos(con, mantidas, cortadas, [])
+    restantes = db.standby_total(con)
+    print(f"stand-by: {len(pendentes)} tentadas, {len(mantidas)} aprovadas, "
+          f"{len(cortadas)} cortadas, {len(expiradas)} expiradas, {restantes} seguem esperando")
+    return {"tentadas": len(pendentes), "aprovadas": len(mantidas), "cortadas": len(cortadas),
+            "expiradas": len(expiradas), "restantes": restantes}
 
 
 def enviar_resumo(con) -> None:
@@ -206,6 +252,8 @@ def main() -> int:
     p.add_argument("--fontes", nargs="*", help="limita a estas fontes")
     p.add_argument("--resumo", action="store_true", help="envia o resumo e sai")
     p.add_argument("--relatorio", action="store_true", help="precisao por fonte e sai")
+    p.add_argument("--standby", action="store_true",
+                   help="tenta de novo a IA sobre as vagas em stand-by")
     p.add_argument("--testar-fontes", action="store_true",
                    help="testa cada fonte sem gravar nada e mostra exemplos")
     p.add_argument("--listar", action="store_true", help="lista tudo que o radar aprovou")
@@ -231,6 +279,9 @@ def main() -> int:
             return 0
         if args.resumo:
             enviar_resumo(con)
+            return 0
+        if args.standby:
+            processar_standby(con)
             return 0
         r = rodar_ciclo(con, apenas=args.fontes)
         print(f"\nciclo: {r['coletadas']} coletadas | {r['aprovadas']} aprovadas | "

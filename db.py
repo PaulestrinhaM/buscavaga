@@ -1,5 +1,7 @@
 """SQLite: deduplicacao, historico e fila do resumo diario."""
+import json
 import sqlite3
+from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -24,6 +26,18 @@ CREATE TABLE IF NOT EXISTS vagas (
 CREATE INDEX IF NOT EXISTS idx_conteudo ON vagas(id_conteudo);
 CREATE INDEX IF NOT EXISTS idx_notificada ON vagas(notificada);
 
+-- Vaga que a IA nao conseguiu avaliar: nem enviada, nem descartada. Guardada
+-- inteira (com a descricao) para nova tentativa, sem depender da fonte trazer de novo.
+CREATE TABLE IF NOT EXISTS standby (
+    id               TEXT PRIMARY KEY,
+    id_conteudo      TEXT NOT NULL,
+    dados            TEXT NOT NULL,
+    entrou_em        TEXT NOT NULL,
+    tentativas       INTEGER DEFAULT 0,
+    ultima_tentativa TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_standby_conteudo ON standby(id_conteudo);
+
 CREATE TABLE IF NOT EXISTS ciclos (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     rodado_em   TEXT NOT NULL,
@@ -44,12 +58,62 @@ def conectar() -> sqlite3.Connection:
 
 
 def ja_vista(con, vaga) -> bool:
-    """Dedup em duas chaves: link e empresa+titulo (mesma vaga republicada)."""
-    cur = con.execute(
-        "SELECT 1 FROM vagas WHERE id = ? OR id_conteudo = ? LIMIT 1",
-        (vaga.id, vaga.id_conteudo),
+    """Dedup em duas chaves: link e empresa+titulo (mesma vaga republicada).
+
+    Vaga em stand-by tambem conta: ja esta na fila da IA.
+    """
+    for tabela in ("vagas", "standby"):
+        cur = con.execute(
+            f"SELECT 1 FROM {tabela} WHERE id = ? OR id_conteudo = ? LIMIT 1",
+            (vaga.id, vaga.id_conteudo),
+        )
+        if cur.fetchone() is not None:
+            return True
+    return False
+
+
+# ---------------------------------------------------------------- stand-by
+def standby_guardar(con, vaga) -> None:
+    dados = asdict(vaga)
+    dados["publicada_em"] = vaga.publicada_em.isoformat() if vaga.publicada_em else None
+    con.execute(
+        "INSERT OR IGNORE INTO standby (id, id_conteudo, dados, entrou_em) VALUES (?,?,?,?)",
+        (vaga.id, vaga.id_conteudo, json.dumps(dados, ensure_ascii=False),
+         datetime.now(timezone.utc).isoformat()),
     )
-    return cur.fetchone() is not None
+    con.commit()
+
+
+def standby_listar(con, limite: int) -> list:
+    """Vagas em stand-by, da que esta ha mais tempo esperando para a mais recente."""
+    from vaga import Vaga
+    vagas = []
+    for linha in con.execute(
+            "SELECT dados, tentativas FROM standby ORDER BY entrou_em LIMIT ?", (limite,)):
+        dados = json.loads(linha["dados"])
+        if dados.get("publicada_em"):
+            dados["publicada_em"] = datetime.fromisoformat(dados["publicada_em"])
+        vaga = Vaga(**dados)
+        vaga.extras["tentativas_ia"] = linha["tentativas"]
+        vagas.append(vaga)
+    return vagas
+
+
+def standby_remover(con, vaga) -> None:
+    con.execute("DELETE FROM standby WHERE id = ?", (vaga.id,))
+    con.commit()
+
+
+def standby_falhou(con, vaga) -> None:
+    con.execute(
+        "UPDATE standby SET tentativas = tentativas + 1, ultima_tentativa = ? WHERE id = ?",
+        (datetime.now(timezone.utc).isoformat(), vaga.id),
+    )
+    con.commit()
+
+
+def standby_total(con) -> int:
+    return con.execute("SELECT COUNT(*) FROM standby").fetchone()[0]
 
 
 CORTADA_IA = -1   # gravada so para nao voltar a cada ciclo; nunca e enviada
