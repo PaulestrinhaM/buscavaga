@@ -89,12 +89,14 @@ def standby_listar(con, limite: int) -> list:
     from vaga import Vaga
     vagas = []
     for linha in con.execute(
-            "SELECT dados, tentativas FROM standby ORDER BY entrou_em LIMIT ?", (limite,)):
+            "SELECT dados, tentativas, entrou_em FROM standby ORDER BY entrou_em LIMIT ?",
+            (limite,)):
         dados = json.loads(linha["dados"])
         if dados.get("publicada_em"):
             dados["publicada_em"] = datetime.fromisoformat(dados["publicada_em"])
         vaga = Vaga(**dados)
         vaga.extras["tentativas_ia"] = linha["tentativas"]
+        vaga.extras["standby_desde"] = datetime.fromisoformat(linha["entrou_em"])
         vagas.append(vaga)
     return vagas
 

@@ -168,9 +168,9 @@ gravada no banco, sem envio, para não voltar no ciclo seguinte.
 inválida), a vaga não é enviada nem descartada: vai inteira, com a descrição, para a
 tabela `standby` do banco. A cada hora, no minuto 30, `python main.py --standby` tenta
 de novo, em lotes menores. Aprovada segue o fluxo normal; cortada é gravada como
-cortada; falhou de novo, continua esperando. Se o anúncio passar de `DIAS_MAX_ANUNCIO`
-dias sem avaliação, sai do stand-by e chega no Telegram com título e link, para olhar
-na mão. Enviar só pela regra quando a IA cai mandaria de uma vez tudo o que ela teria
+cortada; falhou de novo, continua esperando. Se a vaga ficar `STANDBY_DIAS_MAX` dias
+(3) em stand-by sem avaliação, ou o anúncio passar de `DIAS_MAX_ANUNCIO` dias, sai da
+fila e chega no Telegram com título e link, para olhar na mão. Enviar só pela regra quando a IA cai mandaria de uma vez tudo o que ela teria
 cortado.
 
 No GitHub Actions, cadastrar os mesmos valores em Settings, Secrets and variables,
@@ -183,7 +183,7 @@ se a triagem por IA estiver ligada, `GEMINI_API_KEY`.
 python -m pytest tests/ -v
 ```
 
-152 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
+154 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
 identidade usada na deduplicação. Rodam em CI a cada push.
 
 ## Limitações conhecidas

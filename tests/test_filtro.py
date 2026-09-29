@@ -636,6 +636,42 @@ def test_standby_com_ia_ainda_fora_continua_esperando(tmp_path, monkeypatch):
     assert len(ids) == 1 and tentativas == [2]
 
 
+def test_standby_ha_mais_de_tres_dias_sai_da_fila_e_avisa(tmp_path, monkeypatch):
+    """Anuncio recente, mas a IA nao conseguiu avaliar em 3 dias: vai para o usuario."""
+    import db as _db
+    import main as _main
+    from vaga import Vaga
+    monkeypatch.setattr(_db, "CAMINHO", tmp_path / "t.db")
+    monkeypatch.setattr(_main.triagem, "triar", lambda vs, lote=None: ([], [], vs))
+    alertas = []
+    monkeypatch.setattr(_main.notificador, "alerta", lambda t: alertas.append(t) or True)
+    con = _db.conectar()
+    vaga = Vaga("Analista de Dados", "A", "Remoto", "http://a/8", "f",
+                publicada_em=datetime.now(timezone.utc) - timedelta(days=1))
+    _db.standby_guardar(con, vaga)
+    quatro_dias = (datetime.now(timezone.utc) - timedelta(days=4)).isoformat()
+    con.execute("UPDATE standby SET entrou_em = ?", (quatro_dias,))
+    r = _main.processar_standby(con)
+    con.close()
+    assert r["expiradas"] == 1 and r["restantes"] == 0
+    assert "http://a/8" in alertas[0] and "3 dias" in alertas[0]
+
+
+def test_standby_recente_continua_esperando(tmp_path, monkeypatch):
+    import db as _db
+    import main as _main
+    from vaga import Vaga
+    monkeypatch.setattr(_db, "CAMINHO", tmp_path / "t.db")
+    monkeypatch.setattr(_main.triagem, "triar", lambda vs, lote=None: ([], [], vs))
+    monkeypatch.setattr(_main.notificador, "alerta", lambda t: True)
+    con = _db.conectar()
+    _db.standby_guardar(con, Vaga("Analista de Dados", "A", "Remoto", "http://a/7", "f",
+                                  publicada_em=datetime.now(timezone.utc)))
+    r = _main.processar_standby(con)
+    con.close()
+    assert r["expiradas"] == 0 and r["restantes"] == 1
+
+
 def test_standby_expirado_sai_da_fila_e_avisa(tmp_path, monkeypatch):
     import db as _db
     import main as _main

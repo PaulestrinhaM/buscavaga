@@ -218,6 +218,7 @@ MODELO_IA_RESERVA = "gemini-flash-lite-latest"  # usado se o principal estiver s
 # teria cortado. O stand-by e tentado de novo a cada hora (python main.py --standby).
 ADIAR_SE_IA_FALHAR = True
 STANDBY_POR_RODADA = 60              # vagas do stand-by avaliadas por tentativa
+STANDBY_DIAS_MAX = 3                 # sem avaliacao nesse prazo, vai para o Telegram olhar na mao
 STANDBY_LOTE = 20                    # lote menor que o normal: prompt curto falha menos
 # Repescagem: vaga cujo titulo nao bate com nenhum cargo, mas que passou em todos os
 # bloqueios rigidos (senioridade, local, data, afirmativa, area), vai para a IA ler a

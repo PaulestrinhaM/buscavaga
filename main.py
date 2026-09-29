@@ -1,5 +1,6 @@
 """JobRadar: um ciclo de coleta, filtro, dedup e notificacao."""
 import argparse
+from datetime import datetime, timedelta, timezone
 import os
 import sys
 import traceback
@@ -127,15 +128,22 @@ def processar_standby(con) -> dict:
         print("stand-by vazio")
         return {"tentadas": 0, "aprovadas": 0, "cortadas": 0, "expiradas": 0, "restantes": 0}
 
-    # anuncio que envelheceu esperando sai do stand-by, mas o usuario fica sabendo
-    expiradas = [v for v in vagas if (v.dias_desde_publicacao or 0) > config.DIAS_MAX_ANUNCIO]
+    # esperou demais (ou o anuncio envelheceu): sai do stand-by e vai para o usuario
+    # olhar na mao, sem o aval da IA
+    agora = datetime.now(timezone.utc)
+    expiradas = [
+        v for v in vagas
+        if agora - v.extras["standby_desde"] > timedelta(days=config.STANDBY_DIAS_MAX)
+        or (v.dias_desde_publicacao or 0) > config.DIAS_MAX_ANUNCIO
+    ]
     for vaga in expiradas:
         db.standby_remover(con, vaga)
     if expiradas:
         linhas = "\n".join(f"- {v.titulo} | {v.empresa}\n  {v.link}" for v in expiradas[:15])
-        notificador.alerta(f"{len(expiradas)} vagas sairam do stand-by sem avaliacao da IA "
-                           f"(anuncio passou de {config.DIAS_MAX_ANUNCIO} dias). "
-                           f"Vale olhar na mao:\n{linhas}")
+        resto = f"\n(e mais {len(expiradas) - 15})" if len(expiradas) > 15 else ""
+        notificador.alerta(f"{len(expiradas)} vagas ficaram {config.STANDBY_DIAS_MAX} dias em "
+                           f"stand-by sem a IA conseguir avaliar. Vale olhar na mao:\n"
+                           f"{linhas}{resto}")
 
     pendentes = [v for v in vagas if v not in expiradas]
     if config.USAR_IA:
