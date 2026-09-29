@@ -205,6 +205,13 @@ BOARDS = [
     # ("ashby", "nomedaempresa"),
 ]
 
+# Turnos de coleta, em hora de Brasilia (UTC-3, sem horario de verao). O GitHub dispara
+# o workflow de hora em hora; cada disparo roda a coleta se a do turno atual ainda nao
+# rodou, e o stand-by se ja rodou. Disparo que o GitHub atrasa ou descarta e coberto
+# pelo seguinte. Nao passar de 3 turnos: a Adzuna gratuita tem limite mensal.
+HORARIOS_CICLO = [7, 12, 18]
+FUSO_BRASILIA = -3
+
 DIAS_MAX_ANUNCIO = 10   # descarta anuncio mais velho que isso
 EXIGIR_DATA = True      # sem data de publicacao, descarta: quase sempre e anuncio antigo
 

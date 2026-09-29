@@ -672,6 +672,39 @@ def test_standby_recente_continua_esperando(tmp_path, monkeypatch):
     assert r["expiradas"] == 0 and r["restantes"] == 1
 
 
+# --------------------------------------------------- turnos de coleta
+def _utc(texto):
+    return datetime.fromisoformat(texto).replace(tzinfo=timezone.utc)
+
+
+@pytest.mark.parametrize("agora,inicio", [
+    ("2026-09-29T10:17", "2026-09-29T10:00"),   # 07h17 BRT: turno das 07h
+    ("2026-09-29T14:59", "2026-09-29T10:00"),   # 11h59 BRT: ainda o das 07h
+    ("2026-09-29T15:17", "2026-09-29T15:00"),   # 12h17 BRT: turno das 12h
+    ("2026-09-29T23:17", "2026-09-29T21:00"),   # 20h17 BRT: turno das 18h
+    ("2026-09-29T08:17", "2026-09-28T21:00"),   # 05h17 BRT: madrugada, turno das 18h de ontem
+])
+def test_inicio_do_turno(agora, inicio):
+    import main as _main
+    assert _main.inicio_do_turno(_utc(agora)) == _utc(inicio)
+
+
+def test_disparo_descartado_pelo_github_e_coberto_pelo_seguinte(tmp_path, monkeypatch):
+    """Caso de 2026-09-29: o disparo das 07h nao veio; o das 07h48 tem de rodar a coleta."""
+    import db as _db
+    import main as _main
+    monkeypatch.setattr(_db, "CAMINHO", tmp_path / "t.db")
+    con = _db.conectar()
+    con.execute("INSERT INTO ciclos (rodado_em, fonte) VALUES (?, 'gupy')",
+                ("2026-09-29T03:49:00+00:00",))       # ultima coleta: 00h49 BRT
+    assert _main.ciclo_pendente(con, _utc("2026-09-29T10:48"))
+    con.execute("INSERT INTO ciclos (rodado_em, fonte) VALUES (?, 'gupy')",
+                ("2026-09-29T10:48:30+00:00",))       # coleta do turno feita
+    assert not _main.ciclo_pendente(con, _utc("2026-09-29T11:17"))
+    assert _main.ciclo_pendente(con, _utc("2026-09-29T15:17"))   # turno das 12h
+    con.close()
+
+
 def test_standby_expirado_sai_da_fila_e_avisa(tmp_path, monkeypatch):
     import db as _db
     import main as _main

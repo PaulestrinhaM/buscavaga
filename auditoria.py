@@ -75,5 +75,13 @@ def _markdown(registros) -> str:
     return "\n".join(linhas) + "\n\n"
 
 
+def anotar(texto: str) -> None:
+    """Uma linha no resumo da pagina da execucao, no Actions. Fora dele, nada."""
+    destino = os.getenv("GITHUB_STEP_SUMMARY")
+    if destino:
+        with open(destino, "a", encoding="utf-8") as arq:
+            arq.write(texto + "\n\n")
+
+
 def _md(texto: str) -> str:
     return (texto or "").replace("|", "/").replace("\n", " ").strip()

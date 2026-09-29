@@ -165,6 +165,44 @@ def processar_standby(con) -> dict:
             "expiradas": len(expiradas), "restantes": restantes}
 
 
+def inicio_do_turno(agora: datetime) -> datetime:
+    """Inicio, em UTC, do turno de coleta em que 'agora' cai."""
+    fuso = timedelta(hours=config.FUSO_BRASILIA)
+    local = agora.astimezone(timezone.utc) + fuso
+    horas = sorted(config.HORARIOS_CICLO)
+    anteriores = [h for h in horas if h <= local.hour]
+    if anteriores:
+        inicio = local.replace(hour=anteriores[-1], minute=0, second=0, microsecond=0)
+    else:
+        # madrugada: o turno vigente e o ultimo de ontem
+        inicio = (local - timedelta(days=1)).replace(hour=horas[-1], minute=0, second=0,
+                                                     microsecond=0)
+    return inicio - fuso
+
+
+def ciclo_pendente(con, agora: datetime | None = None) -> bool:
+    agora = agora or datetime.now(timezone.utc)
+    ultimo = db.ultimo_ciclo(con)
+    return ultimo is None or ultimo < inicio_do_turno(agora)
+
+
+def rodar_agendado(con) -> None:
+    """O que o disparo de hora em hora faz: coleta do turno, se faltar; senao, stand-by."""
+    if ciclo_pendente(con):
+        r = rodar_ciclo(con)
+        print(f"\nciclo: {r['coletadas']} coletadas | {r['aprovadas']} aprovadas | "
+              f"{r['novas']} novas | {r['urgentes']} notificadas na hora")
+        enviar_resumo(con)
+    else:
+        print("coleta deste turno ja rodou: so o stand-by")
+        r = processar_standby(con)
+        auditoria.anotar(
+            f"**So stand-by.** A coleta deste turno ja rodou "
+            f"(ultima: {db.ultimo_ciclo(con):%d/%m %H:%M} UTC); a planilha esta naquela "
+            f"execucao. Stand-by: {r['tentadas']} tentadas, {r['aprovadas']} aprovadas, "
+            f"{r['cortadas']} cortadas, {r['restantes']} seguem esperando.")
+
+
 def enviar_resumo(con) -> None:
     pendentes = db.pendentes_resumo(con)
     pendentes = [p for p in pendentes if p["score"] >= config.SCORE_MINIMO_NOTIFICAR]
@@ -260,6 +298,8 @@ def main() -> int:
     p.add_argument("--fontes", nargs="*", help="limita a estas fontes")
     p.add_argument("--resumo", action="store_true", help="envia o resumo e sai")
     p.add_argument("--relatorio", action="store_true", help="precisao por fonte e sai")
+    p.add_argument("--agendado", action="store_true",
+                   help="coleta do turno se ainda nao rodou; senao, stand-by (usado pelo Actions)")
     p.add_argument("--standby", action="store_true",
                    help="tenta de novo a IA sobre as vagas em stand-by")
     p.add_argument("--testar-fontes", action="store_true",
@@ -290,6 +330,9 @@ def main() -> int:
             return 0
         if args.standby:
             processar_standby(con)
+            return 0
+        if args.agendado:
+            rodar_agendado(con)
             return 0
         r = rodar_ciclo(con, apenas=args.fontes)
         print(f"\nciclo: {r['coletadas']} coletadas | {r['aprovadas']} aprovadas | "

@@ -8,9 +8,14 @@ sem servidor.
 
 Buscar vaga na mão é improdutivo: o board repete anúncio antigo, a vaga boa some
 rápido e quem olha na primeira hora leva vantagem sobre quem olha duas vezes por
-dia. Este projeto substitui a checagem manual por um ciclo automático três vezes
-por dia, às 7h, 12h e 18h de Brasília (`.github/workflows/radar.yml`). Mais que isso
+dia. Este projeto substitui a checagem manual por um ciclo automático em três turnos
+por dia, 7h, 12h e 18h de Brasília (`HORARIOS_CICLO` em `config.py`). Mais que isso
 esbarra no limite mensal gratuito da Adzuna.
+
+O GitHub atrasa e às vezes descarta disparos agendados, então o workflow não depende
+de acertar o horário: ele dispara de hora em hora (minuto 17) e cada disparo consulta
+o banco. Se a coleta do turno ainda não rodou, roda a coleta e o resumo; se já rodou,
+só tenta o stand-by. Disparo perdido é coberto pelo seguinte.
 
 ## Como funciona
 
@@ -131,6 +136,7 @@ python main.py --testar-fontes          # testa cada fonte sem gravar nada
 python main.py --fontes gupy            # limita a fontes específicas
 python main.py --resumo                 # envia o resumo pendente
 python main.py --standby                # tenta de novo a IA sobre as vagas em stand-by
+python main.py --agendado               # o que o Actions roda: coleta do turno ou stand-by
 python main.py --listar                 # tudo que o radar aprovou nos últimos 7 dias
 python main.py --listar --dias 30 --score-min 7
 python main.py --exportar vagas.csv     # exporta a lista para planilha
@@ -166,8 +172,8 @@ gravada no banco, sem envio, para não voltar no ciclo seguinte.
 
 **Stand-by.** Se a IA não conseguir avaliar uma vaga (API fora, cota, resposta
 inválida), a vaga não é enviada nem descartada: vai inteira, com a descrição, para a
-tabela `standby` do banco. A cada hora, no minuto 30, `python main.py --standby` tenta
-de novo, em lotes menores. Aprovada segue o fluxo normal; cortada é gravada como
+tabela `standby` do banco. Os disparos de hora em hora que não são de coleta tentam de
+novo (`python main.py --standby`), em lotes menores. Aprovada segue o fluxo normal; cortada é gravada como
 cortada; falhou de novo, continua esperando. Se a vaga ficar `STANDBY_DIAS_MAX` dias
 (3) em stand-by sem avaliação, ou o anúncio passar de `DIAS_MAX_ANUNCIO` dias, sai da
 fila e chega no Telegram com título e link, para olhar na mão. Enviar só pela regra quando a IA cai mandaria de uma vez tudo o que ela teria
@@ -183,7 +189,7 @@ se a triagem por IA estiver ligada, `GEMINI_API_KEY`.
 python -m pytest tests/ -v
 ```
 
-154 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
+160 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
 identidade usada na deduplicação. Rodam em CI a cada push.
 
 ## Limitações conhecidas

@@ -161,6 +161,12 @@ def registrar_ciclo(con, fonte: str, coletadas: int, aprovadas: int, erro: str =
     con.commit()
 
 
+def ultimo_ciclo(con) -> datetime | None:
+    """Quando rodou a ultima coleta completa (qualquer fonte), em UTC."""
+    bruto = con.execute("SELECT MAX(rodado_em) FROM ciclos").fetchone()[0]
+    return datetime.fromisoformat(bruto) if bruto else None
+
+
 def precisao_por_fonte(con) -> list[sqlite3.Row]:
     cur = con.execute(
         """SELECT fonte,
