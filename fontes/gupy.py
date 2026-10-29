@@ -2,11 +2,14 @@
 
 Nao e a api.gupy.io, que exige token de empregador. Uso pessoal, com backoff.
 
-Formato validado contra a API real em 2026-09-28:
+Em 2026-09-30 a Gupy desligou employability-portal.gupy.io/api/v1/jobs (404 em
+qualquer rota). A busca do site passou para portal.gupy.io/api/job-search/jobs,
+com os mesmos parametros (jobName, limit, offset) e o mesmo envelope:
   {"data": [...], "pagination": {"limit", "offset", "total"}}
-Cada item: name, careerPageName, city, state, country, isRemoteWork,
-workplaceType ("remote" | "hybrid" | "on-site"), publishedDate (ISO, UTC),
-jobUrl, description. Resultado vem ordenado do mais novo para o mais antigo.
+Cada item: name, careerPageName, city, state, workplaceType ("remote" | "hybrid"
+| "on-site"), publishedDate (ISO, UTC), url/jobUrl, description. Sairam
+isRemoteWork, country e companyId: o remoto agora vem so de workplaceType.
+Offset >= 10000 devolve 400. Resultado vem do mais novo para o mais antigo.
 """
 import time
 from datetime import datetime, timedelta, timezone
@@ -16,7 +19,7 @@ import requests
 import config
 from vaga import Vaga
 
-URL = "https://employability-portal.gupy.io/api/v1/jobs"
+URL = "https://portal.gupy.io/api/job-search/jobs"
 TIMEOUT = 25
 POR_PAGINA = 100
 PAUSA = 1.0          # segundos entre chamadas, para nao martelar o portal
@@ -68,7 +71,7 @@ def _converter(item: dict) -> Vaga:
         titulo=item.get("name") or "",
         empresa=item.get("careerPageName") or "",
         local=_local(item),
-        link=item.get("jobUrl") or item.get("careerPageUrl") or "",
+        link=item.get("jobUrl") or item.get("url") or item.get("careerPageUrl") or "",
         fonte="gupy",
         descricao=_descricao(item),
         publicada_em=_data(item),
