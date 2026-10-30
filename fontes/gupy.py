@@ -79,7 +79,8 @@ def _converter(item: dict) -> Vaga:
     )
 
 
-def _buscar(termo: str, offset: int) -> list[dict]:
+def _buscar(termo: str, offset: int) -> tuple[list[dict], int | None]:
+    """Uma pagina da busca: (itens, total que a API diz existir, se disser)."""
     params = {"jobName": termo, "limit": POR_PAGINA, "offset": offset}
     for tentativa in range(3):
         r = requests.get(URL, params=params, timeout=TIMEOUT,
@@ -88,28 +89,39 @@ def _buscar(termo: str, offset: int) -> list[dict]:
             time.sleep(2 ** tentativa)
             continue
         r.raise_for_status()
-        return _extrair_lista(r.json())
-    return []
+        payload = r.json()
+        total = None
+        if isinstance(payload, dict):
+            total = (payload.get("pagination") or {}).get("total")
+        return _extrair_lista(payload), total if isinstance(total, int) else None
+    return [], None
 
 
 def coletar() -> list[Vaga]:
     limite = datetime.now(timezone.utc) - timedelta(days=config.DIAS_MAX_ANUNCIO)
+    teto = config.PAGINAS_GUPY * POR_PAGINA     # vagas por termo, no maximo
     vagas: list[Vaga] = []
     for termo in config.TERMOS_BUSCA:
-        total = 0
-        for pagina in range(config.PAGINAS_GUPY):
-            itens = _buscar(termo, offset=pagina * POR_PAGINA)
+        offset, recentes, total_api, tamanhos = 0, 0, None, []
+        while offset < teto:
+            itens, total_api = _buscar(termo, offset=offset)
             if not itens:
                 break
-            total += len(itens)
             convertidas = [_converter(i) for i in itens]
             vagas.extend(convertidas)
+            tamanhos.append(len(itens))
+            novas_pag = sum(1 for v in convertidas if v.publicada_em and v.publicada_em >= limite)
+            recentes += novas_pag
+            # avanca pelo que veio, nao pelo que pedimos: a API nova devolve paginas
+            # menores que o limit pedido, e tratar isso como "ultima pagina" cortava a busca
+            offset += len(itens)
             time.sleep(PAUSA)
-            if len(itens) < POR_PAGINA:
+            if total_api is not None and offset >= total_api:
                 break
-            # ordenado por data: se a pagina ja chegou em anuncio velho, a proxima e toda velha
-            ultima = convertidas[-1].publicada_em
-            if ultima and ultima < limite:
+            # pagina inteira velha: com a lista do mais novo para o mais antigo, o resto
+            # tambem e velho. O log abaixo mostra se isso segue valendo na API nova.
+            if novas_pag == 0:
                 break
-        print(f"  [gupy] '{termo}': {total} vagas")
+        print(f"  [gupy] '{termo}': {offset} vagas em {len(tamanhos)} paginas {tamanhos}, "
+              f"{recentes} com ate {config.DIAS_MAX_ANUNCIO} dias, total da API {total_api}")
     return vagas
