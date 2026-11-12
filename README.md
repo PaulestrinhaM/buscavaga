@@ -110,7 +110,6 @@ versionado no Git. Rodando localmente, a planilha fica em `saida/`.
 | Gupy | Endpoint público do portal | Termos remotos no Brasil e todas as vagas das cidades da região |
 | LinkedIn | Endpoint público de visitante, sem login | Remoto no Brasil (`geoId`) e raio de 25 km de Caxias |
 | Adzuna | API oficial, chave gratuita | Brasil, com faixa salarial |
-| Vagas.com | HTML da busca | Filtro 100% home office e páginas das cidades da região |
 | Solides | Dados embutidos na página | Só cidades da região: a busca por texto dela é solta demais |
 | Google Jobs | SerpApi, chave gratuita (250 buscas/mês) | Agrega LinkedIn, Gupy, Indeed e sites de empresa; uma rodada por dia |
 | Job boards | Greenhouse, Lever e Ashby por empresa | 14 empresas brasileiras conferidas, direto na origem |
@@ -118,9 +117,10 @@ versionado no Git. Rodando localmente, a planilha fica em `saida/`.
 
 Para acompanhar uma empresa específica, basta adicionar em `config.BOARDS`.
 
-RemoteOK, Jobicy e Remotive saíram em nov/2026: zero vagas aprovadas em 14 dias. Os
-módulos continuam em `fontes/` para religar se fizer sentido. Vagas.com e Solides são
-raspagem de HTML e quebram quando o site muda; o alerta de fonte quebrada avisa.
+RemoteOK, Jobicy e Remotive saíram em nov/2026: zero vagas aprovadas em 14 dias. O
+Vagas.com tem coletor pronto (`fontes/vagascom.py`), mas fica desligado: a busca por
+termo responde 403 para o IP do GitHub Actions e as páginas de cidade quase não têm
+vaga de dados. Solides é raspagem de HTML e quebra quando o site muda.
 
 ## Como rodar
 

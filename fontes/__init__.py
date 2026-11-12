@@ -6,15 +6,15 @@ from fontes.gupy import coletar as gupy
 from fontes.himalayas import coletar as himalayas
 from fontes.linkedin import coletar as linkedin
 from fontes.solides import coletar as solides
-from fontes.vagascom import coletar as vagascom
 
 # RemoteOK, Jobicy e Remotive sairam em nov/2026: zero vagas aprovadas em 14 dias e
-# muito ruido. Os modulos continuam na pasta; para religar, e so importar e listar.
+# muito ruido. Vagas.com ficou pronto mas desligado: a busca por termo responde 403
+# para o IP do Actions e as paginas de cidade trouxeram 11 vagas, nenhuma de dados.
+# Os modulos continuam na pasta; para religar, e so listar aqui.
 TODAS = {
     "gupy": gupy,
     "linkedin": linkedin,
     "adzuna": adzuna,
-    "vagascom": vagascom,
     "solides": solides,
     "google": google,
     "boards": boards,
