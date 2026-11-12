@@ -56,22 +56,25 @@ aspas exigem frase exata ('"analytics engineer"'). Palavras de ligação ficam e
   ou qualquer modalidade em Caxias do Sul e vizinhas (Farroupilha, Bento
   Gonçalves, Flores da Cunha, São Marcos, Garibaldi). Híbrido ou presencial fora
   disso, Porto Alegre inclusive, é descartado.
-- **Senioridade depende da trilha da vaga.** Em dados (analista e engenheiro de
-  dados, BI, analytics) só passa júnior ou vaga sem nível: pleno, "Pl",
-  mid-level e especialista são descartados. Em operações (marketing, revenue e
-  sales ops, CRM, martech, integração de sistemas) passa júnior ou pleno. Sênior
-  para cima cai nas duas. Título que aceita júnior ("Júnior/Pleno", "Jr/Pl")
-  passa sempre, e vaga sem trilha clara segue a regra de dados, que é a mais
-  estrita.
+- **Júnior é o alvo, pleno passa com critério.** Em dados (analista e engenheiro
+  de dados, BI, analytics) e em operações (marketing, revenue e sales ops, CRM,
+  martech, integração) passa júnior, estágio, trainee, vaga sem nível e pleno.
+  O pleno é julgado pela IA: passa se pedir até 3 anos de experiência e o gap for
+  de ferramenta (Power BI, Tableau, BigQuery, Snowflake, dbt); cai se pedir 4
+  anos ou mais, ou se o núcleo for cloud, Airflow, Kafka ou Docker em produção.
+  Especialista em dados, sênior e acima caem já na regra.
+- **Piso de R$ 4.000 por mês, CLT ou PJ.** Só corta salário declarado: a
+  estimativa da Adzuna não conta, e vaga sem salário segue.
 - **Machine learning está fora do escopo.** Cientista de dados, ML engineer,
   MLOps e afins são bloqueados pelo título. Machine learning citado na
   descrição de uma vaga de analista não bloqueia.
 - **Vaga afirmativa exclusiva é descartada, menção a diversidade não.** O grupo
   precisa vir logo depois da palavra de exclusividade ("exclusiva para PcD");
   "exclusivas ou não para PcD" e "incentivamos candidaturas" continuam passando.
-- **Sem scraping de LinkedIn.** Só fontes com API ou feed público. O LinkedIn é
-  a maior fonte de vagas do país, e essa ausência é o custo assumido para não
-  arriscar a conta usada nas candidaturas.
+- **LinkedIn sem login.** O radar usa o endpoint público de visitante, o mesmo da
+  busca deslogada: a conta usada nas candidaturas não entra em nada. É contra os
+  termos do LinkedIn e ele limita rápido, então são poucas buscas, pausa longa, e
+  um 429 encerra a fonte naquele ciclo sem derrubar as outras.
 - **Score sem modelo.** Cinco sinais conhecidos com pesos declarados em
   `config.py`. Auditável e ajustável à mão, que é o que importa numa base pequena.
 - **A vaga só é marcada como notificada depois que o envio confirma.** Falha de
@@ -104,19 +107,20 @@ versionado no Git. Rodando localmente, a planilha fica em `saida/`.
 
 | Fonte | Acesso | Cobertura |
 | --- | --- | --- |
-| Gupy | Endpoint público do portal de vagas | Brasil, maior ATS do país |
+| Gupy | Endpoint público do portal | Termos remotos no Brasil e todas as vagas das cidades da região |
+| LinkedIn | Endpoint público de visitante, sem login | Remoto no Brasil (`geoId`) e raio de 25 km de Caxias |
 | Adzuna | API oficial, chave gratuita | Brasil, com faixa salarial |
-| Himalayas | API pública, sem chave | Vagas remotas abertas ao Brasil, com nível informado pela fonte |
-| Jobicy | API pública, sem chave | Vagas remotas abertas ao Brasil e à LATAM |
-| Remotive | Feed JSON público | Vagas remotas, categoria de dados |
-| RemoteOK | Feed JSON público | Vagas remotas |
-| Job boards | Greenhouse, Lever e Ashby por empresa | Empresas-alvo, direto na origem |
+| Vagas.com | HTML da busca | Filtro 100% home office e páginas das cidades da região |
+| Solides | Dados embutidos na página | Só cidades da região: a busca por texto dela é solta demais |
+| Google Jobs | SerpApi, chave gratuita (250 buscas/mês) | Agrega LinkedIn, Gupy, Indeed e sites de empresa; uma rodada por dia |
+| Job boards | Greenhouse, Lever e Ashby por empresa | 14 empresas brasileiras conferidas, direto na origem |
+| Himalayas | API pública, sem chave | Vagas remotas abertas ao Brasil |
 
 Para acompanhar uma empresa específica, basta adicionar em `config.BOARDS`.
 
-Candidatas a próxima fonte, que exigem chave gratuita: **Careerjet** e **Jooble**, que
-agregam boards brasileiros. Catho, InfoJobs, Vagas.com, Indeed e LinkedIn não têm API
-pública; raspar esses sites viola os termos de uso deles.
+RemoteOK, Jobicy e Remotive saíram em nov/2026: zero vagas aprovadas em 14 dias. Os
+módulos continuam em `fontes/` para religar se fizer sentido. Vagas.com e Solides são
+raspagem de HTML e quebram quando o site muda; o alerta de fonte quebrada avisa.
 
 ## Como rodar
 
@@ -154,7 +158,10 @@ excedente fica para o ciclo seguinte. Sem veredito da IA, vaga de repescagem nun
 enviada.
 
 Com `USAR_IA = True` em `config.py` e uma `GEMINI_API_KEY` no `.env`, o radar faz uma
-segunda passagem avaliando cada vaga contra o perfil descrito em `triagem.py`. A IA
+segunda passagem avaliando cada vaga contra o perfil em `perfil.md`. O perfil mora num
+arquivo à parte para ser atualizado sem mexer em código: quando o currículo mudar,
+edita o arquivo e a data na primeira linha. Com mais de 45 dias sem revisão, o radar
+manda um lembrete no Telegram na coleta de segunda de manhã. A IA
 entra depois da regra e da deduplicação, nesta ordem:
 
 1. Cada fonte é coletada.
@@ -181,7 +188,8 @@ cortado.
 
 No GitHub Actions, cadastrar os mesmos valores em Settings, Secrets and variables,
 Actions: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`, `ADZUNA_APP_ID`, `ADZUNA_APP_KEY` e,
-se a triagem por IA estiver ligada, `GEMINI_API_KEY`.
+se a triagem por IA estiver ligada, `GEMINI_API_KEY`. Para o Google Jobs,
+`SERPAPI_API_KEY` (sem ela a fonte fica desligada).
 
 ## Testes
 
@@ -189,13 +197,14 @@ se a triagem por IA estiver ligada, `GEMINI_API_KEY`.
 python -m pytest tests/ -v
 ```
 
-160 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score e a
-identidade usada na deduplicação. Rodam em CI a cada push.
+Cerca de 200 casos cobrindo os três níveis de filtro, os bloqueios, o cálculo de score,
+a identidade usada na deduplicação e os parsers das fontes, estes contra páginas reais
+capturadas em `tests/fixtures/`. Rodam em CI a cada push.
 
 ## Limitações conhecidas
 
-- Sem o LinkedIn, a cobertura de vagas brasileiras fica incompleta. O contorno é
-  manter alerta nativo do LinkedIn em paralelo.
+- O LinkedIn de visitante pode passar a bloquear o IP do Actions a qualquer momento.
+  Se a fonte zerar por vários ciclos, o contorno é o alerta nativo do LinkedIn.
 - O filtro olha o título. Vaga com título vago e descrição boa é perdida.
 - Os pesos do score foram calibrados por julgamento, não contra histórico. Depois
   de algumas semanas de base, valem recalibração com os dados reais.
