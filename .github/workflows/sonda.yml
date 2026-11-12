@@ -1,0 +1,30 @@
+name: Sonda de fontes (diagnostico)
+
+on:
+  push:
+    branches: ["diag/**"]
+
+permissions:
+  contents: write
+
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Testar fontes novas (sem gravar nada)
+        run: |
+          mkdir -p diag/saida3
+          python main.py --testar-fontes --fontes gupy linkedin vagascom solides boards 2>&1 | tee diag/saida3/testar.txt
+          python diag/links.py 2>&1 | tee diag/saida3/links.txt
+      - name: Devolver a saida como commit
+        run: |
+          git config user.name "jobradar"
+          git config user.email "actions@github.com"
+          git add -f diag/saida3
+          git commit -qm "sonda: fontes ao vivo" && git push
