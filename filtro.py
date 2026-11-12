@@ -128,6 +128,9 @@ def bloqueada(vaga: Vaga) -> str | None:
     if senioridade_corpo:
         return f"senioridade no anuncio ({senioridade_corpo})"
 
+    if vaga.salario_max is not None and 0 < vaga.salario_max < config.PISO_SALARIAL:
+        return f"salario abaixo do piso (R$ {vaga.salario_max:.0f})"
+
     dias = vaga.dias_desde_publicacao
     if dias is not None and dias > config.DIAS_MAX_ANUNCIO:
         return f"anuncio com {dias} dias"
@@ -226,7 +229,8 @@ def avaliar(vaga: Vaga) -> bool:
         # passou em todos os bloqueios rigidos, so o titulo nao foi reconhecido:
         # candidata a repescagem, onde a IA le a descricao
         vaga.trilha = trilha(vaga.titulo_norm)
-        vaga.repescagem = local_aceito(vaga)
+        gringa = vaga.fonte.split(":")[0] in config.FONTES_SEM_REPESCAGEM
+        vaga.repescagem = local_aceito(vaga) and not gringa
         return False
 
     if not local_aceito(vaga):

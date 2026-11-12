@@ -35,6 +35,9 @@ def _converter(item: dict) -> Vaga:
         except ValueError:
             pass
     salario = f"R$ {item['salary_min']:.0f}" if item.get("salary_min") else ""
+    # salary_is_predicted "1" e chute da Adzuna, nao vale para o piso
+    declarado = str(item.get("salary_is_predicted", "1")) == "0"
+    teto = item.get("salary_max") or item.get("salary_min")
     return Vaga(
         titulo=item.get("title", ""),
         empresa=(item.get("company") or {}).get("display_name", ""),
@@ -44,6 +47,7 @@ def _converter(item: dict) -> Vaga:
         descricao=item.get("description", ""),
         publicada_em=publicada,
         salario=salario,
+        salario_max=float(teto) if declarado and teto else None,
     )
 
 

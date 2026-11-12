@@ -14,9 +14,10 @@ PALAVRAS_IGNORADAS = [
 ]
 
 # Cargo inequivoco: aprova sozinho. Separado por trilha, porque a senioridade
-# aceita muda: em dados ele nao tem experiencia formal (so junior), em operacoes
-# e integracao tem dois anos (junior ou pleno). Quando o titulo casa as duas
-# trilhas, vence a de cargo com mais palavras-chave; empate fica em dados.
+# aceita muda: em dados vai ate pleno desde nov/2026 (junior e o alvo, pleno passa
+# se a experiencia exigida couber, quem julga e a IA); em operacoes e integracao,
+# junior ou pleno. Quando o titulo casa as duas trilhas, vence a de cargo com mais
+# palavras-chave; empate fica em dados.
 CARGOS_DADOS = [
     "analista de dado*", "engenh* de dados",
     "analista de bi", "analista de business intelligence", "business intelligence",
@@ -24,6 +25,12 @@ CARGOS_DADOS = [
     "analista de analytics", "analista de inteligencia de mercado",
     "analista de informacoes", "analista de indicadores",
     "digital analytics",
+    # BI e adjacentes (nov/2026): a ferramenta de BI se aprende rapido, a base ele tem
+    "desenvolvedor* bi", "desenvolvedor* business intelligence", "bi developer",
+    "analista de inteligencia comercial", "analista de inteligencia de negocio*",
+    "analista de mis", "analista de reporting", "engenh* de analytics",
+    # porta de entrada
+    "assistente de dado*", "estagi* dado*", "trainee dado*", "trainee data",
 ]
 CARGOS_OPERACOES = [
     "marketing operations", "marketing ops", "revenue operations", "revops",
@@ -71,11 +78,11 @@ BLOQUEIO_SENIORIDADE = [
     "lead", "coordinator", "vp", "vice president", "chief", "architect",
     "arquiteto", "arquiteta",
 ]
-# So na trilha de dados, e so se o titulo nao aceitar junior ("Junior/Pleno", "Jr/Pl").
-# Especialista entra aqui porque na trilha Jr > Pl > Sr > Especialista fica acima de
-# senior; em operacoes "Especialista em CRM" e nome de cargo, nao nivel.
+# So na trilha de dados, e so se o titulo nao aceitar junior. Pleno saiu daqui em
+# nov/2026: passa pela regra e a IA decide pela experiencia exigida. Especialista
+# fica porque na trilha Jr > Pl > Sr > Especialista esta acima de senior; em
+# operacoes "Especialista em CRM" e nome de cargo, nao nivel.
 BLOQUEIO_PLENO = [
-    "pleno", "plena", "pl", "mid-level", "mid level", "midlevel", "mid", "ii",
     "especialista", "specialist",
 ]
 # Expressoes que contem "pl" como palavra mas nao falam de nivel.
@@ -189,6 +196,9 @@ TERMOS_BUSCA = [
     "analista de integracao",
 ]
 PAIS_ADZUNA = "br"
+# Repescagem (IA lendo vaga de titulo nao reconhecido) so para fonte brasileira: nas
+# gringas ela so trazia ruido (engenheiro de software, medico, advogado) e gastava cota.
+FONTES_SEM_REPESCAGEM = ["himalayas", "jobicy", "remotive", "remoteok"]
 # Himalayas e em ingles: termos proprios, 20 vagas por termo, uma chamada cada.
 TERMOS_BUSCA_EN = [
     "data analyst", "data engineer", "business intelligence", "analytics",
@@ -213,6 +223,10 @@ HORARIOS_CICLO = [7, 12, 18]
 FUSO_BRASILIA = -3
 
 DIAS_MAX_ANUNCIO = 10   # descarta anuncio mais velho que isso
+# Piso de remuneracao mensal, CLT ou PJ. So corta salario DECLARADO pela vaga: a
+# estimativa da Adzuna (salary_is_predicted) nao conta. A IA aplica o mesmo piso
+# ao que estiver escrito na descricao.
+PISO_SALARIAL = 4000
 EXIGIR_DATA = True      # sem data de publicacao, descarta: quase sempre e anuncio antigo
 
 

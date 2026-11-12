@@ -186,9 +186,24 @@ def ciclo_pendente(con, agora: datetime | None = None) -> bool:
     return ultimo is None or ultimo < inicio_do_turno(agora)
 
 
+def lembrar_perfil(agora: datetime | None = None) -> bool:
+    """Lembrete no Telegram se o perfil da IA esta velho. So na coleta de segunda cedo."""
+    agora = (agora or datetime.now(timezone.utc)) + timedelta(hours=config.FUSO_BRASILIA)
+    if agora.weekday() != 0 or agora.hour >= min(config.HORARIOS_CICLO) + 5:
+        return False
+    dias = triagem.dias_sem_revisar_perfil(agora.date())
+    if dias is None or dias < triagem.DIAS_REVISAR_PERFIL:
+        return False
+    notificador.alerta(f"O perfil que a IA usa para julgar vagas (perfil.md) esta ha {dias} "
+                       f"dias sem revisao. Se o curriculo mudou (ferramenta nova, curso, "
+                       f"projeto), atualiza o arquivo e a data na primeira linha.")
+    return True
+
+
 def rodar_agendado(con) -> None:
     """O que o disparo de hora em hora faz: coleta do turno, se faltar; senao, stand-by."""
     if ciclo_pendente(con):
+        lembrar_perfil()
         r = rodar_ciclo(con)
         print(f"\nciclo: {r['coletadas']} coletadas | {r['aprovadas']} aprovadas | "
               f"{r['novas']} novas | {r['urgentes']} notificadas na hora")
