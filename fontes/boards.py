@@ -2,6 +2,8 @@
 
 Util para acompanhar empresas-alvo diretamente, sem depender de agregador.
 """
+import html
+import re
 from datetime import datetime, timezone
 
 import requests
@@ -11,24 +13,32 @@ from vaga import Vaga
 
 TIMEOUT = 20
 ENDPOINTS = {
-    "greenhouse": "https://boards-api.greenhouse.io/v1/boards/{slug}/jobs",
+    "greenhouse": "https://boards-api.greenhouse.io/v1/boards/{slug}/jobs?content=true",
     "lever": "https://api.lever.co/v0/postings/{slug}?mode=json",
     "ashby": "https://api.ashbyhq.com/posting-api/job-board/{slug}",
 }
 
 
+def _sem_html(texto: str) -> str:
+    # o content do Greenhouse vem com o HTML escapado (&lt;p&gt;)
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html.unescape(html.unescape(texto)))).strip()
+
+
 def _greenhouse(slug, dados):
     for j in dados.get("jobs", []):
         publicada = None
-        if j.get("updated_at"):
+        # first_published e a data do anuncio; updated_at muda a cada edicao
+        bruto = j.get("first_published") or j.get("updated_at")
+        if bruto:
             try:
-                publicada = datetime.fromisoformat(j["updated_at"].replace("Z", "+00:00"))
+                publicada = datetime.fromisoformat(bruto.replace("Z", "+00:00"))
             except ValueError:
                 pass
         yield Vaga(
             titulo=j.get("title", ""), empresa=slug,
             local=(j.get("location") or {}).get("name", ""),
             link=j.get("absolute_url", ""), fonte=f"greenhouse:{slug}",
+            descricao=_sem_html(j.get("content") or "")[:8000],
             publicada_em=publicada,
         )
 
@@ -49,10 +59,21 @@ def _lever(slug, dados):
 
 def _ashby(slug, dados):
     for j in dados.get("jobs", []):
+        publicada = None
+        if j.get("publishedAt"):
+            try:
+                publicada = datetime.fromisoformat(j["publishedAt"].replace("Z", "+00:00"))
+            except ValueError:
+                pass
+        local = j.get("location", "")
+        if j.get("isRemote"):
+            local = f"Remoto ({local})"
         yield Vaga(
             titulo=j.get("title", ""), empresa=slug,
-            local=j.get("location", ""), link=j.get("jobUrl", ""),
+            local=local, link=j.get("jobUrl", ""),
             fonte=f"ashby:{slug}",
+            descricao=(j.get("descriptionPlain") or "")[:8000],
+            publicada_em=publicada,
         )
 
 
@@ -65,6 +86,9 @@ def coletar() -> list[Vaga]:
         url = ENDPOINTS[plataforma].format(slug=slug)
         r = requests.get(url, timeout=TIMEOUT)
         if r.status_code != 200:
+            print(f"  [boards] {plataforma}:{slug} respondeu {r.status_code}")
             continue
-        vagas.extend(PARSERS[plataforma](slug, r.json()))
+        achadas = list(PARSERS[plataforma](slug, r.json()))
+        vagas.extend(achadas)
+        print(f"  [boards] {plataforma}:{slug}: {len(achadas)} vagas")
     return vagas

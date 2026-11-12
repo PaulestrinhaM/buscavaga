@@ -205,14 +205,61 @@ TERMOS_BUSCA_EN = [
     "crm", "marketing operations", "revenue operations", "marketing automation",
 ]
 PAGINAS_ADZUNA = 2      # 50 vagas por pagina, por termo: 16 chamadas por ciclo no maximo
-PAGINAS_GUPY = 2        # 100 vagas por pagina, por termo de busca
+PAGINAS_GUPY = 3        # 100 vagas por pagina, por termo de busca (so remotas)
+# Gupy busca por palavra no titulo: termo curto pega mais ("dados" acha analista,
+# engenheiro, assistente e estagiario de dados de uma vez).
+TERMOS_GUPY = [
+    "dados", "data", "BI", "business intelligence", "analytics",
+    "CRM", "integracao", "marketing operations", "revenue operations",
+]
+# Cidades da regiao buscadas sem termo: presencial e hibrido valem, e o filtro de
+# titulo decide depois. Caxias publica centenas por semana, por isso mais paginas.
+CIDADES_GUPY = ["Caxias do Sul", "Farroupilha", "Bento Gonçalves", "Flores da Cunha",
+                "Garibaldi", "São Marcos"]
+PAGINAS_GUPY_CIDADE = 8
 
-# Empresas com job board publico (Greenhouse / Lever / Ashby).
-# Formato: (plataforma, slug_da_empresa)
+# Empresas com job board publico (Greenhouse / Lever / Ashby). Lista conferida em
+# 2026-11-12 contra os endpoints publicos: so entra quem respondeu com vagas e tem
+# operacao no Brasil. A maioria e SP hibrido; o filtro de local separa as remotas.
 BOARDS = [
-    # ("greenhouse", "nomedaempresa"),
-    # ("lever", "nomedaempresa"),
-    # ("ashby", "nomedaempresa"),
+    ("greenhouse", "stone"), ("greenhouse", "quintoandar"), ("greenhouse", "vtex"),
+    ("greenhouse", "gympass"), ("greenhouse", "rdstation"), ("greenhouse", "inter"),
+    ("greenhouse", "c6bank"), ("greenhouse", "xpinc"), ("greenhouse", "btgpactual"),
+    ("greenhouse", "wildlifestudios"), ("greenhouse", "ebanx"),
+    ("lever", "neon"), ("lever", "swile"),
+    ("ashby", "nubank"),
+]
+
+# LinkedIn (visitante, sem login): poucas buscas, porque ele limita rapido.
+TERMOS_LINKEDIN = [
+    "analista de dados", "engenheiro de dados", "analista de BI",
+    "business intelligence", "analytics engineer", "analista de CRM",
+]
+TERMOS_LINKEDIN_REGIAO = ["dados", "BI", "CRM"]
+LINKEDIN_CIDADE = "Caxias do Sul, Rio Grande do Sul, Brasil"   # raio de 25 km
+LINKEDIN_HORAS = 48          # so vaga publicada nas ultimas 48 h: o radar roda 3x/dia
+PAGINAS_LINKEDIN = 2         # ~10 vagas por pagina
+LINKEDIN_DETALHES = 12       # descricoes buscadas por ciclo (uma chamada cada)
+
+# Vagas.com: termo com filtro 100% home office, e cidade da regiao sem termo.
+TERMOS_VAGASCOM = ["dados", "analista de dados", "engenheiro de dados", "BI",
+                   "business intelligence", "CRM"]
+CIDADES_VAGASCOM = ["Caxias do Sul RS", "Farroupilha RS", "Bento Goncalves RS"]
+
+# Solides: so por cidade (a busca por texto dela e solta demais).
+CIDADES_SOLIDES = ["caxias-do-sul-rs", "farroupilha-rs", "bento-goncalves-rs"]
+PAGINAS_SOLIDES = 4          # 14 vagas por pagina
+
+# Google Jobs via SerpApi: (busca, local). Uma rodada por dia, cota de 250/mes.
+TERMOS_GOOGLE = [
+    ("analista de dados remoto", "Brazil"),
+    ("engenheiro de dados remoto", "Brazil"),
+    ("analista de BI remoto", "Brazil"),
+    ("analytics engineer remoto", "Brazil"),
+    ("analista de CRM remoto", "Brazil"),
+    ("analista de dados", "Caxias do Sul, State of Rio Grande do Sul, Brazil"),
+    ("analista de BI", "Caxias do Sul, State of Rio Grande do Sul, Brazil"),
+    ("CRM marketing", "Caxias do Sul, State of Rio Grande do Sul, Brazil"),
 ]
 
 # Turnos de coleta, em hora de Brasilia (UTC-3, sem horario de verao). O GitHub dispara
