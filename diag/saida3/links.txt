@@ -1,0 +1,5 @@
+200 41537 https://gestamp.vagas.solides.com.br/vaga/952431 -> https://gestamp.vagas.solides.com.br/vaga/952431
+200 209678 https://vagas.solides.com.br/vagas/todas/caxias-do-sul-rs -> https://vagas.solides.com.br/vagas/todas/caxias-do-sul-rs
+200 204427 https://vagas.solides.com.br/vagas/todas/caxias-do-sul-rs?page=2 -> https://vagas.solides.com.br/vagas/todas/caxias-do-sul-rs?page=2
+200 67133 https://www.vagas.com.br/vagas-em-caxias-do-sul-rs?ordenar_por=mais_recentes -> https://www.vagas.com.br/vagas-em-caxias-do-sul-rs?ordenar_por=mais_recentes
+403 5818 https://www.vagas.com.br/vagas-de-dados?m%5B%5D=100%25+Home+Office&ordenar_por=mais_recentes -> https://www.vagas.com.br/vagas-de-dados?m%5B%5D=100%25+Home+Office&ordenar_por=mais_recentes

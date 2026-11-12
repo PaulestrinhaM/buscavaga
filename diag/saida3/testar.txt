@@ -1,0 +1,109 @@
+
+=== gupy ===
+  [gupy] remoto 'dados': 100 vagas [100]
+  [gupy] remoto 'data': 18 vagas [18]
+  [gupy] remoto 'BI': 10 vagas [10]
+  [gupy] remoto 'business intelligence': 1 vagas [1]
+  [gupy] remoto 'analytics': 11 vagas [11]
+  [gupy] remoto 'CRM': 11 vagas [11]
+  [gupy] remoto 'integracao': 11 vagas [11]
+  [gupy] remoto 'marketing operations': 0 vagas []
+  [gupy] remoto 'revenue operations': 0 vagas []
+  [gupy] cidade 'Caxias do Sul': 100 de 100 vagas [100]
+  [gupy] cidade 'Farroupilha': 62 de 62 vagas [62]
+  [gupy] cidade 'Bento Gonçalves': 98 de 98 vagas [98]
+  [gupy] cidade 'Flores da Cunha': 33 de 33 vagas [33]
+  [gupy] cidade 'Garibaldi': 12 de 12 vagas [12]
+  [gupy] cidade 'São Marcos': 0 de 0 vagas []
+  467 coletadas, 9 aprovadas pelo filtro
+  --- por que as rejeitadas cairam:
+     137  bloqueada: anuncio antigo
+     130  nenhum criterio de cargo atendido no titulo
+     104  bloqueada: senioridade acima do alvo
+      70  bloqueada: fora da area
+       9  bloqueada: senioridade acima do alvo em dados
+       7  bloqueada: vaga afirmativa exclusiva
+       1  bloqueada: senioridade no anuncio
+  --- melhores aprovadas:
+    [10] ANALISTA DE DADOS JUNIOR | Oportunidades | Remoto
+    [9] BEMOL DIGITAL | DATA ENGINEER I | Bemol Digital | Remoto
+    [9] Analista de BI Pleno  | Vetta Tecnologia | Remoto
+    [8] Hitss | Analista de Dados PL | Hitss Brasil | Remoto
+    [8] Consultor(a) SAP Analytics Cloud BI/Planning - Júnior/Pleno | SolvePlan | Remoto
+
+=== linkedin ===
+  [linkedin] 'analista de dados' remoto: 20 vagas
+  [linkedin] 'engenheiro de dados' remoto: 20 vagas
+  [linkedin] 'analista de BI' remoto: 20 vagas
+  [linkedin] 'business intelligence' remoto: 20 vagas
+  [linkedin] 'analytics engineer' remoto: 20 vagas
+  [linkedin] 'analista de CRM' remoto: 20 vagas
+  [linkedin] 'dados' regiao: 7 vagas
+  [linkedin] 'BI' regiao: 18 vagas
+  [linkedin] 'CRM' regiao: 20 vagas
+  [linkedin] 123 unicas, 12 com descricao
+  123 coletadas, 48 aprovadas pelo filtro
+  --- por que as rejeitadas cairam:
+      37  bloqueada: senioridade acima do alvo
+      29  nenhum criterio de cargo atendido no titulo
+       5  bloqueada: senioridade acima do alvo em dados
+       3  bloqueada: fora da area
+       1  bloqueada: vaga afirmativa exclusiva
+  --- melhores aprovadas:
+    [9] Talent Data Analyst - Remote | INDI Staffing Services | Remoto (Recife, PE)
+    [9] Business Intelligence Analyst - Remote | INDI Staffing Services | Remoto (São Paulo, Brasil)
+    [9] Analista de Dados de Sinistro Pl | SulAmérica | Remoto (São Paulo, SP)
+    [9] Analista de Dados - TI | Aeris Energy | Remoto (Caucaia, CE)
+    [8] Analista de Dados - Trabalho Remoto | BairesDev | Remoto (Salvador, BA)
+
+=== vagascom ===
+  ERRO: HTTPError: 403 Client Error: Forbidden for url: https://www.vagas.com.br/vagas-de-dados?m%5B%5D=100%25+Home+Office&ordenar_por=mais_recentes
+
+=== solides ===
+  [solides] 'caxias-do-sul-rs': 56 vagas
+  [solides] 'farroupilha-rs': 7 vagas
+  [solides] 'bento-goncalves-rs': 44 vagas
+  107 coletadas, 0 aprovadas pelo filtro
+  --- por que as rejeitadas cairam:
+      46  bloqueada: anuncio antigo
+      20  bloqueada: fora da area
+      16  bloqueada: vaga afirmativa exclusiva
+      13  nenhum criterio de cargo atendido no titulo
+      12  bloqueada: senioridade acima do alvo
+  --- exemplos de titulo que vieram (para calibrar o filtro):
+    Vendedor Varejo | Caxias do Sul, RS (presencial)
+    Auxiliar de Fibra Óptica I - Caxias do Sul | Caxias do Sul, RS (presencial)
+    DESENHISTA TECNICO RS | Caxias do Sul, RS (presencial)
+    [800169-9] ANALISTA FISCAL PLENO (Empresa de contabilidade,  | Caxias do Sul, RS (presencial)
+    [800099-2] ANALISTA FISCAL ESCRITÓRIO CONTÁBIL - BAIRRO SÃO  | Caxias do Sul, RS (presencial)
+
+=== boards ===
+  [boards] greenhouse:stone: 349 vagas
+  [boards] greenhouse:quintoandar: 99 vagas
+  [boards] greenhouse:vtex: 33 vagas
+  [boards] greenhouse:gympass: 86 vagas
+  [boards] greenhouse:rdstation: 6 vagas
+  [boards] greenhouse:inter: 116 vagas
+  [boards] greenhouse:c6bank: 157 vagas
+  [boards] greenhouse:xpinc: 118 vagas
+  [boards] greenhouse:btgpactual: 235 vagas
+  [boards] greenhouse:wildlifestudios: 16 vagas
+  [boards] greenhouse:ebanx: 35 vagas
+  [boards] lever:neon: 9 vagas
+  [boards] lever:swile: 27 vagas
+  [boards] ashby:nubank: 106 vagas
+  1392 coletadas, 4 aprovadas pelo filtro
+  --- por que as rejeitadas cairam:
+     508  bloqueada: senioridade acima do alvo
+     417  bloqueada: anuncio antigo
+     212  bloqueada: fora da area
+     104  bloqueada: senioridade acima do alvo em dados
+      98  nenhum criterio de cargo atendido no titulo
+      42  bloqueada: vaga afirmativa exclusiva
+       4  bloqueada: senioridade no anuncio
+       3  local fora do alvo
+  --- melhores aprovadas:
+    [8] Estágio em Ciência de Dados | vtex | Brazil
+    [7] Analista de Product Analytics Pleno | Inovação | c6bank | São Paulo, Brazil
+    [6] Analista de Pré-Vendas BDR - SMB | RD Station (Remoto) | rdstation | Florianópolis, Santa Catarina, Brasil
+    [6] Analista de Analytics Pleno | Prevenção a Fraudes  | c6bank | São Paulo, Brazil
