@@ -101,7 +101,8 @@ def _buscar(params: dict, offset: int) -> list[dict]:
     return []
 
 
-def _paginar(params: dict, max_paginas: int, limite: datetime) -> tuple[list[Vaga], list[int]]:
+def _paginar(params: dict, max_paginas: int,
+             limite: datetime | None) -> tuple[list[Vaga], list[int]]:
     vagas, tamanhos = [], []
     for pagina in range(max_paginas):
         itens = _buscar(params, offset=pagina * POR_PAGINA)
@@ -116,7 +117,7 @@ def _paginar(params: dict, max_paginas: int, limite: datetime) -> tuple[list[Vag
         # do mais novo para o mais antigo: pagina cujo ultimo anuncio ja passou do
         # limite encerra, porque a seguinte seria toda velha
         ultima = convertidas[-1].publicada_em
-        if ultima and ultima < limite:
+        if limite and ultima and ultima < limite:
             break
     return vagas, tamanhos
 
@@ -130,7 +131,9 @@ def coletar() -> list[Vaga]:
         vagas.extend(achadas)
         print(f"  [gupy] remoto '{termo}': {len(achadas)} vagas {tamanhos}")
     for cidade in config.CIDADES_GUPY:
-        achadas, tamanhos = _paginar({"city": cidade}, config.PAGINAS_GUPY_CIDADE, limite)
+        # sem corte por data: a busca por cidade parou na 1a pagina com ele no teste ao
+        # vivo; o filtro descarta anuncio velho depois
+        achadas, tamanhos = _paginar({"city": cidade}, config.PAGINAS_GUPY_CIDADE, None)
         # se a API ignorar a cidade, volta o Brasil inteiro: fica so o que e dela
         alvo = normalizar(cidade)
         locais = [v for v in achadas if alvo in normalizar(v.extras.get("cidade", ""))]

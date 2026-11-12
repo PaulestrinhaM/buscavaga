@@ -158,3 +158,19 @@ def test_ashby_marca_remoto():
     v = next(boards._ashby("nubank", dados))
     assert v.local == "Remoto (São Paulo)"
     assert v.publicada_em.day == 10
+
+
+def test_vagascom_403_pula_so_a_url(monkeypatch):
+    class R:
+        def __init__(self, status, text=""):
+            self.status_code, self.text = status, text
+
+        def raise_for_status(self):
+            pass
+    pagina = _ler("vagascom.html.gz")
+    monkeypatch.setattr(vagascom.requests, "get",
+                        lambda url, **kw: R(403) if "vagas-de-" in url else R(200, pagina))
+    monkeypatch.setattr(vagascom, "PAUSA", 0)
+    monkeypatch.setattr(config, "TERMOS_VAGASCOM", ["dados"])
+    monkeypatch.setattr(config, "CIDADES_VAGASCOM", ["Caxias do Sul RS"])
+    assert len(vagascom.coletar()) == 40

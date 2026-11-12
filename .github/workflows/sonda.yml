@@ -20,7 +20,7 @@ jobs:
       - name: Testar fontes novas (sem gravar nada)
         run: |
           mkdir -p diag/saida3
-          python main.py --testar-fontes --fontes gupy linkedin vagascom solides boards 2>&1 | tee diag/saida3/testar.txt
+          python main.py --testar-fontes --fontes gupy vagascom 2>&1 | tee diag/saida3/testar2.txt
           python diag/links.py 2>&1 | tee diag/saida3/links.txt
       - name: Devolver a saida como commit
         run: |

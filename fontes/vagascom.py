@@ -5,8 +5,9 @@ atributo title do link "link-detalhes-vaga", empresa em "emprVaga", nivel em
 "nivelVaga", trecho da descricao em "detalhes", cidade em "vaga-local", data
 relativa em "data-publicacao" ("Hoje", "Ontem", "Ha 3 dias") e o selo
 "Exclusivo para PCD" em "vaga-pne". 40 vagas por pagina.
-O filtro m[]=100% Home Office vem da propria pagina. Busca e por qualquer palavra,
-entao vem muito ruido: o filtro de titulo do radar e que separa.
+O filtro m[]=100% Home Office vem da propria pagina, mas responde 403 para robo:
+fica tentado, e se seguir barrado a fonte vive das paginas de cidade da regiao.
+Busca e por qualquer palavra, entao vem muito ruido: o filtro de titulo separa.
 """
 import html
 import re
@@ -82,7 +83,10 @@ def _vagas(pagina: str, remoto: bool) -> list[Vaga]:
 
 def _get(caminho: str, params: dict | None = None) -> str | None:
     r = requests.get(BASE + caminho, params=params, headers=CABECALHO, timeout=TIMEOUT)
-    if r.status_code == 404:
+    # 404: cidade sem pagina. 403: o site barrou essa URL (o filtro de home office e
+    # barrado para robo, medido em 2026-11-12); as outras seguem.
+    if r.status_code in (403, 404):
+        print(f"  [vagascom] {r.status_code} em {caminho}")
         return None
     r.raise_for_status()
     return r.text
