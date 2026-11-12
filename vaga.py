@@ -26,6 +26,7 @@ class Vaga:
     descricao: str = ""
     publicada_em: datetime | None = None
     salario: str = ""
+    salario_max: float | None = None   # mensal, so quando a vaga declara
     score: int = 0
     motivo: str = ""
     nivel_confianca: str = ""

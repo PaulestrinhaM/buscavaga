@@ -302,17 +302,27 @@ def test_hibrido_na_descricao_vence_remoto_na_descricao():
 
 
 # --------------------------------------------------- pleno
+# Desde nov/2026 pleno em dados passa pela regra: quem decide e a IA, pela
+# experiencia que a vaga exige.
 @pytest.mark.parametrize("titulo", [
     "Digital Analytics Pleno",
     "Analista de Dados Pl",
     "Data Analyst Mid-level",
     "Data Analyst Mid Level",
     "Analista de Dados Plena",
+    "Analista de Dados II",
+    "Mid Data Engineer",
 ])
-def test_pleno_sem_junior_bloqueia(titulo):
+def test_pleno_em_dados_passa_para_a_ia(titulo):
     vaga = v(titulo)
-    assert not filtro.avaliar(vaga)
-    assert "senioridade" in vaga.motivo
+    assert filtro.avaliar(vaga), vaga.motivo
+    assert vaga.trilha == "dados"
+
+
+def test_pleno_pontua_menos_que_junior():
+    jr, pl = v("Analista de Dados Junior"), v("Analista de Dados Pleno")
+    assert filtro.avaliar(jr) and filtro.avaliar(pl)
+    assert jr.score > pl.score
 
 
 @pytest.mark.parametrize("titulo", [
@@ -338,15 +348,21 @@ def test_especialista_em_dados_bloqueia(titulo):
 
 # --------------------------------------------------- senioridade por trilha
 @pytest.mark.parametrize("titulo", [
-    "Digital Analytics Pleno",
     "Engenheiro de Dados Pleno",
     "Analista de BI Pl",
-    # titulo misto fica com a regra mais estrita
     "Analista de Dados e CRM Pleno",
-    # aprovada por cargo ambiguo, sem trilha: regra de dados
     "Business Analyst de Dados Pleno",
 ])
-def test_trilha_dados_descarta_pleno(titulo):
+def test_trilha_dados_aceita_pleno(titulo):
+    assert filtro.avaliar(v(titulo))
+
+
+@pytest.mark.parametrize("titulo", [
+    "Engenheiro de Dados Senior",
+    "Analista de BI III",
+    "Data Engineer Lead",
+])
+def test_trilha_dados_segue_barrando_senior(titulo):
     assert not filtro.avaliar(v(titulo))
 
 
@@ -752,8 +768,7 @@ def test_grupo_no_titulo_com_ressalva_passa(titulo):
     "VP of Revenue Operations",
     "Data Architect",
     "Arquiteto de Dados",
-    "Mid Data Engineer",
-    "Analista de Dados II",
+    "Analista de Dados III",
 ])
 def test_senioridade_em_ingles_e_nivel_ii_bloqueiam(titulo):
     assert not filtro.avaliar(v(titulo))
@@ -802,3 +817,39 @@ def test_repescagem_sem_veredito_nunca_sai_pela_regra(tmp_path, monkeypatch):
     falhar = lambda vs: ([], [], vs)
     gravadas, enviadas, _ = _ciclo_com_ia(tmp_path, monkeypatch, falhar, vagas, adiar=False)
     assert enviadas == [] and gravadas == {}
+
+
+# --------------------------------------------------- BI e porta de entrada (nov/2026)
+@pytest.mark.parametrize("titulo", [
+    "Desenvolvedor BI", "Desenvolvedora de BI Jr", "BI Developer",
+    "Analista de Inteligencia Comercial", "Analista de Inteligencia de Negocios",
+    "Analista de MIS", "Analista de Reporting", "Engenheiro de Analytics",
+    "Assistente de Dados", "Estagiario de Dados", "Estagio em Dados", "Trainee de Dados",
+])
+def test_cargos_de_bi_e_entrada_aprovam(titulo):
+    vaga = v(titulo)
+    assert filtro.avaliar(vaga), vaga.motivo
+    assert vaga.nivel_confianca == "alta"
+
+
+# --------------------------------------------------- piso salarial
+def test_salario_declarado_abaixo_do_piso_bloqueia():
+    vaga = v("Analista de Dados Junior")
+    vaga.salario_max = 3000
+    assert not filtro.avaliar(vaga)
+    assert "piso" in vaga.motivo
+
+
+def test_salario_no_piso_ou_sem_salario_passa():
+    vaga = v("Analista de Dados Junior")
+    vaga.salario_max = 4000
+    assert filtro.avaliar(vaga)
+    assert filtro.avaliar(v("Analista de Dados Junior"))
+
+
+# --------------------------------------------------- repescagem so em fonte BR
+def test_fonte_gringa_nao_vai_para_repescagem():
+    vaga = v("Operacoes de Marketing", local="Remoto")
+    vaga.fonte = "remoteok"
+    assert not filtro.avaliar(vaga)
+    assert not vaga.repescagem

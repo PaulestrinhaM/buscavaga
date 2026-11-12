@@ -10,6 +10,14 @@ Cada item: name, careerPageName, city, state, workplaceType ("remote" | "hybrid"
 | "on-site"), publishedDate (ISO, UTC), url/jobUrl, description. Sairam
 isRemoteWork, country e companyId: o remoto agora vem so de workplaceType.
 Offset >= 10000 devolve 400. Resultado vem do mais novo para o mais antigo.
+
+Medido em 2026-11-12 (sonda no Actions):
+- pagination.total nao e o total: com limit=100 devolve total=100 mesmo havendo
+  ~200 vagas. Confiar nele fazia o coletor parar na primeira pagina de cada termo.
+  O fim da busca e a pagina que vem com menos itens que o limit.
+- workplaceType=remote filtra de fato, e city=<cidade> tambem. Por isso sao duas
+  buscas: termo + remoto (o resto do Brasil so serve remoto), e cidade da regiao
+  sem termo (presencial e hibrido servem, e o titulo e filtrado depois).
 """
 import time
 from datetime import datetime, timedelta, timezone
@@ -17,7 +25,7 @@ from datetime import datetime, timedelta, timezone
 import requests
 
 import config
-from vaga import Vaga
+from vaga import Vaga, normalizar
 
 URL = "https://portal.gupy.io/api/job-search/jobs"
 TIMEOUT = 25
@@ -75,13 +83,13 @@ def _converter(item: dict) -> Vaga:
         fonte="gupy",
         descricao=_descricao(item),
         publicada_em=_data(item),
-        extras={"remoto": _local(item) == "Remoto"},
+        extras={"remoto": _local(item) == "Remoto", "cidade": item.get("city") or ""},
     )
 
 
-def _buscar(termo: str, offset: int) -> tuple[list[dict], int | None]:
-    """Uma pagina da busca: (itens, total que a API diz existir, se disser)."""
-    params = {"jobName": termo, "limit": POR_PAGINA, "offset": offset}
+def _buscar(params: dict, offset: int) -> list[dict]:
+    """Uma pagina da busca."""
+    params = {**params, "limit": POR_PAGINA, "offset": offset}
     for tentativa in range(3):
         r = requests.get(URL, params=params, timeout=TIMEOUT,
                          headers={"User-Agent": "jobradar/1.0 (busca pessoal)"})
@@ -89,39 +97,46 @@ def _buscar(termo: str, offset: int) -> tuple[list[dict], int | None]:
             time.sleep(2 ** tentativa)
             continue
         r.raise_for_status()
-        payload = r.json()
-        total = None
-        if isinstance(payload, dict):
-            total = (payload.get("pagination") or {}).get("total")
-        return _extrair_lista(payload), total if isinstance(total, int) else None
-    return [], None
+        return _extrair_lista(r.json())
+    return []
+
+
+def _paginar(params: dict, max_paginas: int,
+             limite: datetime | None) -> tuple[list[Vaga], list[int]]:
+    vagas, tamanhos = [], []
+    for pagina in range(max_paginas):
+        itens = _buscar(params, offset=pagina * POR_PAGINA)
+        if not itens:
+            break
+        convertidas = [_converter(i) for i in itens]
+        vagas.extend(convertidas)
+        tamanhos.append(len(itens))
+        time.sleep(PAUSA)
+        if len(itens) < POR_PAGINA:
+            break                       # ultima pagina
+        # do mais novo para o mais antigo: pagina cujo ultimo anuncio ja passou do
+        # limite encerra, porque a seguinte seria toda velha
+        ultima = convertidas[-1].publicada_em
+        if limite and ultima and ultima < limite:
+            break
+    return vagas, tamanhos
 
 
 def coletar() -> list[Vaga]:
     limite = datetime.now(timezone.utc) - timedelta(days=config.DIAS_MAX_ANUNCIO)
-    teto = config.PAGINAS_GUPY * POR_PAGINA     # vagas por termo, no maximo
     vagas: list[Vaga] = []
-    for termo in config.TERMOS_BUSCA:
-        offset, recentes, total_api, tamanhos = 0, 0, None, []
-        while offset < teto:
-            itens, total_api = _buscar(termo, offset=offset)
-            if not itens:
-                break
-            convertidas = [_converter(i) for i in itens]
-            vagas.extend(convertidas)
-            tamanhos.append(len(itens))
-            novas_pag = sum(1 for v in convertidas if v.publicada_em and v.publicada_em >= limite)
-            recentes += novas_pag
-            # avanca pelo que veio, nao pelo que pedimos: a API nova devolve paginas
-            # menores que o limit pedido, e tratar isso como "ultima pagina" cortava a busca
-            offset += len(itens)
-            time.sleep(PAUSA)
-            if total_api is not None and offset >= total_api:
-                break
-            # pagina inteira velha: com a lista do mais novo para o mais antigo, o resto
-            # tambem e velho. O log abaixo mostra se isso segue valendo na API nova.
-            if novas_pag == 0:
-                break
-        print(f"  [gupy] '{termo}': {offset} vagas em {len(tamanhos)} paginas {tamanhos}, "
-              f"{recentes} com ate {config.DIAS_MAX_ANUNCIO} dias, total da API {total_api}")
+    for termo in config.TERMOS_GUPY:
+        achadas, tamanhos = _paginar({"jobName": termo, "workplaceType": "remote"},
+                                     config.PAGINAS_GUPY, limite)
+        vagas.extend(achadas)
+        print(f"  [gupy] remoto '{termo}': {len(achadas)} vagas {tamanhos}")
+    for cidade in config.CIDADES_GUPY:
+        # sem corte por data: a busca por cidade parou na 1a pagina com ele no teste ao
+        # vivo; o filtro descarta anuncio velho depois
+        achadas, tamanhos = _paginar({"city": cidade}, config.PAGINAS_GUPY_CIDADE, None)
+        # se a API ignorar a cidade, volta o Brasil inteiro: fica so o que e dela
+        alvo = normalizar(cidade)
+        locais = [v for v in achadas if alvo in normalizar(v.extras.get("cidade", ""))]
+        vagas.extend(locais)
+        print(f"  [gupy] cidade '{cidade}': {len(locais)} de {len(achadas)} vagas {tamanhos}")
     return vagas

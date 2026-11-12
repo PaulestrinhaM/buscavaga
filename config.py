@@ -14,9 +14,10 @@ PALAVRAS_IGNORADAS = [
 ]
 
 # Cargo inequivoco: aprova sozinho. Separado por trilha, porque a senioridade
-# aceita muda: em dados ele nao tem experiencia formal (so junior), em operacoes
-# e integracao tem dois anos (junior ou pleno). Quando o titulo casa as duas
-# trilhas, vence a de cargo com mais palavras-chave; empate fica em dados.
+# aceita muda: em dados vai ate pleno desde nov/2026 (junior e o alvo, pleno passa
+# se a experiencia exigida couber, quem julga e a IA); em operacoes e integracao,
+# junior ou pleno. Quando o titulo casa as duas trilhas, vence a de cargo com mais
+# palavras-chave; empate fica em dados.
 CARGOS_DADOS = [
     "analista de dado*", "engenh* de dados",
     "analista de bi", "analista de business intelligence", "business intelligence",
@@ -24,6 +25,12 @@ CARGOS_DADOS = [
     "analista de analytics", "analista de inteligencia de mercado",
     "analista de informacoes", "analista de indicadores",
     "digital analytics",
+    # BI e adjacentes (nov/2026): a ferramenta de BI se aprende rapido, a base ele tem
+    "desenvolvedor* bi", "desenvolvedor* business intelligence", "bi developer",
+    "analista de inteligencia comercial", "analista de inteligencia de negocio*",
+    "analista de mis", "analista de reporting", "engenh* de analytics",
+    # porta de entrada
+    "assistente de dado*", "estagi* dado*", "trainee dado*", "trainee data",
 ]
 CARGOS_OPERACOES = [
     "marketing operations", "marketing ops", "revenue operations", "revops",
@@ -71,11 +78,11 @@ BLOQUEIO_SENIORIDADE = [
     "lead", "coordinator", "vp", "vice president", "chief", "architect",
     "arquiteto", "arquiteta",
 ]
-# So na trilha de dados, e so se o titulo nao aceitar junior ("Junior/Pleno", "Jr/Pl").
-# Especialista entra aqui porque na trilha Jr > Pl > Sr > Especialista fica acima de
-# senior; em operacoes "Especialista em CRM" e nome de cargo, nao nivel.
+# So na trilha de dados, e so se o titulo nao aceitar junior. Pleno saiu daqui em
+# nov/2026: passa pela regra e a IA decide pela experiencia exigida. Especialista
+# fica porque na trilha Jr > Pl > Sr > Especialista esta acima de senior; em
+# operacoes "Especialista em CRM" e nome de cargo, nao nivel.
 BLOQUEIO_PLENO = [
-    "pleno", "plena", "pl", "mid-level", "mid level", "midlevel", "mid", "ii",
     "especialista", "specialist",
 ]
 # Expressoes que contem "pl" como palavra mas nao falam de nivel.
@@ -189,20 +196,70 @@ TERMOS_BUSCA = [
     "analista de integracao",
 ]
 PAIS_ADZUNA = "br"
+# Repescagem (IA lendo vaga de titulo nao reconhecido) so para fonte brasileira: nas
+# gringas ela so trazia ruido (engenheiro de software, medico, advogado) e gastava cota.
+FONTES_SEM_REPESCAGEM = ["himalayas", "jobicy", "remotive", "remoteok"]
 # Himalayas e em ingles: termos proprios, 20 vagas por termo, uma chamada cada.
 TERMOS_BUSCA_EN = [
     "data analyst", "data engineer", "business intelligence", "analytics",
     "crm", "marketing operations", "revenue operations", "marketing automation",
 ]
 PAGINAS_ADZUNA = 2      # 50 vagas por pagina, por termo: 16 chamadas por ciclo no maximo
-PAGINAS_GUPY = 2        # 100 vagas por pagina, por termo de busca
+PAGINAS_GUPY = 3        # 100 vagas por pagina, por termo de busca (so remotas)
+# Gupy busca por palavra no titulo: termo curto pega mais ("dados" acha analista,
+# engenheiro, assistente e estagiario de dados de uma vez).
+TERMOS_GUPY = [
+    "dados", "data", "BI", "business intelligence", "analytics",
+    "CRM", "integracao", "marketing operations", "revenue operations",
+]
+# Cidades da regiao buscadas sem termo: presencial e hibrido valem, e o filtro de
+# titulo decide depois. Caxias publica centenas por semana, por isso mais paginas.
+CIDADES_GUPY = ["Caxias do Sul", "Farroupilha", "Bento Gonçalves", "Flores da Cunha",
+                "Garibaldi", "São Marcos"]
+PAGINAS_GUPY_CIDADE = 8
 
-# Empresas com job board publico (Greenhouse / Lever / Ashby).
-# Formato: (plataforma, slug_da_empresa)
+# Empresas com job board publico (Greenhouse / Lever / Ashby). Lista conferida em
+# 2026-11-12 contra os endpoints publicos: so entra quem respondeu com vagas e tem
+# operacao no Brasil. A maioria e SP hibrido; o filtro de local separa as remotas.
 BOARDS = [
-    # ("greenhouse", "nomedaempresa"),
-    # ("lever", "nomedaempresa"),
-    # ("ashby", "nomedaempresa"),
+    ("greenhouse", "stone"), ("greenhouse", "quintoandar"), ("greenhouse", "vtex"),
+    ("greenhouse", "gympass"), ("greenhouse", "rdstation"), ("greenhouse", "inter"),
+    ("greenhouse", "c6bank"), ("greenhouse", "xpinc"), ("greenhouse", "btgpactual"),
+    ("greenhouse", "wildlifestudios"), ("greenhouse", "ebanx"),
+    ("lever", "neon"), ("lever", "swile"),
+    ("ashby", "nubank"),
+]
+
+# LinkedIn (visitante, sem login): poucas buscas, porque ele limita rapido.
+TERMOS_LINKEDIN = [
+    "analista de dados", "engenheiro de dados", "analista de BI",
+    "business intelligence", "analytics engineer", "analista de CRM",
+]
+TERMOS_LINKEDIN_REGIAO = ["dados", "BI", "CRM"]
+LINKEDIN_CIDADE = "Caxias do Sul, Rio Grande do Sul, Brasil"   # raio de 25 km
+LINKEDIN_HORAS = 48          # so vaga publicada nas ultimas 48 h: o radar roda 3x/dia
+PAGINAS_LINKEDIN = 2         # ~10 vagas por pagina
+LINKEDIN_DETALHES = 12       # descricoes buscadas por ciclo (uma chamada cada)
+
+# Vagas.com: termo com filtro 100% home office, e cidade da regiao sem termo.
+TERMOS_VAGASCOM = ["dados", "analista de dados", "engenheiro de dados", "BI",
+                   "business intelligence", "CRM"]
+CIDADES_VAGASCOM = ["Caxias do Sul RS", "Farroupilha RS", "Bento Goncalves RS"]
+
+# Solides: so por cidade (a busca por texto dela e solta demais).
+CIDADES_SOLIDES = ["caxias-do-sul-rs", "farroupilha-rs", "bento-goncalves-rs"]
+PAGINAS_SOLIDES = 4          # 14 vagas por pagina
+
+# Google Jobs via SerpApi: (busca, local). Uma rodada por dia, cota de 250/mes.
+TERMOS_GOOGLE = [
+    ("analista de dados remoto", "Brazil"),
+    ("engenheiro de dados remoto", "Brazil"),
+    ("analista de BI remoto", "Brazil"),
+    ("analytics engineer remoto", "Brazil"),
+    ("analista de CRM remoto", "Brazil"),
+    ("analista de dados", "Caxias do Sul, State of Rio Grande do Sul, Brazil"),
+    ("analista de BI", "Caxias do Sul, State of Rio Grande do Sul, Brazil"),
+    ("CRM marketing", "Caxias do Sul, State of Rio Grande do Sul, Brazil"),
 ]
 
 # Turnos de coleta, em hora de Brasilia (UTC-3, sem horario de verao). O GitHub dispara
@@ -213,6 +270,10 @@ HORARIOS_CICLO = [7, 12, 18]
 FUSO_BRASILIA = -3
 
 DIAS_MAX_ANUNCIO = 10   # descarta anuncio mais velho que isso
+# Piso de remuneracao mensal, CLT ou PJ. So corta salario DECLARADO pela vaga: a
+# estimativa da Adzuna (salary_is_predicted) nao conta. A IA aplica o mesmo piso
+# ao que estiver escrito na descricao.
+PISO_SALARIAL = 4000
 EXIGIR_DATA = True      # sem data de publicacao, descarta: quase sempre e anuncio antigo
 
 
