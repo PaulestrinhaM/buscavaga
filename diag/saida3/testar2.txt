@@ -1,0 +1,61 @@
+
+=== gupy ===
+  [gupy] remoto 'dados': 100 vagas [100]
+  [gupy] remoto 'data': 18 vagas [18]
+  [gupy] remoto 'BI': 10 vagas [10]
+  [gupy] remoto 'business intelligence': 1 vagas [1]
+  [gupy] remoto 'analytics': 11 vagas [11]
+  [gupy] remoto 'CRM': 11 vagas [11]
+  [gupy] remoto 'integracao': 11 vagas [11]
+  [gupy] remoto 'marketing operations': 0 vagas []
+  [gupy] remoto 'revenue operations': 0 vagas []
+  [gupy] cidade 'Caxias do Sul': 327 de 327 vagas [100, 100, 100, 27]
+  [gupy] cidade 'Farroupilha': 62 de 62 vagas [62]
+  [gupy] cidade 'Bento Gonçalves': 98 de 98 vagas [98]
+  [gupy] cidade 'Flores da Cunha': 33 de 33 vagas [33]
+  [gupy] cidade 'Garibaldi': 12 de 12 vagas [12]
+  [gupy] cidade 'São Marcos': 0 de 0 vagas []
+  694 coletadas, 9 aprovadas pelo filtro
+  --- por que as rejeitadas cairam:
+     286  bloqueada: anuncio antigo
+     130  nenhum criterio de cargo atendido no titulo
+     125  bloqueada: fora da area
+     117  bloqueada: senioridade acima do alvo
+      14  bloqueada: vaga afirmativa exclusiva
+      11  bloqueada: senioridade acima do alvo em dados
+       2  bloqueada: senioridade no anuncio
+  --- melhores aprovadas:
+    [10] ANALISTA DE DADOS JUNIOR | Oportunidades | Remoto
+    [9] BEMOL DIGITAL | DATA ENGINEER I | Bemol Digital | Remoto
+    [9] Analista de BI Pleno  | Vetta Tecnologia | Remoto
+    [8] Hitss | Analista de Dados PL | Hitss Brasil | Remoto
+    [8] Consultor(a) SAP Analytics Cloud BI/Planning - Júnior/Pleno | SolvePlan | Remoto
+
+=== vagascom ===
+  [vagascom] 403 em /vagas-de-dados
+  [vagascom] remoto 'dados': 0 vagas
+  [vagascom] 403 em /vagas-de-analista-de-dados
+  [vagascom] remoto 'analista de dados': 0 vagas
+  [vagascom] 403 em /vagas-de-engenheiro-de-dados
+  [vagascom] remoto 'engenheiro de dados': 0 vagas
+  [vagascom] 403 em /vagas-de-bi
+  [vagascom] remoto 'BI': 0 vagas
+  [vagascom] 403 em /vagas-de-business-intelligence
+  [vagascom] remoto 'business intelligence': 0 vagas
+  [vagascom] 403 em /vagas-de-crm
+  [vagascom] remoto 'CRM': 0 vagas
+  [vagascom] cidade 'Caxias do Sul RS': 9 vagas
+  [vagascom] cidade 'Farroupilha RS': 0 vagas
+  [vagascom] cidade 'Bento Goncalves RS': 2 vagas
+  11 coletadas, 0 aprovadas pelo filtro
+  --- por que as rejeitadas cairam:
+       5  nenhum criterio de cargo atendido no titulo
+       4  bloqueada: anuncio antigo
+       1  bloqueada: vaga afirmativa exclusiva
+       1  bloqueada: fora da area
+  --- exemplos de titulo que vieram (para calibrar o filtro):
+    Supervisora de Teleatendimento Weinmann - Vaga Afirmativa pa | Rio de Janeiro / RJ
+    Assistente de Coleta (Laboratório Weinamnn) | Porto Alegre / RS
+    Auxiliar de Produção - Turno a e B | Caxias do Sul / RS
+    Auxiliar de Logística | Caxias do Sul / RS
+    Técnico de Enfermagem (Atendimento Móvel) - Laboratório Wein | Porto Alegre / RS
