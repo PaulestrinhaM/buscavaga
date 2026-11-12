@@ -1,0 +1,596 @@
+[
+ {
+  "plat": "greenhouse",
+  "slug": "stone",
+  "n": 349,
+  "dados": [
+   "Analista Comercial de Retenção - Exclusiva para Pessoas com Deficiência (PcD) | Híbrido (RJ) | Híbrido, Rio de Janeiro",
+   "Analista Comercial de Retenção | Híbrido (RJ) | Híbrido, Rio de Janeiro",
+   "Analista Comercial - Inside Sales - Vaga Exclusiva para Pessoas com Deficiência (PcD) |Rio de Janeiro,  RJ | Híbrido, Rio de Janeiro",
+   "Analista de Atendimento Ativo (foco em Recuperação de Terminais) - Rio de  Janeiro/RJ | Rio De Janeiro, Rio De Janeiro, Brasil",
+   "Analista de Auditoria Interna Sênior | Produtos Bancários e Contabilidade (Híbrido/SP) | Sao Paulo, Sao Paulo, Brasil",
+   "Analista de Growth Analytics | Sênior (Híbrido/SP) | Sao Paulo, Sao Paulo, Brasil",
+   "Analista de Políticas de Crédito | Pleno (Hibrido/SP) | Sao Paulo, Sao Paulo, Brasil",
+   "Analista de Relacionamento com o Cliente | Rio de Janeiro/RJ | Rio De Janeiro, Rio De Janeiro, Brasil",
+   "Analista de Relacionamento com o Cliente - Vaga Exclusiva para Pessoas com Deficiência (PcD) | Rio de  Janeiro/RJ | Rio De Janeiro, Rio De Janeiro, Brasil",
+   "Analista Júnior  de Políticas de Crédito / Crédit Business Analyst  | Sao Paulo, Sao Paulo, Brasil",
+   "Analista Pleno de Gestão de Portfólio de Crédito (Riscos) | Pleno (Hibrido/SP) | Sao Paulo, Sao Paulo, Brasil",
+   "Analista Sênior de Tesouraria Proprietária/ALM | (Presencial/SP) | Remoto"
+  ],
+  "locais": [
+   [
+    "Sao Paulo, Sao Paulo, Bra",
+    52
+   ],
+   [
+    "Remoto",
+    23
+   ],
+   [
+    "Rio De Janeiro, Rio De Ja",
+    18
+   ],
+   [
+    "Florianopolis, Santa Cata",
+    7
+   ],
+   [
+    "Híbrido, Rio de Janeiro",
+    4
+   ],
+   [
+    "Belo Horizonte, Minas Ger",
+    4
+   ]
+  ]
+ },
+ {
+  "plat": "ashby",
+  "slug": "nubank",
+  "n": 107,
+  "dados": [
+   "Staff Software Engineer - BI Intelligence  | São Paulo",
+   "Senior Software Engineer - Data Platform (m/w/d) | Berlin"
+  ],
+  "locais": [
+   [
+    "São Paulo",
+    30
+   ],
+   [
+    "Palo Alto",
+    23
+   ],
+   [
+    "Miami",
+    16
+   ],
+   [
+    "Ciudad de México",
+    14
+   ],
+   [
+    "Bogota",
+    10
+   ],
+   [
+    "Toronto",
+    7
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "quintoandar",
+  "n": 99,
+  "dados": [
+   "Analista de Planejamento e Performance | Sales Operations - Afirmativa PcD | Brasil",
+   "Analista de Planejamento e Performance Sênior (vaga afirmativa PCD) | São Paulo, São Paulo, Brazil",
+   "Grupo QuintoAndar | Analista Comercial Hunter – Imovelweb | Rio de Janeiro | Brasil",
+   "Grupo QuintoAndar | Analista Compliance Pleno | São Paulo, São Paulo, Brazil",
+   "Grupo QuintoAndar | Analista Compliance Sênior | São Paulo, São Paulo, Brazil",
+   "Grupo QuintoAndar | Analista de Cobrança (Evictions) | São Paulo, São Paulo, Brazil",
+   "Grupo QuintoAndar | Analista de Cobrança (Evictions) [Vaga Afirmativa para Pessoas com Deficiência] | São Paulo, São Paulo, Brazil",
+   "Grupo QuintoAndar | Analista de Crédito Imobiliário | São Paulo, São Paulo, Brazil",
+   "Grupo QuintoAndar | Analista de Inside Sales 2 Pleno | São Paulo, São Paulo, Brazil",
+   "Grupo QuintoAndar | Analista de Inside Sales Pleno (Consórcio) | Brasil",
+   "Grupo QuintoAndar | Analista de Inside Sales Sênior (Consórcio) | São Paulo, São Paulo, Brazil",
+   "Grupo QuintoAndar | Analista de Performance Sênior | Brasil"
+  ],
+  "locais": [
+   [
+    "São Paulo, São Paulo, Bra",
+    39
+   ],
+   [
+    "Brasil",
+    38
+   ],
+   [
+    "Mexico City, Mexico City,",
+    8
+   ],
+   [
+    "Argentina",
+    5
+   ],
+   [
+    "Buenos Aires, Buenos Aire",
+    3
+   ],
+   [
+    "Portugal",
+    2
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "ebanx",
+  "n": 36,
+  "dados": [
+   "Data Science Specialist | Curitiba | On-site"
+  ],
+  "locais": [
+   [
+    "Curitiba | On-site",
+    9
+   ],
+   [
+    "São Paulo",
+    4
+   ],
+   [
+    "Curitiba or São Paulo | H",
+    3
+   ],
+   [
+    "Singapore",
+    3
+   ],
+   [
+    "Shanghai",
+    2
+   ],
+   [
+    "Curitiba or São Paulo | O",
+    2
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "wildlifestudios",
+  "n": 16,
+  "dados": [
+   "Associate Data Engineer | São Paulo, Brazil",
+   "Senior Data Scientist | São Paulo, Brazil"
+  ],
+  "locais": [
+   [
+    "São Paulo",
+    7
+   ],
+   [
+    "São Paulo, Brazil",
+    5
+   ],
+   [
+    "São Paulo, São Paulo, Bra",
+    4
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "vtex",
+  "n": 33,
+  "dados": [
+   "Analista Administrativo Tech (Exclusivo para pessoas com deficiência) | Rio de Janeiro; São Paulo, Sao Paulo, Brazil",
+   "Analytics Engineer - Campaign Intelligence [Ads] | Brazil",
+   "Estágio em Ciência de Dados | Brazil",
+   "Field Marketing Data Analyst | Bucharest"
+  ],
+  "locais": [
+   [
+    "Brazil",
+    10
+   ],
+   [
+    "Rio de Janeiro; São Paulo",
+    4
+   ],
+   [
+    "Manhattan, New York",
+    4
+   ],
+   [
+    "Miami, Florida",
+    4
+   ],
+   [
+    "Barcelona",
+    3
+   ],
+   [
+    "São Paulo, Sao Paulo, Bra",
+    3
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "gympass",
+  "n": 86,
+  "dados": [
+   "Analista de Atendimento ao Cliente  - Vaga Afirmativa para Pessoas com Deficiência | Brazil",
+   "Analista de Experiência do Cliente  - Vaga Afirmativa para Pessoas com Deficiência | Brazil",
+   "Analista de Suporte ao Cliente (CX)  - Vaga Afirmativa para Pessoas com Deficiência | Brazil",
+   "Analytics Engineer (AI) | Martech | Brazil (Remote)"
+  ],
+  "locais": [
+   [
+    "Brazil (Remote)",
+    18
+   ],
+   [
+    "Brazil (São Paulo - Hybri",
+    10
+   ],
+   [
+    "US (Remote)",
+    6
+   ],
+   [
+    "Brazil",
+    4
+   ],
+   [
+    "Austria (Vienna - Hybrid)",
+    4
+   ],
+   [
+    "US (NY - Hybrid)",
+    4
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "xpinc",
+  "n": 118,
+  "dados": [
+   "Analista Auditoria de Processos Pleno | São Paulo, SP",
+   "Analista de Credito Senior | São Paulo, SP",
+   "Analista de Dados Sênior | Vaga exclusiva para Pessoa com Deficiência | São Paulo, SP",
+   "Analista de Gestão de Ativos SAM Sênior | São Paulo, SP",
+   "Analista de Prevençao a Fraudes Senior | São Paulo, SP",
+   "Analista de Pricing | Seguro de Pessoas & Previdência | São Paulo, SP",
+   "Analista de Suporte - Serviços Financeiros | Vaga exclusiva para Pessoa com Deficiência | São Paulo, SP",
+   "Analista Fiscal Senior | São Paulo, SP",
+   "Analista Jurídico Júnior | Societário e M&A | São Paulo, SP",
+   "Analista Sênior de Talent Acquisition l Corporate Functions | São Paulo, SP",
+   "Analista Sênior | Estruturação e Governança de Fundos  | São Paulo, SP",
+   "Banco de Talentos | Business Analytics | São Paulo, SP"
+  ],
+  "locais": [
+   [
+    "São Paulo, SP",
+    54
+   ],
+   [
+    "São Paulo",
+    10
+   ],
+   [
+    "Rio de Janeiro",
+    4
+   ],
+   [
+    "Brasil",
+    4
+   ],
+   [
+    "Rio de Janeiro, RJ",
+    2
+   ],
+   [
+    "São Paulo, SP ",
+    2
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "btgpactual",
+  "n": 235,
+  "dados": [
+   "Analista Asset Servicing | Cálculo de Cotas | Rio de Janeiro, Brazil",
+   "Analista Asset Servicing | Product Owner - Innovation (RJ / SP) | Rio de Janeiro, Brazil ",
+   " Analista Automatizador de Testes (QA) | IT OffShore LUX  | São Paulo, Brazil",
+   "Analista BTG Empresas - Adquirência e Cash Management (Banking PJ) | São Paulo",
+   "Analista Compliance Jr | Regulatório | São Paulo",
+   "Analista de Asset Servicing | Escrituração  | São Paulo",
+   "Analista de Asset Servicing | Investment Compliance - Enquadramento de Fundos | São Paulo",
+   "Analista de Auditoria Interna | São Paulo",
+   "Analista de Backup Sênior | São Paulo",
+   "Analista de Business Transformation | Consumer & Digital | São Paulo",
+   "Analista de Cadastro | São Paulo",
+   "Analista de Compliance | AML | São Paulo"
+  ],
+  "locais": [
+   [
+    "São Paulo",
+    168
+   ],
+   [
+    "São Paulo, São Paulo, Bra",
+    13
+   ],
+   [
+    "São Paulo, Brazil",
+    12
+   ],
+   [
+    "São Paulo, Rio de Janeiro",
+    9
+   ],
+   [
+    "São Paulo ou Rio de Janei",
+    5
+   ],
+   [
+    "Rio de Janeiro",
+    4
+   ]
+  ]
+ },
+ {
+  "plat": "lever",
+  "slug": "neon",
+  "n": 9,
+  "dados": [
+   "Analista de CRM Sênior | Vaga Afirmativa para Mulheres Pretas e Pardas | Remoto",
+   "Analista de Suporte Júnior | Afirmativa para PCD's | São Paulo",
+   "Analista de Suporte Pleno | São Paulo",
+   "Banco de Talentos - Comunidade Negra | Remoto"
+  ],
+  "locais": [
+   [
+    "Remoto",
+    7
+   ],
+   [
+    "São Paulo",
+    2
+   ]
+  ]
+ },
+ {
+  "plat": "ashby",
+  "slug": "neon",
+  "n": 1,
+  "dados": [],
+  "locais": [
+   [
+    "Asia | South Korea",
+    1
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "inter",
+  "n": 116,
+  "dados": [
+   "BANCO DE TALENTOS (OPORTUNIDADES DE ESTÁGIO) | FINANCE  | Belo Horizonte, MG; São Paulo, SP",
+   "[BANCO DE TALENTOS] OPORTUNIDADES DE ESTÁGIO | INTER  | Belo Horizonte, MG; São Paulo, SP",
+   "CONTENT & CRM ANALYST II | US GROWTH ACQUISITION & ACTIVATION (Miami,FL) | Miami, FL",
+   "CONTENT & CRM ANALYST JUNIOR | Belo Horizonte, MG",
+   "DATA ANALYST II | DIGITAL CREDIT MG | Belo Horizonte, MG",
+   "DATA ANALYST I | INTER SEGUROS | Belo Horizonte, MG",
+   "DATA ENGINEER II | BANKING, FINANCE & GROWTH MG | Belo Horizonte, MG",
+   "DATA ENGINEER III  | Belo Horizonte, MG",
+   "DATA ENGINEER III | DATA & AI PLATFORM GLOBAL MG | Belo Horizonte, MG; São Paulo, SP",
+   "DATA ENGINEER II | MARKETING STRATEGY MG | Belo Horizonte, MG",
+   "DATA SCIENCE COORDINATOR | CREDIT & COLLECTIONS | Belo Horizonte, MG; Curitiba, PR; Recife, PE; São Paulo, SP",
+   "DATA SCIENTIST III | DATA ENGINEERING & SCIENCE | Belo Horizonte, MG; Curitiba, PR; Recife, PE; São Paulo, SP"
+  ],
+  "locais": [
+   [
+    "Belo Horizonte, MG",
+    71
+   ],
+   [
+    "São Paulo, SP",
+    11
+   ],
+   [
+    "Belo Horizonte, MG; Curit",
+    11
+   ],
+   [
+    "Belo Horizonte, MG; São P",
+    9
+   ],
+   [
+    "Miami, FL",
+    3
+   ],
+   [
+    "Curitiba, PR",
+    3
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "c6bank",
+  "n": 157,
+  "dados": [
+   "Analista de Analytics Pleno | Prevenção a Fraudes  | São Paulo, Brazil",
+   "Analista de Controles Internos Sênior – Regulatórios | Processos & Controles  | São Paulo, Brazil",
+   "Analista de Infraestrutura Sênior | Infrastructure Serv  | São Paulo, Brazil",
+   "Analista de Negócios Pleno | Cartões - Débito, Yellow e Conta Global  | São Paulo, Brazil",
+   "Analista de Negócios Sênior | Consignado | São Paulo, Brazil",
+   "Analista de Negócios Sênior | Parcerias e Loyalty | São Paulo, Brazil",
+   "Analista de Operações Júnior | BackOffice Imóveis  | São Paulo, Brazil",
+   "Analista de Operações Júnior | Orçamento e Desempenho Operacional | São Paulo, Brazil",
+   "Analista de Operações Pleno | Trade Finance e Garantias | São Paulo, Brazil",
+   "Analista de Operações Sênior | Monitoração Financeira | São Paulo, Brazil",
+   "Analista de Planejamento Comercial Sênior | PJ  | São Paulo, Brazil",
+   "Analista de Planejamento Sênior | Planejamento Comercial - Segmento Alta Renda | São Paulo, Brazil"
+  ],
+  "locais": [
+   [
+    "São Paulo, Brazil",
+    98
+   ],
+   [
+    "Belo Horizonte, Minas Ger",
+    5
+   ],
+   [
+    "Brasília, Federal Distric",
+    5
+   ],
+   [
+    "Porto Alegre, Rio Grande ",
+    4
+   ],
+   [
+    "Rio de Janeiro, Rio de Ja",
+    4
+   ],
+   [
+    "Curitiba, Paraná, Brazil",
+    4
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "rdstation",
+  "n": 6,
+  "dados": [
+   "Analista de Parcerias Sênior - Enablement | RD Station (Remoto) | Remoto, Brasil",
+   "Analista de Pré-Vendas BDR - SMB | RD Station (Remoto) | Florianópolis, Santa Catarina, Brasil",
+   "Analista de Pré-Vendas SDR - Eventos e Parcerias| RD Station | São Paulo, São Paulo, Brasil",
+   "Jovem Aprendiz - Treinamento e Qualidade | RD Station  | Florianópolis, Santa Catarina, Brasil (Híbrido)"
+  ],
+  "locais": [
+   [
+    "Remoto, Brasil",
+    3
+   ],
+   [
+    "Florianópolis, Santa Cata",
+    2
+   ],
+   [
+    "São Paulo, São Paulo, Bra",
+    1
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "blip",
+  "n": 2,
+  "dados": [],
+  "locais": [
+   [
+    "Remote",
+    1
+   ],
+   [
+    "Los Angeles, CA",
+    1
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "flash",
+  "n": 2,
+  "dados": [],
+  "locais": [
+   [
+    "Santo Domingo, Dominican ",
+    2
+   ]
+  ]
+ },
+ {
+  "plat": "lever",
+  "slug": "swile",
+  "n": 27,
+  "dados": [
+   "Analista de Customer Care JR - [Afirmativa para PCD] | São Paulo, Brazil",
+   "Analista Pleno de Riscos e Controles Internos | São Paulo, Brazil",
+   "Senior Data Platform Engineer | Paris, France",
+   "Senior Data Platform Engineer | Montpellier, France"
+  ],
+  "locais": [
+   [
+    "Montpellier, France",
+    7
+   ],
+   [
+    "São Paulo, Brazil",
+    6
+   ],
+   [
+    "Paris, France",
+    6
+   ],
+   [
+    "Remote, Brasil",
+    3
+   ],
+   [
+    "Brasil",
+    2
+   ],
+   [
+    "Centro-Oeste do Brasil",
+    1
+   ]
+  ]
+ },
+ {
+  "plat": "greenhouse",
+  "slug": "getnet",
+  "n": 42,
+  "dados": [
+   "CRM & Salesforce Adoption, Enablement and Performance Specialist | Spain - Boadilla del Monte, Madrid",
+   "Salesforce Developer / Technical Consultant (CRM & Integrations) | Spain - Boadilla del Monte, Madrid"
+  ],
+  "locais": [
+   [
+    "Mexico - Mexico City",
+    15
+   ],
+   [
+    "Spain - Boadilla del Mont",
+    7
+   ],
+   [
+    "Brazil - São Paulo/SP",
+    4
+   ],
+   [
+    "Brazil- São Paulo",
+    4
+   ],
+   [
+    "Brazil - São Paulo or Por",
+    3
+   ],
+   [
+    "Spain- Boadilla del Monte",
+    3
+   ]
+  ]
+ }
+]
