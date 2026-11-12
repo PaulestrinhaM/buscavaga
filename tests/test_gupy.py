@@ -73,3 +73,14 @@ def test_link_aceita_campo_url():
     item.pop("jobUrl")
     item["url"] = "https://x.gupy.io/job/1"
     assert gupy._converter(item).link == "https://x.gupy.io/job/1"
+
+
+def test_busca_por_cidade_nao_para_pela_data(monkeypatch):
+    monkeypatch.setattr(config, "TERMOS_GUPY", [])
+    monkeypatch.setattr(config, "CIDADES_GUPY", ["Caxias do Sul"])
+    monkeypatch.setattr(config, "PAGINAS_GUPY_CIDADE", 3)
+    velha = config.DIAS_MAX_ANUNCIO + 5
+    pagina = [_item(i, velha, "Caxias do Sul", "on-site") for i in range(100)]
+    chamadas = _fake(monkeypatch, lambda p, off: pagina)
+    gupy.coletar()
+    assert len(chamadas) == 3
