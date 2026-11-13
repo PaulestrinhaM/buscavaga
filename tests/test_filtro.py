@@ -853,3 +853,22 @@ def test_fonte_gringa_nao_vai_para_repescagem():
     vaga.fonte = "remoteok"
     assert not filtro.avaliar(vaga)
     assert not vaga.repescagem
+
+
+# --------------------------------------------------- nov/2026: descricao manda no local
+def test_local_remoto_da_fonte_cai_com_hibrido_na_descricao():
+    vaga = v("Analista de Dados", local="São Paulo, SP (LinkedIn marcou remoto, a confirmar)",
+             descricao="Sobre a vaga... Modelo de trabalho: híbrido, 3x na semana em Alphaville.")
+    assert not filtro.avaliar(vaga)
+
+
+def test_auxilio_home_office_nao_torna_vaga_remota():
+    vaga = v("Analista de Dados", local="São Paulo, SP",
+             descricao="Beneficios: VR, plano de saude, auxilio home office.")
+    assert not filtro.avaliar(vaga)
+
+
+def test_encontros_presenciais_nao_derrubam_vaga_remota():
+    vaga = v("Analista de Dados", local="São Paulo, SP",
+             descricao="Vaga 100% remota, com encontros presenciais a cada trimestre.")
+    assert filtro.avaliar(vaga)

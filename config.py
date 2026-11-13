@@ -144,10 +144,14 @@ TERMOS_HIBRIDO = ["hibrido", "hibrida", "hybrid", "semipresencial", "semi-presen
 # ("USA Only", "Europe"). So interessa o que alcanca o Brasil.
 # Expressoes que realmente indicam trabalho remoto no corpo do anuncio.
 # "remoto" solto nao serve: aparece em "nao e remoto", "remoto nao disponivel".
+# "home office" sozinho saiu em nov/2026: aparece em "auxilio home office", beneficio
+# de vaga hibrida, e fazia vaga hibrida passar por remota.
 SINAIS_REMOTO_DESCRICAO = [
-    "100% remoto", "totalmente remoto", "trabalho remoto", "vaga remota",
-    "modelo remoto", "home office", "anywhere office", "remote work",
-    "fully remote", "trabalho totalmente remoto",
+    "100% remoto", "100% remota", "totalmente remoto", "totalmente remota",
+    "trabalho remoto", "vaga remota", "modelo remoto", "modalidade remota",
+    "modalidade: remoto", "modelo de trabalho: remoto", "regime remoto",
+    "100% home office", "home office integral", "anywhere office", "remote work",
+    "fully remote", "100% remote", "remote-first", "remote first",
 ]
 # Se o anuncio disser isso, e presencial, mesmo que cite remoto em outro ponto.
 SINAIS_PRESENCIAL = [
@@ -239,7 +243,7 @@ TERMOS_LINKEDIN_REGIAO = ["dados", "BI", "CRM"]
 LINKEDIN_CIDADE = "Caxias do Sul, Rio Grande do Sul, Brasil"   # raio de 25 km
 LINKEDIN_HORAS = 48          # so vaga publicada nas ultimas 48 h: o radar roda 3x/dia
 PAGINAS_LINKEDIN = 2         # ~10 vagas por pagina
-LINKEDIN_DETALHES = 12       # descricoes buscadas por ciclo (uma chamada cada)
+LINKEDIN_DETALHES = 40       # descricoes por ciclo, so de vaga nova que passou na regra
 
 # Vagas.com: termo com filtro 100% home office, e cidade da regiao sem termo.
 TERMOS_VAGASCOM = ["dados", "analista de dados", "engenheiro de dados", "BI",
@@ -294,5 +298,7 @@ STANDBY_LOTE = 20                    # lote menor que o normal: prompt curto fal
 # sobrecarregar a cota; o excedente fica para o ciclo seguinte.
 REPESCAGEM = True
 MAX_REPESCAGEM = 80                  # acima disso, a repescagem vai para o stand-by
-DESCRICAO_IA = 1200                  # caracteres da descricao enviados a IA, por vaga
-MAX_VAGAS_IA = 40                    # vagas por chamada; acima disso vira mais de um lote
+DESCRICAO_IA = 3500                  # caracteres da descricao por vaga (era 1200: a modalidade
+                                     # costuma estar no fim do anuncio e ficava de fora)
+MAX_VAGAS_IA = 15                    # vagas por chamada: lote grande com descricao longa
+                                     # faz o modelo ler por cima
