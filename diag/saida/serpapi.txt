@@ -1,12 +1,13 @@
   [google] 'analista de dados remoto': 10 vagas
 total: 10
---  Analista de Dados Financeiros Júnior — SQL e Indic | Orbite Consulting | Remoto (Qualquer lugar) | Orbite Talent | 2026-10-14 22:06:11.949875+00:00
---  Profissional Analista de Dados Industriais Sênior  | Radix | Remoto (Qualquer lugar) | InHire | None
---  Analista de Dados Sênior | CLT | Todo o Brasil - ( | King of Languages | Remoto (Qualquer lugar) | Remote Rocketship | None
---  Banco Dados | Cadmus | Remoto (Qualquer lugar) | Glassdoor | 2026-11-03 22:06:11.949875+00:00
---  Analista de Dados Sênior / BI | In All Media | Remoto (Qualquer lugar) | Remote Rocketship | None
---  Analista de Dados PL | 100% Remoto | Nava Tech for Busine | Remoto (Qualquer lugar) | GeekHunter | None
---  Analista de Dados Pl - Foco em Ciências de Dados ( | DUX Company | Remoto (Qualquer lugar) | Glassdoor | 2026-10-25 22:06:11.949875+00:00
---  Analista de Dados - foco em BI (Pl) | HST | Remoto (Qualquer lugar) | JobLeads | 2026-10-24 22:06:11.949875+00:00
---  Analista de Dados – Data Analytics (Pleno) | Skydropx - Frenet | Remoto (Qualquer lugar) | Jobs | None
---  Analista de Dados - Produtos | Híbrido (Joinville) | PX AGENCIAMENTO DE S | Remoto (Qualquer lugar) | Indeed | None
+OK  CAS | Analista de Dados, Automação e Inteligência  | Sicredi | Qualquer lugar (Google marcou  | Glassdoor | 2026-11-10 22:07:20.780994+00:00
+OK  Analista de Dados de Customer Service | Tirol | Qualquer lugar (Google marcou  | JobLeads | 2026-11-10 22:07:20.780994+00:00
+OK  Vaga home office de Analista de Dados Junior na Op | Oportunidades | Qualquer lugar (Google marcou  | Quero Home | 2026-11-09 22:07:20.780994+00:00
+OK  ANALISTA DE DADOS JUNIOR | Bancorbrás | Qualquer lugar (Google marcou  | Jobgether | 2026-11-06 22:07:20.780994+00:00
+OK  Estagiário de Análise de Dados | ANDRITZ AG | Qualquer lugar (Google marcou  | Glassdoor | 2026-11-06 22:07:20.780994+00:00
+--  Analista de Dados SR | Grupo SysMap | Qualquer lugar (Google marcou  | Himalayas | 2026-11-06 22:07:20.780994+00:00
+OK  Hitss | Analista de Dados PL | GLOBAL HITSS | Qualquer lugar (Google marcou  | Jobgether | 2026-11-13 22:07:20.780994+00:00
+--  Analista de Dados e Negócios | Comercial | Olist | Qualquer lugar (Google marcou  | JobLeads | 2026-11-10 22:07:20.780994+00:00
+--  Job for Full-time employee:
+Analista de Dados III | Grupo Boticário | Qualquer lugar (Google marcou  | Joinrs | 2026-11-07 22:07:20.780994+00:00
+--  Analista de QA de Dados | Jump | Qualquer lugar (Google marcou  | Currículo Automático | 2026-11-11 22:07:20.780994+00:00
