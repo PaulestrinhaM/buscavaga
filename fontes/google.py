@@ -6,7 +6,7 @@ uma vez por dia, so no primeiro turno, com config.TERMOS_GOOGLE: 8 buscas por di
 ficam em ~240 por mes. Sem SERPAPI_API_KEY no ambiente a fonte fica desligada.
 
 Parametros: engine=google_jobs, q, location (cidade por extenso), gl, hl,
-next_page_token (o start foi aposentado). Resposta: jobs_results[] com title,
+next_page_token (o start foi aposentado), chips=date_posted:week (so a ultima semana). Resposta: jobs_results[] com title,
 company_name, location, via, description, detected_extensions (posted_at,
 work_from_home, salary, schedule_type), apply_options[{title, link}], share_link.
 """
@@ -35,18 +35,22 @@ def _data(texto: str, agora: datetime) -> datetime | None:
 
 def _converter(item: dict, agora: datetime) -> Vaga:
     ext = item.get("detected_extensions") or {}
+    # work_from_home do Google nao e confiavel (veio true para "Hibrido (Joinville)"):
+    # so registra, e a descricao confirma ou derruba no filtro
     remoto = ext.get("work_from_home") or "anywhere" in (item.get("location") or "").lower()
     local = item.get("location") or ""
+    # a busca ja pede so a ultima semana (chips): sem data, conta como recente
+    publicada = _data(ext.get("posted_at", ""), agora) or agora
     opcoes = item.get("apply_options") or []
     link = opcoes[0]["link"] if opcoes and opcoes[0].get("link") else item.get("share_link", "")
     return Vaga(
         titulo=item.get("title") or "",
         empresa=item.get("company_name") or "",
-        local=f"Remoto ({local})" if remoto else local,
+        local=f"{local} (Google marcou remoto, a confirmar)" if remoto else local,
         link=link,
         fonte="google",
         descricao=(item.get("description") or "")[:8000],
-        publicada_em=_data(ext.get("posted_at", ""), agora),
+        publicada_em=publicada,
         salario=ext.get("salary", ""),
         extras={"via": item.get("via", "")},
     )
@@ -71,6 +75,8 @@ def coletar(forcar: bool = False) -> list[Vaga]:
         r = requests.get(URL, timeout=TIMEOUT, params={
             "engine": "google_jobs", "q": termo, "location": local,
             "gl": "br", "hl": "pt-br", "api_key": chave,
+            # o Google Jobs ordena por relevancia e devolvia vaga de 30 dias
+            "chips": "date_posted:week",
         })
         if r.status_code == 429:
             print("  [google] cota da SerpApi esgotada")
