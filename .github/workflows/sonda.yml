@@ -1,0 +1,26 @@
+name: Sonda de triagem (diagnostico)
+on:
+  push:
+    branches: ["diag/**"]
+permissions:
+  contents: write
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: |
+          mkdir -p diag/saida
+          python diag/triagem_amostra.py 2>&1 | tee diag/saida/triagem.txt
+      - run: |
+          git config user.name "jobradar"
+          git config user.email "actions@github.com"
+          git add -f diag/saida
+          git commit -qm "sonda: triagem" && git push
