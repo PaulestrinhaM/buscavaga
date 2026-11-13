@@ -115,7 +115,7 @@ def test_google_converte_item():
         "detected_extensions": {"posted_at": "há 3 dias", "work_from_home": True},
         "apply_options": [{"title": "LinkedIn", "link": "https://exemplo/vaga"}],
     }, agora)
-    assert v.local.startswith("Remoto")
+    assert "Google marcou remoto" in v.local
     assert v.link == "https://exemplo/vaga"
     assert v.publicada_em == agora - timedelta(days=3)
 
@@ -188,3 +188,18 @@ def test_enriquecer_derruba_hibrido_e_adia_sem_descricao(monkeypatch):
     ficam, _ = main.enriquecer_linkedin(None, novas, [], registros)
     assert [v.titulo for v in ficam] == ["Analista de Dados 2"]   # 1 hibrida, 3 sem cota
     assert gravadas == ["Analista de Dados 1"]                     # a 3 volta no proximo ciclo
+
+
+def test_google_sem_data_conta_como_recente():
+    agora = datetime(2026, 11, 13, tzinfo=timezone.utc)
+    v = google._converter({"title": "Analista de Dados", "detected_extensions": {}}, agora)
+    assert v.publicada_em == agora
+
+
+def test_google_hibrido_no_titulo_cai_mesmo_marcado_remoto():
+    import filtro
+    agora = datetime.now(timezone.utc)
+    v = google._converter({"title": "Analista de Dados - Produtos | Híbrido (Joinville)",
+                           "location": "Qualquer lugar", "detected_extensions":
+                           {"work_from_home": True}}, agora)
+    assert not filtro.avaliar(v)
