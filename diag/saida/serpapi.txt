@@ -1,0 +1,12 @@
+  [google] 'analista de dados remoto': 10 vagas
+total: 10
+--  Analista de Dados Financeiros Júnior — SQL e Indic | Orbite Consulting | Remoto (Qualquer lugar) | Orbite Talent | 2026-10-14 22:06:11.949875+00:00
+--  Profissional Analista de Dados Industriais Sênior  | Radix | Remoto (Qualquer lugar) | InHire | None
+--  Analista de Dados Sênior | CLT | Todo o Brasil - ( | King of Languages | Remoto (Qualquer lugar) | Remote Rocketship | None
+--  Banco Dados | Cadmus | Remoto (Qualquer lugar) | Glassdoor | 2026-11-03 22:06:11.949875+00:00
+--  Analista de Dados Sênior / BI | In All Media | Remoto (Qualquer lugar) | Remote Rocketship | None
+--  Analista de Dados PL | 100% Remoto | Nava Tech for Busine | Remoto (Qualquer lugar) | GeekHunter | None
+--  Analista de Dados Pl - Foco em Ciências de Dados ( | DUX Company | Remoto (Qualquer lugar) | Glassdoor | 2026-10-25 22:06:11.949875+00:00
+--  Analista de Dados - foco em BI (Pl) | HST | Remoto (Qualquer lugar) | JobLeads | 2026-10-24 22:06:11.949875+00:00
+--  Analista de Dados – Data Analytics (Pleno) | Skydropx - Frenet | Remoto (Qualquer lugar) | Jobs | None
+--  Analista de Dados - Produtos | Híbrido (Joinville) | PX AGENCIAMENTO DE S | Remoto (Qualquer lugar) | Indeed | None
