@@ -235,7 +235,8 @@ def avaliar(vaga: Vaga) -> bool:
         # candidata a repescagem, onde a IA le a descricao
         vaga.trilha = trilha(vaga.titulo_norm)
         gringa = vaga.fonte.split(":")[0] in config.FONTES_SEM_REPESCAGEM
-        vaga.repescagem = local_aceito(vaga) and not gringa
+        sinal = _contem_palavra(vaga.texto_busca, config.SINAIS_REPESCAGEM)
+        vaga.repescagem = bool(sinal) and local_aceito(vaga) and not gringa
         return False
 
     if not local_aceito(vaga):

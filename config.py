@@ -203,6 +203,13 @@ PAIS_ADZUNA = "br"
 # Repescagem (IA lendo vaga de titulo nao reconhecido) so para fonte brasileira: nas
 # gringas ela so trazia ruido (engenheiro de software, medico, advogado) e gastava cota.
 FONTES_SEM_REPESCAGEM = ["himalayas", "jobicy", "remotive", "remoteok"]
+# Repescagem so para quem cita algo de dados no anuncio: a busca por cidade da Gupy
+# traz mecanico, repositor e operador de prensa, e cada um gastava cota da IA.
+SINAIS_REPESCAGEM = [
+    "dados", "data", "sql", "python", "power bi", "looker", "tableau", "dashboard",
+    "indicador", "kpi", "analytics", "bi", "business intelligence", "etl", "crm",
+    "integracao", "automacao", "api", "banco de dados", "relatorios gerenciais",
+]
 # Himalayas e em ingles: termos proprios, 20 vagas por termo, uma chamada cada.
 TERMOS_BUSCA_EN = [
     "data analyst", "data engineer", "business intelligence", "analytics",
