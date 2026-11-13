@@ -1,0 +1,76 @@
+  [linkedin] 'analista de dados' remoto: 10 vagas
+  [linkedin] 'engenheiro de dados' remoto: 10 vagas
+  [linkedin] 'analista de CRM' remoto: 10 vagas
+  [linkedin] 30 unicas (descricao vem depois da deduplicacao)
+  [gupy] remoto 'dados': 100 vagas [100]
+  [gupy] remoto 'CRM': 10 vagas [10]
+  [gupy] cidade 'Caxias do Sul': 200 de 200 vagas [100, 100]
+regra: 26 aprovadas, 81 repescagem
+  DERRUBADA PELA DESCRICAO: Analista de Inteligência de Dados Pleno | local fora do alvo: Araraquara, SP (LinkedIn marcou remoto, 
+  DERRUBADA PELA DESCRICAO: Analista de Dados Pl | local fora do alvo: Belo Horizonte, MG (LinkedIn marcou remo
+  DERRUBADA PELA DESCRICAO: Engenheiro(a) de Dados | Databricks | bloqueada: senioridade no anuncio (senioridade: senior)
+  DERRUBADA PELA DESCRICAO: Data Engineer | local fora do alvo: São Paulo, Brasil (LinkedIn marcou remot
+  DERRUBADA PELA DESCRICAO: Analista CRM PL | local fora do alvo: Osasco, SP (LinkedIn marcou remoto, a co
+  DERRUBADA PELA DESCRICAO: Analista de CRM JR | local fora do alvo: Osasco, SP (LinkedIn marcou remoto, a co
+  DERRUBADA PELA DESCRICAO: ANALISTA DE CRM JR | local fora do alvo: São José do Rio Preto, SP (LinkedIn marc
+[linkedin] 19 novas: 12 seguem, 7 derrubadas pela descricao, 0 sem descricao (voltam no proximo ciclo)
+[triagem] cortada: Analista de Dados Pl. - Alphaville -> Local presencial fora da regiao permitida
+[triagem] cortada: Analista de Dados - GMO -> Local presencial fora da regiao permitida
+[triagem] cortada: Analista de Dados | Araras -> Local presencial fora da regiao permitida
+[triagem] cortada: Analista de Dados de Sinistro Pl -> Local presencial fora da regiao permitida
+[triagem] cortada: Analista de Dados Pleno -> Local presencial fora da regiao permitida
+[triagem] cortada: Data Engineer Python + AWS -> Gap dificil (AWS principal) e local presencial fora
+[triagem] cortada: Data Engineer -> Gap dificil (Kubernetes, Airflow, AWS) e local
+[triagem] cortada: Analista de CRM Dados Pleno -> Local presencial fora da regiao permitida
+[triagem] cortada: Analista de Marketing Pleno – CRM -> Vaga de CRM operacional, local presencial fora
+[triagem] cortada: Analista de CRM Jr -> Vaga de CRM operacional, local presencial fora
+[triagem] cortada: ENGENHEIRO DADOS  -> Vaga senior exigida, fora do perfil.
+[triagem] cortada: Estágio em Mídias Sociais | CRM | Remoto -> Area de marketing e atendimento, fora do perfil.
+[triagem] cortada: Assistente Comercial - Friven Refrigeração -> Area comercial e SDR, fora do perfil.
+[triagem] cortada: Nube - Oportunidade de Estágio na área Admini -> Estagio administrativo escolar, fora do perfil.
+[triagem] cortada: Mecânico Automotivo - DRSUL Fiat Caxias do Su -> Mecanico automotivo, fora da area.
+[triagem] cortada: Preparador(a) de Misturas (Turno 1) | Frasle  -> Cargo de producao industrial, fora da area.
+[triagem] cortada: Operador de Prensas - Blocos (Turno 2) | Fras -> Cargo de producao industrial, fora da area.
+[triagem] cortada: Estágio Curricular em Psicologia Organizacion -> Estagio em psicologia, fora da area.
+[triagem] cortada: Preparador(a) de Misturas - SIBLO (Turno 2) | -> Cargo de producao industrial, fora da area.
+[triagem] cortada: ANALISTA DE CRÉDITO E RISCO JR (MERCADO EXTER -> Vaga de analise de credito e risco.
+[triagem] cortada: Auxiliar de Operações (Turno 2) | Frasle Mobi -> Vaga de auxiliar de operacoes de producao.
+[triagem] cortada: Repositor - Petz Ruben Bento Alves  -> Vaga de repositor de loja.
+[triagem] cortada: Ajudante - Caxias do Sul/RS -> Vaga de ajudante de carga e descarga.
+
+IA: 11 mantidas, 23 cortadas, 0 sem avaliacao
+
+MANTIDA s=9 | linkedin | Engenheiro de Dados Azure Pleno - Remoto | São Paulo, SP (LinkedIn marcou |  [dados] Perfeito para engenharia de dados com Azure e Databricks
+MANTIDA s=9 | gupy | Assistente de Dados (LAVINIA SOUZA QUEIROZ) | Remoto |  [dados] Otima vaga de assistente de dados com Databricks
+MANTIDA s=8 | linkedin | ENGENHEIRO DADOS PL (REMOTO) | Campinas, SP (LinkedIn marcou  |  [dados] Excelente encaixe em engenharia de dados com Databricks
+MANTIDA s=8 | gupy | ANALISTA DE DADOS JUNIOR | Remoto |  [bi] Analista de dados junior focado em BI e Delta Lake.
+MANTIDA s=8 | gupy | ADMINISTRADOR DE DADOS | Remoto |  [dados] Administrador de dados remoto com foco em modelagem e SQL.
+MANTIDA s=8 | gupy | ADMINISTRADOR DE DADOS | Remoto |  [dados] Administrador de dados remoto com foco em modelagem e SQL.
+MANTIDA s=7 | gupy | Analista de Governança de Dados JR | Remoto |  [dados] Boa vaga junior em governanca de dados
+MANTIDA s=7 | gupy | Hitss | Analista de Dados PL | Remoto |  [bi] Boa oportunidade de BI e FinOps analitico
+MANTIDA s=7 | gupy | Hitss | Engenheiro de Dados Multicloud  | Remoto |  [dados] Requer pos em TI e multicloud, gap aceitavel.
+MANTIDA s=7 | gupy | Analista de Inteligência Competitiva | Foco em dad | Caxias do Sul, Rio Grande do S |  [bi] Analista de inteligencia competitiva presencial em Caxias do Sul.
+MANTIDA s=7 | gupy | 22419-Administrador(a) de Dados  | Remoto |  [dados] Administrador de dados temporario, exige pos e experiencia.
+CORTADA      | linkedin | Analista de Dados Pl. - Alphaville | Santana de Parnaíba, SP (Linke | IA: Local presencial fora da regiao permitida
+CORTADA      | linkedin | Analista de Dados - GMO | Itajaí, SC (LinkedIn marcou re | IA: Local presencial fora da regiao permitida
+CORTADA      | linkedin | Analista de Dados | Araras | Araras, SP (LinkedIn marcou re | IA: Local presencial fora da regiao permitida
+CORTADA      | linkedin | Analista de Dados de Sinistro Pl | São Paulo, SP (LinkedIn marcou | IA: Local presencial fora da regiao permitida
+CORTADA      | linkedin | Analista de Dados Pleno | São Paulo, SP (LinkedIn marcou | IA: Local presencial fora da regiao permitida
+CORTADA      | linkedin | Data Engineer Python + AWS | São Paulo, SP (LinkedIn marcou | IA: Gap dificil (AWS principal) e local presencial fora
+CORTADA      | linkedin | Data Engineer | São Paulo, SP (LinkedIn marcou | IA: Gap dificil (Kubernetes, Airflow, AWS) e local
+CORTADA      | linkedin | Analista de CRM Dados Pleno | Rio de Janeiro, RJ (LinkedIn m | IA: Local presencial fora da regiao permitida
+CORTADA      | linkedin | Analista de Marketing Pleno – CRM | São Paulo, SP (LinkedIn marcou | IA: Vaga de CRM operacional, local presencial fora
+CORTADA      | linkedin | Analista de CRM Jr | São Paulo, SP (LinkedIn marcou | IA: Vaga de CRM operacional, local presencial fora
+CORTADA      | gupy | ENGENHEIRO DADOS  | Remoto | IA: Vaga senior exigida, fora do perfil.
+CORTADA      | gupy | Estágio em Mídias Sociais | CRM | Remoto | Remoto | IA: Area de marketing e atendimento, fora do perfil.
+CORTADA      | gupy | Assistente Comercial - Friven Refrigeração | Caxias do Sul, Rio Grande do S | IA: Area comercial e SDR, fora do perfil.
+CORTADA      | gupy | Nube - Oportunidade de Estágio na área Administrat | Caxias do Sul, Rio Grande do S | IA: Estagio administrativo escolar, fora do perfil.
+CORTADA      | gupy | Mecânico Automotivo - DRSUL Fiat Caxias do Sul | Caxias do Sul, Rio Grande do S | IA: Mecanico automotivo, fora da area.
+CORTADA      | gupy | Preparador(a) de Misturas (Turno 1) | Frasle Mobil | Caxias do Sul, Rio Grande do S | IA: Cargo de producao industrial, fora da area.
+CORTADA      | gupy | Operador de Prensas - Blocos (Turno 2) | Frasle Mo | Caxias do Sul, Rio Grande do S | IA: Cargo de producao industrial, fora da area.
+CORTADA      | gupy | Estágio Curricular em Psicologia Organizacional -  | Caxias do Sul, Rio Grande do S | IA: Estagio em psicologia, fora da area.
+CORTADA      | gupy | Preparador(a) de Misturas - SIBLO (Turno 2) | Fras | Caxias do Sul, Rio Grande do S | IA: Cargo de producao industrial, fora da area.
+CORTADA      | gupy | ANALISTA DE CRÉDITO E RISCO JR (MERCADO EXTERNO)-  | Caxias do Sul, Rio Grande do S | IA: Vaga de analise de credito e risco.
+CORTADA      | gupy | Auxiliar de Operações (Turno 2) | Frasle Mobility  | Caxias do Sul, Rio Grande do S | IA: Vaga de auxiliar de operacoes de producao.
+CORTADA      | gupy | Repositor - Petz Ruben Bento Alves  | Caxias do Sul, Rio Grande do S | IA: Vaga de repositor de loja.
+CORTADA      | gupy | Ajudante - Caxias do Sul/RS | Caxias do Sul, Rio Grande do S | IA: Vaga de ajudante de carga e descarga.
