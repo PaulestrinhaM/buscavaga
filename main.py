@@ -3,6 +3,7 @@ import argparse
 from datetime import datetime, timedelta, timezone
 import os
 import sys
+import time
 import traceback
 from pathlib import Path
 
@@ -28,7 +29,12 @@ import db
 import filtro
 import notificador
 import triagem
+import importlib
+
 from fontes import TODAS
+
+# o __init__ de fontes exporta a funcao coletar com o nome "linkedin"; aqui e o modulo
+linkedin = importlib.import_module("fontes.linkedin")
 
 
 def rodar_ciclo(con, apenas=None) -> dict:
@@ -71,6 +77,8 @@ def rodar_ciclo(con, apenas=None) -> dict:
         db.registrar_ciclo(con, nome, len(resultado), aprovadas_fonte)
         print(f"[{nome}] {len(resultado)} coletadas, {aprovadas_fonte} aprovadas")
 
+    novas, repescagem = enriquecer_linkedin(con, novas, repescagem, registros)
+
     # metade ou mais das fontes quebrou: e problema de arquitetura, nao de mercado
     if fontes and len(falhas) >= len(fontes) / 2:
         notificador.alerta(f"{len(falhas)} de {len(fontes)} fontes falharam: {', '.join(falhas)}")
@@ -90,6 +98,50 @@ def rodar_ciclo(con, apenas=None) -> dict:
 
     return {"coletadas": coletadas, "aprovadas": aprovadas,
             "novas": len(novas), "urgentes": urgentes, "falhas": falhas}
+
+
+def enriquecer_linkedin(con, novas: list, repescagem: list, registros: list) -> tuple[list, list]:
+    """Busca a descricao das vagas novas do LinkedIn e reavalia com ela.
+
+    O filtro de remoto do LinkedIn nao e confiavel: e a descricao que diz se a vaga
+    e hibrida. So vaga nova (ja deduplicada) gasta chamada. A que fica sem descricao
+    (teto do ciclo, 429) sai do ciclo sem ser gravada: volta no proximo. A que a
+    descricao derruba fica gravada como cortada, para nao gastar chamada de novo.
+    """
+    alvo = [v for v in novas + repescagem if v.fonte == "linkedin" and not v.descricao]
+    if not alvo:
+        return novas, repescagem
+    sem_descricao, derrubadas = set(), set()
+    for i, vaga in enumerate(alvo):
+        if i >= config.LINKEDIN_DETALHES:
+            sem_descricao.update(id(v) for v in alvo[i:])
+            break
+        try:
+            linkedin.detalhar(vaga)
+            time.sleep(linkedin.PAUSA)
+        except linkedin.Limitado:
+            sem_descricao.update(id(v) for v in alvo[i:])
+            break
+        except Exception as e:
+            print(f"[linkedin] detalhe falhou ({e}): {vaga.titulo[:40]}")
+            sem_descricao.add(id(vaga))
+            continue
+        if not vaga.descricao:
+            sem_descricao.add(id(vaga))
+            continue
+        era_repescagem = vaga.repescagem
+        aprovada = filtro.avaliar(vaga)
+        if aprovada or (era_repescagem and vaga.repescagem):
+            continue
+        derrubadas.add(id(vaga))
+        db.registrar(con, vaga, notificada=db.CORTADA_IA)
+        registros.append((auditoria.DESCARTADA_REGRA, vaga))
+    print(f"[linkedin] {len(alvo)} novas: {len(alvo) - len(sem_descricao) - len(derrubadas)} "
+          f"seguem, {len(derrubadas)} derrubadas pela descricao, "
+          f"{len(sem_descricao)} sem descricao (voltam no proximo ciclo)")
+    fora = sem_descricao | derrubadas
+    return ([v for v in novas if id(v) not in fora],
+            [v for v in repescagem if id(v) not in fora])
 
 
 def _aplicar_vereditos(con, mantidas, cortadas, nao_avaliadas) -> list[tuple[str, object]]:

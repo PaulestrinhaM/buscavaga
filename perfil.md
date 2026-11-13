@@ -1,4 +1,4 @@
-revisado_em: 2026-11-12
+revisado_em: 2026-11-13
 
 <!--
 Perfil que a IA le para julgar cada vaga. Fonte: a base do curriculo do Paulo
@@ -51,14 +51,19 @@ NIVEIS HONESTOS
 - Nao tem: AWS, Azure, GCP como plataforma principal, Airflow, Kafka, Docker ou
   Kubernetes em producao, Scala, Java, deep learning.
 
-O QUE ELE BUSCA
-- Alvo principal: engenharia de dados e analise de dados. Junior, estagio, trainee,
-  vaga sem nivel declarado ou PLENO (pleno com as condicoes da instrucao).
-- BI e qualquer funcao proxima de dados tambem servem: analista de BI, desenvolvedor
-  BI, inteligencia comercial ou de mercado, reporting, MIS, analytics engineer,
-  governanca e qualidade de dados.
-- Marketing/revenue/sales operations, CRM, martech, automacao e integracao de
-  sistemas: junior ou pleno. E onde tem mais experiencia.
+O QUE ELE BUSCA (em ordem de prioridade)
+- Esta em transicao para engenharia de dados. Alvo principal: engenharia de dados e
+  analise de dados. Junior, estagio, trainee, sem nivel declarado ou PLENO (pleno com
+  as condicoes da instrucao).
+- Em seguida, BI e analytics: analista de BI, desenvolvedor BI, inteligencia comercial
+  ou de mercado, reporting, MIS, analytics engineer, governanca e qualidade de dados.
+- Plano B, aceitavel mas nunca prioridade: CRM, martech, marketing/revenue operations,
+  integracao e automacao, SO quando o trabalho e tecnico (configurar, integrar, tratar
+  base, automatizar, medir). Ter experiencia em CRM nao faz essas vagas serem o alvo.
+- NAO quer: marketing de execucao (copy, conteudo, redes sociais, criacao de campanha,
+  planejar e disparar reguas, segmentar leads como tarefa principal), CRM de
+  relacionamento, e-commerce operacional, pre-vendas, nem vaga administrativa que so
+  usa planilha.
 - Local: remoto de qualquer lugar do Brasil, ou qualquer modalidade em Caxias do Sul
   e vizinhas (Farroupilha, Bento Goncalves, Flores da Cunha, Sao Marcos, Garibaldi).
   Vaga de empresa estrangeira remota que contrate no Brasil e aceitavel, mas nao e o

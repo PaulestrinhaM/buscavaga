@@ -148,13 +148,18 @@ def local_aceito(vaga: Vaga) -> bool:
     # "auxilio home office" na descricao nao transforma vaga hibrida em remota
     if _contem_palavra(alvo, config.TERMOS_HIBRIDO + config.SINAIS_PRESENCIAL):
         return False
-    # vaga remota costuma vir com a cidade da sede no campo de local e o
-    # regime so na descricao. Exige expressao inequivoca, e o anuncio nao
-    # pode se declarar presencial ou hibrido em outro ponto.
     corpo = normalizar(vaga.descricao)
-    if _contem(corpo, config.SINAIS_REMOTO_DESCRICAO):
-        if not _contem_palavra(corpo, config.SINAIS_PRESENCIAL + config.TERMOS_HIBRIDO):
-            return True
+    remoto_no_corpo = _contem(corpo, config.SINAIS_REMOTO_DESCRICAO)
+    # A descricao manda sobre o campo de local: fonte que marca "remoto" por filtro
+    # proprio (LinkedIn) erra, e o anuncio diz "modelo hibrido" no fim. Hibrido ou
+    # presencial no corpo encerra, mesmo com "remoto" em outro ponto ("remoto 3x por
+    # semana, modelo hibrido"). "Encontros presenciais" no plural nao casa.
+    if _contem_palavra(corpo, config.SINAIS_PRESENCIAL + config.TERMOS_HIBRIDO):
+        return False
+    # vaga remota costuma vir com a cidade da sede no campo de local e o
+    # regime so na descricao. Exige expressao inequivoca.
+    if remoto_no_corpo:
+        return True
     # regiao internacional que alcanca o Brasil
     if _contem(alvo, config.REGIOES_ACEITAS):
         return True
@@ -230,7 +235,8 @@ def avaliar(vaga: Vaga) -> bool:
         # candidata a repescagem, onde a IA le a descricao
         vaga.trilha = trilha(vaga.titulo_norm)
         gringa = vaga.fonte.split(":")[0] in config.FONTES_SEM_REPESCAGEM
-        vaga.repescagem = local_aceito(vaga) and not gringa
+        sinal = _contem_palavra(vaga.texto_busca, config.SINAIS_REPESCAGEM)
+        vaga.repescagem = bool(sinal) and local_aceito(vaga) and not gringa
         return False
 
     if not local_aceito(vaga):

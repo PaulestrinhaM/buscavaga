@@ -26,7 +26,7 @@ def test_linkedin_le_os_cards_da_busca():
     v = vagas[1]
     assert v.titulo == "Analista de Dados - Trabalho Remoto"
     assert v.empresa == "BairesDev"
-    assert v.local.startswith("Remoto")
+    assert "LinkedIn marcou remoto" in v.local
     assert v.link == "https://www.linkedin.com/jobs/view/4489037187"
     assert v.publicada_em.date().isoformat() == "2026-11-11"
 
@@ -35,7 +35,7 @@ def test_linkedin_detalhe_traz_nivel_e_descricao(monkeypatch):
     monkeypatch.setattr(linkedin, "_get", lambda url, params=None: _ler("linkedin_detalhe.html.gz"))
     vaga = Vaga(titulo="x", empresa="", local="", link="", fonte="linkedin",
                 extras={"linkedin_id": "1"})
-    linkedin._detalhar(vaga)
+    linkedin.detalhar(vaga)
     assert vaga.descricao.startswith("Nível de experiência: Pleno-sênior")
     assert "INDI" in vaga.descricao
 
@@ -48,24 +48,10 @@ def test_linkedin_429_encerra_sem_erro(monkeypatch):
     assert linkedin.coletar() == []
 
 
-def test_linkedin_so_busca_descricao_de_titulo_que_passa(monkeypatch):
-    busca = _ler("linkedin_busca.html.gz")
-    detalhes = []
-
-    def get(url, params=None):
-        if "jobPosting" in url:
-            detalhes.append(url)
-            return "<div></div>"
-        return busca if params.get("start") == 0 else ""
-    monkeypatch.setattr(linkedin, "_get", get)
-    monkeypatch.setattr(linkedin, "PAUSA", 0)
-    monkeypatch.setattr(config, "TERMOS_LINKEDIN", ["analista de dados"])
-    monkeypatch.setattr(config, "TERMOS_LINKEDIN_REGIAO", [])
-    vagas = linkedin.coletar()
-    assert len(vagas) == 10
-    # "Talent Data Analyst", "Analista de Dados", "Data Analyst (Azure...)" etc. passam;
-    # nem todo card da pagina vira chamada de detalhe
-    assert 0 < len(detalhes) <= config.LINKEDIN_DETALHES
+def test_linkedin_nao_afirma_remoto_na_coleta():
+    vagas = linkedin._cards(_ler("linkedin_busca.html.gz"), remoto=True)
+    assert all("a confirmar" in v.local for v in vagas)
+    assert all(not v.local.lower().startswith("remoto") for v in vagas)
 
 
 # ------------------------------------------------------------------ vagas.com
@@ -174,3 +160,31 @@ def test_vagascom_403_pula_so_a_url(monkeypatch):
     monkeypatch.setattr(config, "TERMOS_VAGASCOM", ["dados"])
     monkeypatch.setattr(config, "CIDADES_VAGASCOM", ["Caxias do Sul RS"])
     assert len(vagascom.coletar()) == 40
+
+
+# ------------------------------------------------------------------ enriquecimento no ciclo
+def test_enriquecer_derruba_hibrido_e_adia_sem_descricao(monkeypatch):
+    import main
+    import filtro
+    gravadas = []
+    monkeypatch.setattr(main.db, "registrar", lambda con, v, notificada: gravadas.append(v.titulo))
+    monkeypatch.setattr(main.linkedin, "PAUSA", 0)
+    monkeypatch.setattr(config, "LINKEDIN_DETALHES", 2)
+    textos = {"1": "Modelo de trabalho: hibrido, 3x na semana.", "2": "Vaga 100% remota."}
+
+    def detalhar(v):
+        v.descricao = textos[v.extras["linkedin_id"]]
+    monkeypatch.setattr(main.linkedin, "detalhar", detalhar)
+
+    def nova(i):
+        v = Vaga(titulo=f"Analista de Dados {i}", empresa="X",
+                 local="São Paulo, SP (LinkedIn marcou remoto, a confirmar)",
+                 link=f"https://l/{i}", fonte="linkedin", extras={"linkedin_id": str(i)},
+                 publicada_em=datetime.now(timezone.utc))
+        assert filtro.avaliar(v)
+        return v
+    novas = [nova(1), nova(2), nova(3)]
+    registros = []
+    ficam, _ = main.enriquecer_linkedin(None, novas, [], registros)
+    assert [v.titulo for v in ficam] == ["Analista de Dados 2"]   # 1 hibrida, 3 sem cota
+    assert gravadas == ["Analista de Dados 1"]                     # a 3 volta no proximo ciclo

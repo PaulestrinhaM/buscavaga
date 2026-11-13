@@ -776,7 +776,8 @@ def test_senioridade_em_ingles_e_nivel_ii_bloqueiam(titulo):
 
 # --------------------------------------------------- repescagem pela IA
 def test_titulo_vago_sem_bloqueio_vira_repescagem():
-    vaga = v("Operacoes de Marketing", local="Remoto")
+    vaga = v("Operacoes de Marketing", local="Remoto",
+             descricao="Integracao do CRM e dashboards de funil.")
     assert not filtro.avaliar(vaga)
     assert vaga.repescagem
 
@@ -796,7 +797,7 @@ def test_repescagem_so_e_enviada_com_aval_da_ia(tmp_path, monkeypatch):
     import main as _main
     monkeypatch.setattr(_main.config, "USAR_IA", True)
     monkeypatch.setattr(_main.config, "REPESCAGEM", True)
-    vagas = [("Operacoes de Marketing", "A", "Remoto", "http://a/1", "f")]
+    vagas = [("Operacoes de Marketing - Automacao", "A", "Remoto", "http://a/1", "f")]
 
     vistas = []
     def aprovar(vs):
@@ -805,8 +806,8 @@ def test_repescagem_so_e_enviada_com_aval_da_ia(tmp_path, monkeypatch):
             x.score = 9
         return vs, [], []
     _, enviadas, _ = _ciclo_com_ia(tmp_path, monkeypatch, aprovar, vagas)
-    assert [x.titulo for x in vistas] == ["Operacoes de Marketing"]
-    assert [x.titulo for x in enviadas] == ["Operacoes de Marketing"]
+    assert [x.titulo for x in vistas] == ["Operacoes de Marketing - Automacao"]
+    assert [x.titulo for x in enviadas] == ["Operacoes de Marketing - Automacao"]
 
 
 def test_repescagem_sem_veredito_nunca_sai_pela_regra(tmp_path, monkeypatch):
@@ -853,3 +854,31 @@ def test_fonte_gringa_nao_vai_para_repescagem():
     vaga.fonte = "remoteok"
     assert not filtro.avaliar(vaga)
     assert not vaga.repescagem
+
+
+# --------------------------------------------------- nov/2026: descricao manda no local
+def test_local_remoto_da_fonte_cai_com_hibrido_na_descricao():
+    vaga = v("Analista de Dados", local="São Paulo, SP (LinkedIn marcou remoto, a confirmar)",
+             descricao="Sobre a vaga... Modelo de trabalho: híbrido, 3x na semana em Alphaville.")
+    assert not filtro.avaliar(vaga)
+
+
+def test_auxilio_home_office_nao_torna_vaga_remota():
+    vaga = v("Analista de Dados", local="São Paulo, SP",
+             descricao="Beneficios: VR, plano de saude, auxilio home office.")
+    assert not filtro.avaliar(vaga)
+
+
+def test_encontros_presenciais_nao_derrubam_vaga_remota():
+    vaga = v("Analista de Dados", local="São Paulo, SP",
+             descricao="Vaga 100% remota, com encontros presenciais a cada trimestre.")
+    assert filtro.avaliar(vaga)
+
+
+def test_repescagem_exige_sinal_de_dados_na_descricao():
+    mecanico = v("Mecanico Automotivo", local="Caxias do Sul, RS",
+                 descricao="Manutencao de veiculos e diagnostico de motor.")
+    pricing = v("Analista de Pricing", local="Caxias do Sul, RS",
+                descricao="Montar dashboards de preco em Power BI e SQL.")
+    assert not filtro.avaliar(mecanico) and not mecanico.repescagem
+    assert not filtro.avaliar(pricing) and pricing.repescagem

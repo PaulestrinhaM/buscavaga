@@ -11,7 +11,12 @@ Formato medido:
     location (funciona para cidade), distance (km), f_WT=2 (remoto),
     f_TPR=r<segundos> (publicada nos ultimos N segundos), start (offset)
   GET /jobs-guest/jobs/api/jobPosting/<id> -> HTML do anuncio, com descricao e
-    "Nivel de experiencia". Custa uma chamada por vaga: so para titulo que passa.
+    "Nivel de experiencia". Custa uma chamada por vaga.
+
+O filtro f_WT=2 (remoto) NAO e confiavel: o LinkedIn devolve vaga hibrida e
+presencial junto. Por isso a coleta nao afirma remoto. A descricao e buscada depois
+da deduplicacao, so para vaga nova que passou na regra (main.enriquecer_linkedin), e
+e ela que decide a modalidade. Sem descricao, a vaga nao segue no ciclo.
 """
 import html
 import re
@@ -21,7 +26,6 @@ from datetime import datetime, timezone
 import requests
 
 import config
-import filtro
 from vaga import Vaga
 
 BUSCA = "https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search"
@@ -66,8 +70,9 @@ def _cards(pagina: str, remoto: bool) -> list[Vaga]:
         vagas.append(Vaga(
             titulo=titulo,
             empresa=_campo(card, r'base-search-card__subtitle">(.*?)</h4>'),
-            # o filtro f_WT=2 garante o remoto; a cidade que vem e so a da sede
-            local=f"Remoto ({local})" if remoto else local,
+            # o f_WT=2 nao garante remoto: so registra o que o LinkedIn disse, e a
+            # descricao confirma ou derruba (filtro.local_aceito)
+            local=f"{local} (LinkedIn marcou remoto, a confirmar)" if remoto else local,
             link=f"https://www.linkedin.com/jobs/view/{id_vaga.group(1)}",
             fonte="linkedin",
             publicada_em=(datetime.fromisoformat(data.group(1)).replace(tzinfo=timezone.utc)
@@ -77,7 +82,8 @@ def _cards(pagina: str, remoto: bool) -> list[Vaga]:
     return vagas
 
 
-def _detalhar(vaga: Vaga) -> None:
+def detalhar(vaga: Vaga) -> None:
+    """Preenche a descricao a partir do anuncio. Levanta Limitado no 429."""
     pagina = _get(DETALHE.format(id=vaga.extras["linkedin_id"]))
     descricao = _campo(pagina, r'show-more-less-html__markup[^>]*>(.*?)</div>')
     criterios = re.findall(r'description__job-criteria-subheader">(.*?)</h3>\s*'
@@ -114,15 +120,6 @@ def coletar() -> list[Vaga]:
         print(f"  [linkedin] 429: parou com {len(vagas)} vagas neste ciclo")
         return vagas
 
-    # descricao so de quem passa no titulo, ate o teto: o resto nao vale a chamada
     unicas = {v.link: v for v in vagas}
-    candidatas = [v for v in unicas.values() if filtro.classificar(v)[0]]
-    try:
-        for vaga in candidatas[:config.LINKEDIN_DETALHES]:
-            _detalhar(vaga)
-            time.sleep(PAUSA)
-    except Limitado:
-        print("  [linkedin] 429 no detalhe: o resto vai sem descricao")
-    print(f"  [linkedin] {len(unicas)} unicas, {min(len(candidatas), config.LINKEDIN_DETALHES)} "
-          f"com descricao")
+    print(f"  [linkedin] {len(unicas)} unicas (descricao vem depois da deduplicacao)")
     return list(unicas.values())
