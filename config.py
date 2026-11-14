@@ -121,7 +121,16 @@ RESSALVAS_TITULO = ["tambem", "inclusive", "aberta", "elegivel", "nao exclusiva"
 # Ruido recorrente em board de vaga.
 BLOQUEIO_RUIDO = [
     "vendedor", "vendedora", "comercial externo", "representante", "caixa",
-    "atendente", "auxiliar de limpeza", "motorista", "enfermeir", "professor",
+    "atendente", "auxiliar de limpeza", "motorista",
+    # vendas como funcao (nov/2026). "Dados de vendas" e "BI comercial" seguem passando:
+    # so entra o nome do cargo de quem vende
+    "consultor de vendas", "consultora de vendas", "assistente de vendas",
+    "promotor de vendas", "promotora de vendas", "executivo de vendas",
+    "executiva de vendas", "executivo de contas", "executiva de contas",
+    "account executive", "agente de vendas", "vendas externas", "vendas internas",
+    "pre-vendas", "pre vendas", "pre-venda", "bdr", "sdr", "inside sales",
+    "televendas", "closer",
+    "servente", "ajudante de limpeza", "agente de limpeza", "zelador", "zeladora", "enfermeir", "professor",
     "recepcionista", "estoquista", "soldador", "torneiro", "operador de maquina",
     # na serra gaucha "automacao" e quase sempre industrial, nao de processos
     "automacao industrial", "clp", "pcp", "manutencao", "eletricista",
@@ -144,6 +153,10 @@ TERMOS_HIBRIDO = ["hibrido", "hibrida", "hybrid", "semipresencial", "semi-presen
 # ("USA Only", "Europe"). So interessa o que alcanca o Brasil.
 # Expressoes que realmente indicam trabalho remoto no corpo do anuncio.
 # "remoto" solto nao serve: aparece em "nao e remoto", "remoto nao disponivel".
+# Fonte que marca remoto por filtro proprio (LinkedIn f_WT, Google work_from_home)
+# escreve isso no local. NAO e confirmacao: so a descricao ou o titulo confirmam.
+MARCA_REMOTO_A_CONFIRMAR = "marcou remoto, a confirmar"
+
 # "home office" sozinho saiu em nov/2026: aparece em "auxilio home office", beneficio
 # de vaga hibrida, e fazia vaga hibrida passar por remota.
 SINAIS_REMOTO_DESCRICAO = [

@@ -74,9 +74,17 @@ AREA (campo "area", escolha uma):
   ser de dados.
 
 MODALIDADE (campo "modalidade"): "remoto", "hibrido", "presencial" ou "nao_informado",
-pelo que a DESCRICAO diz. O campo "local" pode estar errado: o LinkedIn marca vaga
-hibrida como remota. Se a descricao fala em dias no escritorio, modelo hibrido ou
-presencial, e isso que vale. "Auxilio home office" e beneficio, nao modalidade.
+pelo titulo e pela DESCRICAO inteira. "Remoto" so quando o anuncio diz isso com
+clareza. O campo "local" pode estar errado: LinkedIn e Google marcam vaga hibrida ou
+presencial como remota ("marcou remoto, a confirmar" e chute da fonte, nao prova).
+Dias no escritorio, modelo hibrido ou presencial: e isso que vale. Cidade no titulo
+ou na descricao como local de trabalho ("Analista de BI (Ribeirao Preto, SP)",
+"atuacao em Joinville") sem o anuncio dizer remoto: "presencial". "Auxilio home
+office" e beneficio, nao modalidade. "Teletrabalho" sozinho NAO confirma remoto: pela
+CLT inclui regime hibrido. "Modalidade: Teletrabalho" com localizacao num escritorio
+("Localizacao: Ribeirao Preto") e "nao_informado"; so vale "remoto" com "100%",
+"integral", "de qualquer lugar" ou equivalente. Fora da regiao de Caxias, so "remoto"
+passa.
 
 SENIORIDADE
 - Junior, estagio, trainee ou sem nivel: aceito.
@@ -157,12 +165,18 @@ def aplicar_veredito(vaga, veredito: dict) -> tuple[bool, str]:
         return False, motivo
     if area in AREAS_CORTADAS:
         return False, f"area {area}: {motivo}"
-    if modalidade in ("hibrido", "presencial") and not _na_regiao(vaga):
-        return False, f"{modalidade} fora da regiao: {motivo}"
+    # fora da regiao, so passa remoto CONFIRMADO: "nao_informado" deixava passar vaga
+    # com "(Ribeirao Preto, SP)" no titulo
+    if not _na_regiao(vaga) and modalidade != "remoto":
+        return False, f"{modalidade or 'modalidade'} fora da regiao: {motivo}"
     try:
         nota = float(veredito.get("nota", vaga.score))
     except (TypeError, ValueError):
         nota = vaga.score
+    # "vale" com nota 0 a 2 e a IA se contradizendo (veio "vale" para vaga afirmativa
+    # exclusiva com nota 0): vale a nota
+    if nota <= 2:
+        return False, f"nota {nota:.0f}: {motivo}"
     teto = TETO_NOTA_POR_AREA.get(area)
     if teto is not None:
         nota = min(nota, teto)
@@ -176,7 +190,7 @@ def _chamar_modelo(modelo: str, prompt: str, chave: str) -> str:
     corpo = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
-            "temperature": 0.1,
+            "temperature": 0,   # mesma vaga, mesma resposta: com 0.1 o veredito oscilava
             "maxOutputTokens": 16000,
             "responseMimeType": "application/json",
             "thinkingConfig": {"thinkingLevel": "low"},
@@ -209,7 +223,10 @@ def _chamar(prompt: str) -> str:
     erros = []
     for modelo in (config.MODELO_IA, config.MODELO_IA_RESERVA):
         try:
-            return _chamar_modelo(modelo, prompt, chave)
+            resposta = _chamar_modelo(modelo, prompt, chave)
+            # o reserva (flash-lite) julga diferente: o log diz quem julgou cada lote
+            print(f"[triagem] lote julgado por {modelo}")
+            return resposta
         except (RuntimeError, requests.RequestException) as e:
             erros.append(str(e))
     raise RuntimeError("; ".join(erros))

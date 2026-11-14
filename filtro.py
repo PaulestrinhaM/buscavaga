@@ -141,7 +141,11 @@ def bloqueada(vaga: Vaga) -> str | None:
 
 def local_aceito(vaga: Vaga) -> bool:
     """Remoto em qualquer lugar do Brasil, ou qualquer modalidade na regiao de Caxias."""
-    alvo = normalizar(f"{vaga.local} {vaga.titulo}")
+    marca = normalizar(config.MARCA_REMOTO_A_CONFIRMAR)
+    a_confirmar = marca in normalizar(vaga.local)
+    # o aviso "marcou remoto, a confirmar" sai do texto avaliado: ele contem a palavra
+    # "remoto" e, ate nov/2026, era ele que aprovava vaga presencial em Ribeirao Preto
+    alvo = normalizar(f"{vaga.local} {vaga.titulo}").replace(marca, "")
     if _contem(alvo, config.CIDADES_REGIAO):
         return True
     # fora da regiao, hibrido ou presencial declarado no local/titulo encerra:
@@ -159,6 +163,14 @@ def local_aceito(vaga: Vaga) -> bool:
     # vaga remota costuma vir com a cidade da sede no campo de local e o
     # regime so na descricao. Exige expressao inequivoca.
     if remoto_no_corpo:
+        return True
+    # Remoto so pela marcacao da fonte: passa PENDENTE para quem le o anuncio. A IA
+    # recebe a descricao inteira e o codigo so aceita fora da regiao se ela devolver
+    # modalidade "remoto" (triagem.aplicar_veredito). Sem descricao ainda (LinkedIn,
+    # que busca o anuncio depois da regra), main.enriquecer_linkedin busca o texto e
+    # reavalia; vaga que fica sem descricao nao segue no ciclo. Nao pode cair no teste
+    # de "remoto" abaixo: a propria marcacao contem a palavra.
+    if a_confirmar:
         return True
     # regiao internacional que alcanca o Brasil
     if _contem(alvo, config.REGIOES_ACEITAS):

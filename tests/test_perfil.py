@@ -50,13 +50,13 @@ def _vaga(local="Remoto"):
 
 def test_crm_com_nota_10_vira_6():
     v = _vaga()
-    vale, _ = triagem.aplicar_veredito(v, {"vale": True, "area": "operacoes_tecnicas", "nota": 10})
+    vale, _ = triagem.aplicar_veredito(v, {"vale": True, "area": "operacoes_tecnicas", "modalidade": "remoto", "nota": 10})
     assert vale and v.score == 6
 
 
 def test_dados_mantem_a_nota():
     v = _vaga()
-    triagem.aplicar_veredito(v, {"vale": True, "area": "dados", "nota": 9})
+    triagem.aplicar_veredito(v, {"vale": True, "area": "dados", "modalidade": "remoto", "nota": 9})
     assert v.score == 9
 
 
@@ -76,3 +76,21 @@ def test_destaques_traz_modalidade_e_salario_do_fim_do_anuncio():
     desc = "Sobre nos. " * 400 + "Modelo de trabalho: hibrido, 3x na semana. Salario: R$ 5.000."
     d = triagem.destaques(desc)
     assert "hibrido" in d and "R$ 5.000" in d
+
+
+def test_modalidade_nao_informada_fora_da_regiao_cai():
+    vale, _ = triagem.aplicar_veredito(_vaga("Qualquer lugar"), {
+        "vale": True, "area": "bi", "modalidade": "nao_informado", "nota": 7})
+    assert not vale
+
+
+def test_modalidade_nao_informada_na_regiao_passa():
+    vale, _ = triagem.aplicar_veredito(_vaga("Caxias do Sul, RS (presencial)"), {
+        "vale": True, "area": "bi", "modalidade": "nao_informado", "nota": 7})
+    assert vale
+
+
+def test_vale_com_nota_zero_cai():
+    vale, _ = triagem.aplicar_veredito(_vaga(), {"vale": True, "area": "bi",
+                                                  "modalidade": "remoto", "nota": 0})
+    assert not vale

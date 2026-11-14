@@ -72,7 +72,7 @@ def _cards(pagina: str, remoto: bool) -> list[Vaga]:
             empresa=_campo(card, r'base-search-card__subtitle">(.*?)</h4>'),
             # o f_WT=2 nao garante remoto: so registra o que o LinkedIn disse, e a
             # descricao confirma ou derruba (filtro.local_aceito)
-            local=f"{local} (LinkedIn marcou remoto, a confirmar)" if remoto else local,
+            local=f"{local} (LinkedIn {config.MARCA_REMOTO_A_CONFIRMAR})" if remoto else local,
             link=f"https://www.linkedin.com/jobs/view/{id_vaga.group(1)}",
             fonte="linkedin",
             publicada_em=(datetime.fromisoformat(data.group(1)).replace(tzinfo=timezone.utc)
