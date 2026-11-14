@@ -88,3 +88,9 @@ def test_modalidade_nao_informada_na_regiao_passa():
     vale, _ = triagem.aplicar_veredito(_vaga("Caxias do Sul, RS (presencial)"), {
         "vale": True, "area": "bi", "modalidade": "nao_informado", "nota": 7})
     assert vale
+
+
+def test_vale_com_nota_zero_cai():
+    vale, _ = triagem.aplicar_veredito(_vaga(), {"vale": True, "area": "bi",
+                                                  "modalidade": "remoto", "nota": 0})
+    assert not vale
