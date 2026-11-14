@@ -1,0 +1,684 @@
+  [linkedin] 'analista de BI' remoto: 10 vagas
+  [linkedin] 'analista de dados' remoto: 10 vagas
+  [linkedin] 'dados' regiao: 3 vagas
+  [linkedin] 19 unicas (descricao vem depois da deduplicacao)
+  [google] 'analista de BI remoto': 10 vagas
+  [google] 'analista de dados remoto': 10 vagas
+  [adzuna] 'analista de dados': 100 vagas
+  [adzuna] 'engenheiro de dados': 100 vagas
+  [adzuna] 'analista de BI': 83 vagas
+  [adzuna] 'analytics': 100 vagas
+  [adzuna] 'marketing operations': 71 vagas
+  [adzuna] 'revenue operations': 64 vagas
+  [adzuna] 'analista de CRM': 88 vagas
+  [adzuna] 'analista de integracao': 100 vagas
+REGRA CORTOU | linkedin | Senior Data Analyst - Remote - Latin America | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | linkedin | ANALISTA BUSINESS INTELLIGENCE SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | linkedin | Analista de BI Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | linkedin | Analista de Dados Sr | Cardiologia D'Or | Corporativo R | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | linkedin | Senior CRM Data Analyst | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | google | Analista de BI Sênior Remoto - BA | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | google | Analista de Negócios / Desenvolvedor de Power BI | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Analista Pleno em Power BI e Power Apps | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Analista Pleno em Power BI (Ribeirão Preto, SP, BR, 140 | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | ANALISTA DE WEB ANALYTICS SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | google | Consultor Power BI SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | google | Analista Pleno em Power BI | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Analista de Dados de Customer Service | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Pessoa Analista de Dados Júnior | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Hitss | Analista de Dados PL | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | CAS | Analista de Dados, Automação e Inteligência Artif | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Analista de Dados de Customer Service | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Analista de BI Sênior Remoto - BA | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | google | Hitss | Analista de Dados PL | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Analista de Dados e Negócios | Comercial | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Job for Full-time employee:
+Analista de Dados III | bloqueada: senioridade acima do alvo (iii)
+REGRA CORTOU | google | Analista Dados Jr - Exclusivo para Pessoas com Deficiên | bloqueada: vaga afirmativa exclusiva (exclusivo para pessoas
+REGRA CORTOU | adzuna | Analista Dados | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Pinhais, Paraná
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Contagem, Minas Gerais
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Hortolândia, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Salto, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Campinas, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Palmas, Tocantins
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Palmas, Tocantins
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Salvador, Bahia
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Rio do Sul, Santa Catarina
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Porto Alegre, Rio Grande do Sul
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Campinas, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Recife, Pernambuco
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Curitiba, Paraná
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Porto Velho, Rondônia
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Lago Sul, Distrito Federal
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Anápolis, Goiás
+REGRA CORTOU | adzuna | ANALISTA DE DADOS | local fora do alvo: Igrejinha, Rio Grande do Sul
+REGRA CORTOU | adzuna | Analista de Dados Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados - Presencial | local fora do alvo: Brasil
+REGRA CORTOU | adzuna | Analista de Dados (Python) | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados Logística | local fora do alvo: Ipojuca, Pernambuco
+REGRA CORTOU | adzuna | Analista de Dados JR | local fora do alvo: Jacareí, Mato Grosso do Sul
+REGRA CORTOU | adzuna | Analista de Dados e Ia | local fora do alvo: Recife, Pernambuco
+REGRA CORTOU | adzuna | Analista de Dados JR | local fora do alvo: Jacareí, Estado de São Paulo
+REGRA CORTOU | adzuna | analista de dados (RH) | bloqueada: fora da area (rh)
+REGRA CORTOU | adzuna | Analista de Dados Fiscais | local fora do alvo: Cachoeirinha, Tocantins
+REGRA CORTOU | adzuna | Analista de Dados CRM | local fora do alvo: Recife, Pernambuco
+REGRA CORTOU | adzuna | Analista de Dados Gss | local fora do alvo: Macaé, Estado do Rio de Janeiro
+REGRA CORTOU | adzuna | Analista de Dados Fiscais | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Analista de Dados - 308 | local fora do alvo: Campinas, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados e Negócios | local fora do alvo: Porto Velho, Rondônia
+REGRA CORTOU | adzuna | Analista de Dados - Indaiatuba | local fora do alvo: Salto, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados - Indaiatuba | local fora do alvo: Hortolândia, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados - Indaiatuba | local fora do alvo: Barueri, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados e Inovação | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista de Dados Fiscais | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Analista de Dados e BI | local fora do alvo: Goiânia, Goiás
+REGRA CORTOU | adzuna | Analista de Dados e BI | local fora do alvo: Goiânia, Goiás
+REGRA CORTOU | adzuna | Analista de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados | Araras | local fora do alvo: Araras, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Dados Pleno | local fora do alvo: Barueri, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados - TI | local fora do alvo: Caucaia, Ceará
+REGRA CORTOU | adzuna | Analista de Dados Pleno | local fora do alvo: Barueri, Estado de São Paulo
+REGRA CORTOU | adzuna | [Solys] Analista de dados | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados Júnior | local fora do alvo: Maceió, Alagoas
+REGRA CORTOU | adzuna | Analista de Dados Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados Comercial | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista de Dados Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados Logísticos | local fora do alvo: Piracicaba, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados e BI | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | ANALISTA DE DADOS E BI | local fora do alvo: Lourdes, Belo Horizonte
+REGRA CORTOU | adzuna | Analista de Dados Jr | local fora do alvo: Jacareí, Mato Grosso do Sul
+REGRA CORTOU | adzuna | Analista de Dados Sr | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Dados Educacionais | local fora do alvo: Osasco, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de dados Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados PL | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Dados e BI | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Analista de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados de Marketing | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista de Dados Sr | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados Junior | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista De Dados Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | ANALISTA DE DADOS PJ | local fora do alvo: Porto Alegre, Rio Grande do Sul
+REGRA CORTOU | adzuna | Analista de Dados PL | local fora do alvo: Paulista, Pernambuco
+REGRA CORTOU | adzuna | Analista de Dados Sênior – Databricks | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados e BI Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | ENGENHEIROS DE DADOS | bloqueada: senioridade no anuncio (nivel senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro de Dados | local fora do alvo: São José do Rio Preto, Estado de São Pau
+REGRA CORTOU | adzuna | Engenheiro de Dados | local fora do alvo: Betim, Minas Gerais
+REGRA CORTOU | adzuna | ENGENHEIROS DE DADOS | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro de dados pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro de Dados Pleno | local fora do alvo: Eusébio, Ceará
+REGRA CORTOU | adzuna | Engenheiro de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados Junior | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro De Dados Pl | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Engenheiro de Dados SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Engenheiro de Dados Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados Pleno | local fora do alvo: Cidade Monções, Zona Sul
+REGRA CORTOU | adzuna | Engenheiro de Dados Sr | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Engenheiro de Dados Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro De Dados III | bloqueada: senioridade acima do alvo (iii)
+REGRA CORTOU | adzuna | Engenheiro De Dados Sr | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Engenheiro de Dados SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Engenheiro de Dados Pl | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro De Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiros De Dados - Recrutamento Aberto | bloqueada: senioridade no anuncio (nivel senior)
+REGRA CORTOU | adzuna | Pessoa Engenheira de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Pessoa Engenheira de Dados Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro de Dados (Auditória Interna) | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Pessoa Engenheira de Dados - Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Pessoa Engenheira de dados - Martech | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro de Dados Sênior (70149) | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Programa Trainee Engenheiro De Dados 2027 | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro de Dados Pleno | Fortaleza/CE | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Programa Trainee Engenheiro de Dados 2027 | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro de Dados AWS Sênior | Remoto | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados GCP Sênior - Remoto | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados | Integração e Dados para IA | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Pessoa Engenheira de Dados - Sênior (Remoto) | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro De Dados Sr (Azure/Databricks) | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Engenheiro de Dados Azure Sênior - Remoto | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados SR (Integração SAP) | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de dados Sr | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Engenheiro (a) de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados | DataSecOps | bloqueada: senioridade no anuncio (senioridade: senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados | Databricks | bloqueada: senioridade no anuncio (senioridade: senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Pessoa Engenheira de Dados Sênior - Big Data | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados e Plataforma de Agentes Sênior (GCP | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados Azure & Databricks Sênior - Remoto | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados e Plataforma de Agentes Sênior (GCP | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados AWS Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Pleno/Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados - AWS Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Pessoa Engenheira de dados Sênior (Inglês e/ou espanhol | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados e Integração Sênior - Adobe Experie | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Dados I Pleno I Rio de Janeiro - RJ | local fora do alvo: Rio de Janeiro, Estado do Rio de Janeiro
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Sênior (Databricks) - Remoto | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Pleno | Azure Databricks | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados | Arquitetura de Dados (Databric | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Engenheiro Arquiteto de Dados - Pleno | Remoto | bloqueada: senioridade acima do alvo (arquiteto)
+REGRA CORTOU | adzuna | Pessoa SRE / Engenheira de Dados Sênior — Plataforma de | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) Sênior de Dados | Databricks | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Pleno - Grafos Semânticos - Reci | local fora do alvo: Recife, Pernambuco
+REGRA CORTOU | adzuna | Engenheiro (a) de Dados Jùnior (Governança de Dados e I | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Pessoa Engenheira de Dados Sênior — Foco em Plataforma, | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Pessoa Engenheira de Dados Junior Inteligência de Dados | bloqueada: vaga afirmativa exclusiva (exclusiva para pessoas
+REGRA CORTOU | adzuna | Profissional Engenheiro(a) de Dados (AWS) Pleno/Sênior  | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Pleno/Sênior | Rio de Janeiro/RJ | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Pleno/Sênior | Rio de Janeiro/RJ | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Azure - Especialista em Databric | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Banco de Talentos | Engenheiro(a) de Dados Sênior - Híb | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro(a) de Dados Sênior (Plataforma de Dados, Clo | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Engenheiro de Software - analista de dados, machine lea | local fora do alvo: São Leopoldo, Rio Grande do Sul
+REGRA CORTOU | adzuna | ANALISTA BI PLENO | local fora do alvo: Jaraguá do Sul, Santa Catarina
+REGRA CORTOU | adzuna | Analista Bi | local fora do alvo: Santos, Estado de São Paulo
+REGRA CORTOU | adzuna | ANALISTA BI PLENO | local fora do alvo: Jaraguá do Sul, Santa Catarina
+REGRA CORTOU | adzuna | Analista BI Sr/Especialista | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista BI - Recrutamento Aberto | local fora do alvo: Porto Alegre, Rio Grande do Sul
+REGRA CORTOU | adzuna | Analista BI Sênior | Corporativo- SP | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista BI Sr/Especialista (4831) | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de BI | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Bi | local fora do alvo: Ananindeua, Pará
+REGRA CORTOU | adzuna | Analista de BI | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Bi | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista De Bi | local fora do alvo: Uberlândia, Minas Gerais
+REGRA CORTOU | adzuna | Analista de Bi | local fora do alvo: Vila Velha, Espirito Santo
+REGRA CORTOU | adzuna | Analista de Bi | local fora do alvo: Ananindeua, Pará
+REGRA CORTOU | adzuna | Analista de Bi | local fora do alvo: Viana, Espirito Santo
+REGRA CORTOU | adzuna | Analista de Bi | local fora do alvo: Primavera do Leste, Mato Grosso
+REGRA CORTOU | adzuna | Analista de BI Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista De Bi E Automações | local fora do alvo: Rio de Janeiro, Estado do Rio de Janeiro
+REGRA CORTOU | adzuna | ANALISTA DE BI E AUTOMAÇÕES | local fora do alvo: Rio de Janeiro, Estado do Rio de Janeiro
+REGRA CORTOU | adzuna | Analista de BI Pl | local fora do alvo: Uberlândia, Minas Gerais
+REGRA CORTOU | adzuna | Analista de BI Jr | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista de BI Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de BI Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de BI Jr | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Analista de BI Jr | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de BI Júnior | local fora do alvo: Recife, Pernambuco
+REGRA CORTOU | adzuna | Analista de BI Jr | local fora do alvo: São Gonçalo, Estado do Rio de Janeiro
+REGRA CORTOU | adzuna | ANALISTA DE BI PLENO SP | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista De BI - Recrutamento Aberto | local fora do alvo: Porto Alegre, Rio Grande do Sul
+REGRA CORTOU | adzuna | Analista de BI Sênior | Remoto | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Pessoa Analista de BI Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de BI | Power BI | local fora do alvo: Porto Alegre, Rio Grande do Sul
+REGRA CORTOU | adzuna | Pessoa Analista de BI Júnior | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista De BI - Recrutamento Aberto | local fora do alvo: Porto Alegre, Rio Grande do Sul
+REGRA CORTOU | adzuna | ANALISTA DE BI – PORTO ALEGRE – RS | local fora do alvo: Porto Alegre, Rio Grande do Sul
+REGRA CORTOU | adzuna | Analista de BI & BA Pl | E-commerce | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista JR - BI | Inteligência de Mercado | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista JR - BI | Inteligência de Mercado | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de BI & BA Pl | E-commerce | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de BI Sênior (SAP BusinessObjects) | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Jbs - Analista de BI - Power Center | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Power BI | local fora do alvo: Blumenau, Santa Catarina
+REGRA CORTOU | adzuna | Analista de Power BI | local fora do alvo: Nova Lima, Minas Gerais
+REGRA CORTOU | adzuna | Analista de Power Bi | local fora do alvo: Rio de Janeiro, Estado do Rio de Janeiro
+REGRA CORTOU | adzuna | Analista de Dados e BI | local fora do alvo: Goiânia, Goiás
+REGRA CORTOU | adzuna | Analista de Dados e BI | local fora do alvo: Goiânia, Goiás
+REGRA CORTOU | adzuna | Analista de Dados e BI | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | ANALISTA DE DADOS E BI | local fora do alvo: Lourdes, Belo Horizonte
+REGRA CORTOU | adzuna | Analista de Dados e BI | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Analista de BI Pleno - Externo - Hospital Santa Marceli | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista Administrativo de BI (Business Intelligence) | local fora do alvo: Itabuna, Bahia
+REGRA CORTOU | adzuna | Analista de Power BI Sr. - 119219 | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | ANALISTA SÊNIOR DE POWER BI | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados e BI Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados e BI. - 117471 | local fora do alvo: Rio de Janeiro, Estado do Rio de Janeiro
+REGRA CORTOU | adzuna | Analista de Dados - Power Bi | local fora do alvo: Rio de Janeiro, Estado do Rio de Janeiro
+REGRA CORTOU | adzuna | Analista de Business Intelligence / Bi | local fora do alvo: Duque de Caxias, Estado do Rio de Janeir
+REGRA CORTOU | adzuna | Analista de Dados e BI Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Dados - Power BI Junior (Presencial) | local fora do alvo: Monte Azul, Belo Horizonte
+REGRA CORTOU | adzuna | Analista Desenvolvedor Sr. - Oracle Bi-Middleware | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista Desenvolvedor Sr. - Oracle Bi-Middleware | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Business Intelligence (BI) - Maracanaú/CE | local fora do alvo: Maracanaú, Ceará
+REGRA CORTOU | adzuna | Analista de Dados Sr - BI (Business Inteligence) | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Gerente de Business Intelligence (híbrido em SP ou POA) | bloqueada: senioridade acima do alvo (gerente)
+REGRA CORTOU | adzuna | Analista de Sistemas Pleno – Dados/BI & Analytics | local fora do alvo: Osasco, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista Adm. Jr - Power Apps/Bi | local fora do alvo: Santos, Estado de São Paulo
+REGRA CORTOU | adzuna | Data Strategy Supervisor - São Paulo | bloqueada: senioridade acima do alvo (supervisor)
+REGRA CORTOU | adzuna | Analista de Dados - Presencial | local fora do alvo: Brasil
+REGRA CORTOU | adzuna | Analista de Dados | local fora do alvo: Pinhais, Paraná
+REGRA CORTOU | adzuna | Banco de Talentos PCD – Nível Brasil | WAP | bloqueada: vaga afirmativa exclusiva (pcd no titulo)
+REGRA CORTOU | adzuna | Analista de Operações SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista De Vendas Senior - Canal Indireto | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Pessoa Agilista SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Inovação Digital Pl Bh Mg (Power BI r) Vg 5 | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | FBS Analytics Engineer | bloqueada: salario abaixo do piso (R$ 12)
+REGRA CORTOU | adzuna | Senior Analytics Engineer | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Analytics Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Gerente de Dados | Analytics | bloqueada: senioridade acima do alvo (gerente)
+REGRA CORTOU | adzuna | Analytics Engineer - Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Senior Analytics Engineer | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Consultor de Product Analytics | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analytics Engineering Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Analytics Engineer - Pleno | local fora do alvo: Florianópolis, Santa Catarina
+REGRA CORTOU | adzuna | Gerente de Dados e Analytics | bloqueada: senioridade acima do alvo (gerente)
+REGRA CORTOU | adzuna | Business Analytics Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Analytics Engineer Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analytics Engineer Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analytics Engineer Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | FBS Senior Analytics Engineer | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | FBS Associate Analytics Engineer | bloqueada: salario abaixo do piso (R$ 12)
+REGRA CORTOU | adzuna | Analista de Marketing Analytics Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Web Analytics Pleno | local fora do alvo: Santana de Parnaíba, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de People Analytics Sr | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Data Translator Analytics Especialista | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | MES & Advanced Analytics Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Analytics Engineer SR| Remoto | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Campanhas Analytics Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Product Analyst - Commercial Analytics | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Business Analytics Sênior - Pagamentos | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Especialista de Crédito (Analytics & Dados) | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Especialista Técnico de Data e Analytics | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Analista Sênior de Analytics - Cobrança | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Business Analytics Sênior - Pagamentos | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Digital Analytics III - Martech | bloqueada: senioridade acima do alvo (iii)
+REGRA CORTOU | adzuna | FBS Director Principal Data & Analytics | bloqueada: senioridade acima do alvo (principal)
+REGRA CORTOU | adzuna | Analista Desenvolvedor Synapse Analytics Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Gerente de Remuneração e People Analytics Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | IT Specialist - Data & Analytics Delivery | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Senior Analytics Engineer (Data & AI) | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Consultor(a) de Engenharia de Dados & Analytics Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Pessoa Analista de Data Analytics Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Anl Engenharia De Analytics Sr - 837495 | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Especialista de Logística (Supply Chain Analytics) | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Analista de Negócios - SP - | Speech Analytics | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Web Analytics Sênior - Netshoes | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | ESPECIALISTA EM DADOS (BI & ANALYTICS) PJ | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Analytics Data Engineer II - Campinas/SP | local fora do alvo: Campinas, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Sistemas Pleno – Dados/BI & Analytics | local fora do alvo: Osasco, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Planejamento de Supply Chain e Analytics Sê | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | [BANCO POTENCIAL] Data Analytics & Engenharia de Dados | local fora do alvo: Fortaleza, Ceará
+REGRA CORTOU | adzuna | Especialista De People Analytics - Porto Alegre/Rs | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | ESPECIALISTA DE PEOPLE ANALYTICS - PORTO ALEGRE/RS | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Analista Inteligência Mercado Sênior | Analytics Engine | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de People Analytics Pl - Petz Holding | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Pessoa engenheira de Software PL | Research Analytics | local fora do alvo: Jardim América, Zona Oeste
+REGRA CORTOU | adzuna | Especialista de Crédito (Analytics & Dados) - Barra da  | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Head de Operações (time de projetos: automação industri | bloqueada: senioridade acima do alvo (head)
+REGRA CORTOU | adzuna | BEMOL SERVIÇOS FINANCEIROS | Analista de Dados e Analyt | bloqueada: senioridade acima do alvo (iii)
+REGRA CORTOU | adzuna | Especialista Em Dados (BI & Analytics) PJ - Recrutament | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Business Intelligence Analyst | Campaign Analytics (Mid | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Business Intelligence Analyst | Campaign Analytics (Mid | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | External Fulfillment Program Manager Analytics , Market | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | External Fulfillment Program Manager Analytics , Market | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | MES & Data Analytics Specialist | Power Bi | Python| Hí | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Analista de Inteligência de Vendas Sênior (Power BI | F | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Pessoa Analytics Engineer Sênior — Foco em Modularidade | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | CONSULTOR SAP ANALYTICS CLOUD (SAP SAC) PL (PJ) — São C | local fora do alvo: São Caetano do Sul, Estado de São Paulo
+REGRA CORTOU | adzuna | SENIOR DATA SCIENCE & AI SOLUTIONS ANALYST (36240) | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | FBS Data Scientist (Customer & Agent Solutions) | bloqueada: fora da area (data scientist)
+REGRA CORTOU | adzuna | Digital Marketing Specialist - Email, Paid Media & Lead | bloqueada: senioridade acima do alvo (lead)
+REGRA CORTOU | adzuna | Analista De BI - Recrutamento Aberto | local fora do alvo: Porto Alegre, Rio Grande do Sul
+REGRA CORTOU | adzuna | Especialista de Prevencao a Fraude I | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Head de dados | bloqueada: senioridade acima do alvo (head)
+REGRA CORTOU | adzuna | Senior Business Analyst | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Especialista de Marketing Pleno - ramo imobiliário | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Analista de Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Executivo Comercial Sênior Vendas Consultivas Tech | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Finanças Sênior - Vaga Afirmativa para Mulh | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Marketing Operations Manager (fixed term) | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Senior Marketing Manager | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Growth Marketing Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Senior Marketing Coordinator | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Content Operations & Governance Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Marketing Coordinator | bloqueada: senioridade acima do alvo (coordinator)
+REGRA CORTOU | adzuna | Creative Project Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Analista de Negócios Sênior - Revops Mkt Rd Station (Re | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Amazon Flex Program Manager, Amazon Flex | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Regional Marketing Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | CRO Project Manager-Brazil | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Regional Marketing Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Sales Operations Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Residences Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Senior Salesforce Administrator | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Especialista de RevOps | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Especialista de Negócios Sênior [Jornadas Digitais] | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Residences Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Senior Marketing Manager (Senior Marketing, Growth & Di | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | BRA - Operations & Fulfillment Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Partnership Manager - Lifestyle | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | KOS Project Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Key Account Manager, Public Market – Regions: São Paulo | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Key Account Manager, Commercial Private Market – Region | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Revenue Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Sr Lawyer - Intellectual Property | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Inside Sales [Talents Bench] | bloqueada: fora da area (inside sales)
+REGRA CORTOU | adzuna | Analista de CRM - Hubspot | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Service Sales Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Service Sales Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Senior Operations Analyst | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Sr. Capacity Planner OTR, OTR Planning | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Sr Finance Business Manager , 3P Latam Finance | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Head of Client Success & Operations LATAM | bloqueada: senioridade acima do alvo (head)
+REGRA CORTOU | adzuna | B2B Sales Team Manager | Inside Sales | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Coordenador de Marketing - B2B Tecnologia & IA | bloqueada: senioridade acima do alvo (coordenador)
+REGRA CORTOU | adzuna | Sr. Capacity Planner OTR, OTR Planning | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Sr. Capacity Planner OTR, OTR Planning | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Sr Finance Business Manager , 3P Latam Finance | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Sr Finance Business Manager , 3P Latam Finance | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Arrivals & Departures Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Arrivals & Departures Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Area Pricing Specialist, Sumaré/SP | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Sr Tech Product Manager, Customer Fulfillment Experienc | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Product Operations Senior Analyst [growth] | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Senior Marketing Manager (Senior Marketing, Growth & Di | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Sr Tech Product Manager, Customer Fulfillment Experienc | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Sr Tech Product Manager, Customer Fulfillment Experienc | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Mkt.Marketing Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Customer Lifecycle Automation Manager (Ote $41,800/year | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Sales Specialist - Heavy Industry (Minas Gerais) | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Inside Sales Representative, Pharma Brazil | bloqueada: fora da area (inside sales)
+REGRA CORTOU | adzuna | Product Lead, Self-Serve Growth | bloqueada: senioridade acima do alvo (lead)
+REGRA CORTOU | adzuna | Sr. Marketing Analyst | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Revenue Operations Manager (Business Development & Reve | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Revenue Operations Manager (Business Development & Reve | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Analista de Revenue Operations (RevOps) | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Executivo Sênior de Revenue Operations (Sales Excellenc | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Revenue Systems & Operations | local fora do alvo: Florianópolis, Santa Catarina
+REGRA CORTOU | adzuna | Billing Operations Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | CPQ Senior Solution Sales Executive | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Senior Business Operations Analyst | Revenue Assurance | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Sales Operations Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Operations Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Senior Salesforce Administrator | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Senior Sales Operations Analyst | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Sr Financial Analyst | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Especialista de RevOps | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | CRM & Sales Operations Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | SR Analista de Receita | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Coordenador de Marketing - B2B Tecnologia & IA | bloqueada: senioridade acima do alvo (coordenador)
+REGRA CORTOU | adzuna | Analista de Revops Sr | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Growth Marketing Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Senior Marketing Manager | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | B2B Sales Ops Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Product Lead, Self-Serve Growth | bloqueada: senioridade acima do alvo (lead)
+REGRA CORTOU | adzuna | Analista Comercial III | bloqueada: senioridade acima do alvo (iii)
+REGRA CORTOU | adzuna | SR Analista de Receita | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Planejamento Comercial Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Coordenador(a) de Receita | V4 Alfradique & Co | bloqueada: senioridade acima do alvo (coordenador)
+REGRA CORTOU | adzuna | Account Specialist - Renewals (W/English&Spanish) | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Sr. Manager, Sales Operations | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Content Operations & Governance Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Sales Ops SR Analyst | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | RevOps BI Architect (Contract-to-Hire) | bloqueada: senioridade acima do alvo (architect)
+REGRA CORTOU | adzuna | B2B Sales Team Manager | Inside Sales | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Lead, Business Operations - Payward Services | bloqueada: senioridade acima do alvo (lead)
+REGRA CORTOU | adzuna | Deal Structuring & Pricing Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Analista Sênior ServiceNow / Líder Técnico | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Especialista em Redes (SME) - Inglês Fluente | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Especialista em Observabilidade e Monitoramento de Sist | bloqueada: senioridade acima do alvo em dados (especialista)
+REGRA CORTOU | adzuna | Analista Júnior de Salesforce – Exclusiva PCD | bloqueada: vaga afirmativa exclusiva (exclusiva pcd)
+REGRA CORTOU | adzuna | Consultor Sênior – Testes de Performance | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Gerente - Quality Engineering | bloqueada: senioridade acima do alvo (gerente)
+REGRA CORTOU | adzuna | Gerente SAP - LOG Rollout Lead | bloqueada: senioridade acima do alvo (gerente)
+REGRA CORTOU | adzuna | Gerente de Projetos de Transição de Operações | bloqueada: senioridade acima do alvo (gerente)
+REGRA CORTOU | adzuna | Engenheiro(a) Sênior de Controle e Automação | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Consultor Sênior SAP SD | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Grupo QuintoAndar | Senior Offensive Security Engineer | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Contract Specialist | bloqueada: senioridade acima do alvo em dados (specialist)
+REGRA CORTOU | adzuna | Senior Account Manager | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista CRM Sr. | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista CRM SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista Crm Jr | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Pessoa Analista CRM Pleno | local fora do alvo: Petrolina, Pernambuco
+REGRA CORTOU | adzuna | Analista CRM SD Station Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista CRM SD Station Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista CRM SD Station Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM | local fora do alvo: Ananindeua, Pará
+REGRA CORTOU | adzuna | Analista de CRM | local fora do alvo: Curitiba, Paraná
+REGRA CORTOU | adzuna | Analista de CRM | local fora do alvo: Governador Valadares, Minas Gerais
+REGRA CORTOU | adzuna | Analista de CRM | local fora do alvo: Recife, Pernambuco
+REGRA CORTOU | adzuna | Analista de CRM | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM | local fora do alvo: Brasil
+REGRA CORTOU | adzuna | ANALISTA DE CRM | local fora do alvo: Porto Alegre, Rio Grande do Sul
+REGRA CORTOU | adzuna | Analista CRM JR - iPlace - São Paulo/SP | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista Peoplesoft - CRM | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM Júnior | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM Pleno | local fora do alvo: Maceió, Alagoas
+REGRA CORTOU | adzuna | Analista de CRM Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de CRM Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista De CRM - Ecommerce | local fora do alvo: Joinville, Santa Catarina
+REGRA CORTOU | adzuna | Analista de CRM - Hubspot | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Analista de CRM Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de CRM Júnior | local fora do alvo: Rio de Janeiro, Estado do Rio de Janeiro
+REGRA CORTOU | adzuna | Analista de CRM Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista De Crm Sr | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de CRM – Marketing | local fora do alvo: Joinville, Santa Catarina
+REGRA CORTOU | adzuna | Analista Comercial - CRM Relatórios | local fora do alvo: Itapema, Santa Catarina
+REGRA CORTOU | adzuna | Analista de CRM | Pós-Vendas | local fora do alvo: Vila Azevedo, Zona Leste
+REGRA CORTOU | adzuna | Analista de CRM e Dados Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Banco de Talentos - Analista de CRM | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Analista de CRM Jr | Santo André | local fora do alvo: Santo André, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM Sr | Santo André | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de CRM Sr | Santo André | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de CRM Jr - Vitória/ES | local fora do alvo: Vitória, Espirito Santo
+REGRA CORTOU | adzuna | ANALISTA DE CRM EM SÃO PAULO - SP - 74116 | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Dados CRM | local fora do alvo: Recife, Pernambuco
+REGRA CORTOU | adzuna | Analista Líder de CRM | bloqueada: senioridade acima do alvo (lider)
+REGRA CORTOU | adzuna | Analista de Marketing - CRM | local fora do alvo: Belém, Pará
+REGRA CORTOU | adzuna | Analista de CRM Comercial Pleno (Engenharia Elétrica) | local fora do alvo: Contagem, Minas Gerais
+REGRA CORTOU | adzuna | ANALISTA DE CRM (CLT) — Nova Lima/MG | local fora do alvo: Nova Lima, Minas Gerais
+REGRA CORTOU | adzuna | Analista de CRM Pleno – Temporário | Carrão/SP | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM Pleno – Temporário | Carrão/SP | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM Pleno | Exclusiva para Pessoa com Defic | bloqueada: vaga afirmativa exclusiva (exclusiva para pessoa 
+REGRA CORTOU | adzuna | Analista De Crm Sênior (Salesforce Marketing Cloud) | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de CRM Sênior - Cartões Core Produto | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Planejamento CRM Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | ANALISTA COMERCIAL I CRM | local fora do alvo: Brotas, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista Sênior de CRM e Revenue | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de CRM & Inteligência de Mercado - Híbrido - B | local fora do alvo: Bauru, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM e Comunicação Júnior - Água Branca (SP) | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de CRM SR (Dados) - Cencosud Brasil - São Paul | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Inbound & CRM Sênior | Mídias | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista Júnior de CRM | Minimal Club | local fora do alvo: Belo Horizonte, Minas Gerais
+REGRA CORTOU | adzuna | Analista de Marketing III- CRM- Negócios Especializados | bloqueada: senioridade acima do alvo (iii)
+REGRA CORTOU | adzuna | Analista de Marketing II- CRM e Automação de Marketing | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Ciência de Dados Sr | CRM | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de Inteligência Comercial, Data e CRM Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Sistemas Sênior Dynamics CRM (Suporte Melho | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Pré -Vendas/SDR | bloqueada: fora da area (sdr)
+REGRA CORTOU | adzuna | Analista de Pré -Vendas/SDR | bloqueada: fora da area (sdr)
+REGRA CORTOU | adzuna | Analista de Pré -Vendas/SDR | bloqueada: fora da area (sdr)
+REGRA CORTOU | adzuna | Analista de Pré -Vendas/SDR | bloqueada: fora da area (sdr)
+REGRA CORTOU | adzuna | Analista de Pré -Vendas/SDR | bloqueada: fora da area (sdr)
+REGRA CORTOU | adzuna | Analista De Sistemas - Pleno Ou Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Ticket Manager | bloqueada: senioridade acima do alvo (manager)
+REGRA CORTOU | adzuna | Analista de Integração Júnior | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Integração WSO2 Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de Negócios - Integrações | Pleno | local fora do alvo: Palhoça, Santa Catarina
+REGRA CORTOU | adzuna | Analista Jurídico Júnior - Integridade | bloqueada: fora da area (juridico)
+REGRA CORTOU | adzuna | Analista de Projetos e Integração Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Projetos e Integração Pleno | local fora do alvo: São Paulo, Estado de São Paulo
+REGRA CORTOU | adzuna | Analista de Suporte Técnico e Integração | local fora do alvo: Curitiba, Paraná
+REGRA CORTOU | adzuna | Analista Suporte Negócio Sênior | Integridade de Contra | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista de TI SR. - Integração de Dados e Pipelines | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista de TI SR. - Integração de Dados e Pipelines | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista Planejamento Comercial Sênior | Planejamento I | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista Planejamento Comercial Sênior | Planejamento I | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Auxiliar de Integração Fiscal | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista Contábil - Shopping Palladium | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Contabil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | ANALISTA JURIDICO JR | bloqueada: fora da area (juridico)
+REGRA CORTOU | adzuna | Analista Contábil - Externo | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Financeiro Pleno ou Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Fiscal | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista Fiscal | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista Fiscal Pleno | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Fiscal | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Sr Staff Engineer | Customer Operations | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Assistente Fiscal Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Jurídico | bloqueada: fora da area (juridico)
+REGRA CORTOU | adzuna | Analista Contábil Fiscal | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Assistente Fiscal - Americana | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Assistente Fiscal - Americana | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Contábil Pleno | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista De Sistemas - Pleno Ou Senior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista Contábil Júnior | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Assistente Fiscal - Americana | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Assistente Fiscal Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Jurídico | bloqueada: fora da area (juridico)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Fiscal | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista Fiscal Pleno | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Contábil para concessionária - Barueri/SP | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Assistente Fiscal - Americana | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Assistente Fiscal - Americana | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Assistente Fiscal - Americana | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Fiscal – Pleno/Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista Fiscal | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Fiscal | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | Analista de DP Sênior | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | adzuna | Analista Contábil - Controladoria Contábil | bloqueada: fora da area (contabil)
+REGRA CORTOU | adzuna | Analista Fiscal | bloqueada: fora da area (fiscal)
+REGRA CORTOU | adzuna | ANALISTA CONTABIL - CONSELHEIRO LAFAIETE/MG | bloqueada: fora da area (contabil)
+DESCRICAO CORTOU | Analista BI Pleno | local fora do alvo: Goiânia, GO (LinkedIn marcou remoto, a c
+DESCRICAO CORTOU | Analista de Dados - GMO | local fora do alvo: Itajaí, SC (LinkedIn marcou remoto, a co
+DESCRICAO CORTOU | Analista BI Pleno | local fora do alvo: São Paulo, SP (LinkedIn marcou remoto, a
+DESCRICAO CORTOU | Analista de Dados Pl. - Alphaville | local fora do alvo: Santana de Parnaíba, SP (LinkedIn marcou
+DESCRICAO CORTOU | Analista de Dados Pleno | local fora do alvo: São Caetano do Sul, SP (LinkedIn marcou 
+DESCRICAO CORTOU | Analista de Dados | local fora do alvo: Rio de Janeiro e Região (LinkedIn marcou
+DESCRICAO CORTOU | Analista de Dados Pleno - CRM PME | local fora do alvo: São Paulo, SP (LinkedIn marcou remoto, a
+DESCRICAO CORTOU | Analista de Inteligência de Dados Pleno | local fora do alvo: Araraquara, SP (LinkedIn marcou remoto, 
+DESCRICAO CORTOU | Analista de Dados | Araras | local fora do alvo: Araras, SP (LinkedIn marcou remoto, a co
+DESCRICAO CORTOU | Analista de Dados Pl | local fora do alvo: Belo Horizonte, MG (LinkedIn marcou remo
+[linkedin] 11 novas: 1 seguem, 10 derrubadas pela descricao, 0 sem descricao (voltam no proximo ciclo)
+[triagem] cortada: Analista de Inteligência de Mercado -> Pleno-senior presencial em Caxias, excede senioridade e requisitos.
+[triagem] cortada: Analista de Dados -> Localizacao e modalidade nao informadas fora de Caxias.
+[triagem] cortada: Analista de Dados -> Vaga presencial/hibrida em SP sem confirmacao de remoto.
+[triagem] cortada: Analista de Dados -> Modalidade nao informada, local Sao Paulo.
+[triagem] cortada: Analista de Dados -> Modalidade nao informada e sem local claro.
+[triagem] cortada: Analista de Dados -> Modalidade e local nao informados com clareza.
+[triagem] cortada: Analista de Dados -> Presencial em Brasilia, fora da regiao.
+[triagem] cortada: Analista de Dados -> Presencial em Brasilia, fora da regiao.
+[triagem] cortada: Analista de Dados e Relacionamento -> Modalidade nao informada.
+[triagem] cortada: Analista de Dados Júnior -> Modalidade nao informada.
+[triagem] cortada: Analista De Dados Junior -> Modalidade nao informada.
+[triagem] cortada: Analista de Dados Fiscais -> Presencial/Hibrido sem confirmacao de remoto fora de Caxias.
+[triagem] cortada: Analista de Dados Jr -> nao_informado fora da regiao: Vaga junior de dados com modalidade nao informada.
+[triagem] cortada: Analista de Dados Olap -> Pede 5 anos de experiencia e Teradata.
+[triagem] cortada: ANALISTA DE DADOS EPIDEMIOLÓGICOS -> nao_informado fora da regiao: Analise de dados em saude sem requisitos complexos.
+[triagem] cortada: Analista de Dados Pleno -> nao_informado fora da regiao: Analista pleno com requisitos compativeis.
+[triagem] cortada: Analista de Dados - CRM e BI -> nao_informado fora da regiao: CRM e BI, plano B aceitavel.
+[triagem] cortada: Engenheiro Dados -> nao_informado fora da regiao: Engenharia de dados generica sem restricoes claras.
+[triagem] cortada: Engenheiro Dados Pl -> nao_informado fora da regiao: Engenheiro de dados pleno compativel.
+[triagem] cortada: Engenheiro de Dados -> Exige GCP como plataforma principal.
+[triagem] cortada: Engenheiro de Dados -> nao_informado fora da regiao: Pipelines de dados, perfil compativel.
+[triagem] cortada: Engenheiro de Dados Pleno -> Presencial em Campinas SP, fora da regiao.
+[triagem] cortada: Engenheiro(a) de Dados -> nao_informado fora da regiao: Usa Python, PySpark e Databricks, encaixe perfeito.
+[triagem] cortada: Engenheiro(a) de Dados -> nao_informado fora da regiao: Engenharia de dados pleno com bom encaixe.
+[triagem] cortada: Pessoa Engenheira de Dados Pleno -> nao_informado fora da regiao: Consultoria de analytics e ETL compativel.
+[triagem] cortada: Hitss | Engenheiro de Dados Multicloud -> Exige multicloud (AWS/Azure/GCP).
+[triagem] cortada: Pessoa Engenheira de Dados (Big Data) -> Vaga senior.
+[triagem] cortada: Engenheiro de Dados Snowflake [Banco de Talen -> Vaga sênior exige arquitetura em Snowflake.
+[triagem] cortada: Engenheiro de Dados AWS [Banco de Talentos] -> Vaga sênior com foco em AWS.
+[triagem] cortada: Engenheiro de Dados Azure [Banco de Talentos] -> Vaga sênior de liderança e arquitetura em Azure.
+[triagem] cortada: [Banco de Talentos] Pessoa Engenheira de Dado -> nao_informado fora da regiao: Engenharia de dados, alinhado com o perfil acadêmico.
+[triagem] cortada: Engenheiro(a) de Dados Pleno -> nao_informado fora da regiao: Pleno aceitável, possui gap em Airflow.
+[triagem] cortada: Engenheiro(a) de Dados Pleno -> nao_informado fora da regiao: Pleno em engenharia de dados, bom encaixe.
+[triagem] cortada: Engenheiro(a) de Dados | TI -> nao_informado fora da regiao: Usa Python, PySpark e Databricks.
+[triagem] cortada: Pessoa Engenheira de Dados Jr - Governança de -> nao_informado fora da regiao: Vaga júnior em governança de dados e IA.
+[triagem] cortada: Analista de BI -> nao_informado fora da regiao: Analista de BI, boa aderência.
+[triagem] cortada: Analista de BI Pleno -> nao_informado fora da regiao: Analista de BI pleno, dentro do limite.
+[triagem] cortada: Data & Analytics Product Owner -> Presencial em São Paulo, fora da região.
+[triagem] cortada: Data Landscaping Analytics, Real World Eviden -> nao_informado fora da regiao: Analise de dados e pesquisa, aceitável.
+[triagem] cortada: Data Landscaping Analytics, Real World Eviden -> Presencial fora do RS.
+[triagem] cortada: Agile Scrum Master - Home Office -> Vaga de Scrum Master em São Paulo.
+[triagem] cortada: Data Product Owner - Home Office -> Vaga de Product Owner em São Paulo.
+[triagem] cortada: Financial Controller -> Vaga da area financeira, fora do perfil.
+[triagem] cortada: Analista de FP&A (Financial Planning & Analys -> Vaga de FP&A financeiro, fora do objetivo.
+[triagem] cortada: Analista de Treinamento e Desenvolvimento | P -> Vaga comercial em Sao Paulo, fora da regiao.
+
+IA: 5 mantidas, 45 cortadas
+
+MANTIDA s=8 | google | Vaga home office de Analista de Dados Junior na Oportun | Qualquer lugar (Google marco |  [dados] Analista de dados junior remoto, otimo encaixe.
+MANTIDA s=8 | google | Business Intelligence Analyst | Qualquer lugar (Google marco |  [bi] BI Analyst remoto, ingles avancado e SQL.
+MANTIDA s=8 | google | Vaga home office de Analista de Dados Junior na Oportun | Qualquer lugar (Google marco |  [dados] Analista de dados junior remoto, otimo encaixe.
+MANTIDA s=6 | adzuna | CRM Administrator | Brasil |  [operacoes_tecnicas] CRM e operacoes tecnicas remoto, plano B aceitavel.
+MANTIDA s=6 | adzuna | CRM Administrator | Brasil |  [operacoes_tecnicas] CRM e operacoes tecnicas remoto, plano B aceitavel.
+IA CORTOU | linkedin | Analista de Inteligência de Mercado | IA: Pleno-senior presencial em Caxias, excede senioridade e requisitos.
+IA CORTOU | adzuna | Analista de Dados | IA: Localizacao e modalidade nao informadas fora de Caxias.
+IA CORTOU | adzuna | Analista de Dados | IA: Vaga presencial/hibrida em SP sem confirmacao de remoto.
+IA CORTOU | adzuna | Analista de Dados | IA: Modalidade nao informada, local Sao Paulo.
+IA CORTOU | adzuna | Analista de Dados | IA: Modalidade nao informada e sem local claro.
+IA CORTOU | adzuna | Analista de Dados | IA: Modalidade e local nao informados com clareza.
+IA CORTOU | adzuna | Analista de Dados | IA: Presencial em Brasilia, fora da regiao.
+IA CORTOU | adzuna | Analista de Dados | IA: Presencial em Brasilia, fora da regiao.
+IA CORTOU | adzuna | Analista de Dados e Relacionamento | IA: Modalidade nao informada.
+IA CORTOU | adzuna | Analista de Dados Júnior | IA: Modalidade nao informada.
+IA CORTOU | adzuna | Analista De Dados Junior | IA: Modalidade nao informada.
+IA CORTOU | adzuna | Analista de Dados Fiscais | IA: Presencial/Hibrido sem confirmacao de remoto fora de Caxias.
+IA CORTOU | adzuna | Analista de Dados Jr | IA: nao_informado fora da regiao: Vaga junior de dados com modalidade nao inform
+IA CORTOU | adzuna | Analista de Dados Olap | IA: Pede 5 anos de experiencia e Teradata.
+IA CORTOU | adzuna | ANALISTA DE DADOS EPIDEMIOLÓGICOS | IA: nao_informado fora da regiao: Analise de dados em saude sem requisitos compl
+IA CORTOU | adzuna | Analista de Dados Pleno | IA: nao_informado fora da regiao: Analista pleno com requisitos compativeis.
+IA CORTOU | adzuna | Analista de Dados - CRM e BI | IA: nao_informado fora da regiao: CRM e BI, plano B aceitavel.
+IA CORTOU | adzuna | Engenheiro Dados | IA: nao_informado fora da regiao: Engenharia de dados generica sem restricoes cl
+IA CORTOU | adzuna | Engenheiro Dados Pl | IA: nao_informado fora da regiao: Engenheiro de dados pleno compativel.
+IA CORTOU | adzuna | Engenheiro de Dados | IA: Exige GCP como plataforma principal.
+IA CORTOU | adzuna | Engenheiro de Dados | IA: nao_informado fora da regiao: Pipelines de dados, perfil compativel.
+IA CORTOU | adzuna | Engenheiro de Dados Pleno | IA: Presencial em Campinas SP, fora da regiao.
+IA CORTOU | adzuna | Engenheiro(a) de Dados | IA: nao_informado fora da regiao: Usa Python, PySpark e Databricks, encaixe perf
+IA CORTOU | adzuna | Engenheiro(a) de Dados | IA: nao_informado fora da regiao: Engenharia de dados pleno com bom encaixe.
+IA CORTOU | adzuna | Pessoa Engenheira de Dados Pleno | IA: nao_informado fora da regiao: Consultoria de analytics e ETL compativel.
+IA CORTOU | adzuna | Hitss | Engenheiro de Dados Multicloud | IA: Exige multicloud (AWS/Azure/GCP).
+IA CORTOU | adzuna | Pessoa Engenheira de Dados (Big Data) | IA: Vaga senior.
+IA CORTOU | adzuna | Engenheiro de Dados Snowflake [Banco de Talentos] | IA: Vaga sênior exige arquitetura em Snowflake.
+IA CORTOU | adzuna | Engenheiro de Dados AWS [Banco de Talentos] | IA: Vaga sênior com foco em AWS.
+IA CORTOU | adzuna | Engenheiro de Dados Azure [Banco de Talentos] | IA: Vaga sênior de liderança e arquitetura em Azure.
+IA CORTOU | adzuna | [Banco de Talentos] Pessoa Engenheira de Dados | IA: nao_informado fora da regiao: Engenharia de dados, alinhado com o perfil aca
+IA CORTOU | adzuna | Engenheiro(a) de Dados Pleno | IA: nao_informado fora da regiao: Pleno aceitável, possui gap em Airflow.
+IA CORTOU | adzuna | Engenheiro(a) de Dados Pleno | IA: nao_informado fora da regiao: Pleno em engenharia de dados, bom encaixe.
+IA CORTOU | adzuna | Engenheiro(a) de Dados | TI | IA: nao_informado fora da regiao: Usa Python, PySpark e Databricks.
+IA CORTOU | adzuna | Pessoa Engenheira de Dados Jr - Governança de Dados e I | IA: nao_informado fora da regiao: Vaga júnior em governança de dados e IA.
+IA CORTOU | adzuna | Analista de BI | IA: nao_informado fora da regiao: Analista de BI, boa aderência.
+IA CORTOU | adzuna | Analista de BI Pleno | IA: nao_informado fora da regiao: Analista de BI pleno, dentro do limite.
+IA CORTOU | adzuna | Data & Analytics Product Owner | IA: Presencial em São Paulo, fora da região.
+IA CORTOU | adzuna | Data Landscaping Analytics, Real World Evidence | IA: nao_informado fora da regiao: Analise de dados e pesquisa, aceitável.
+IA CORTOU | adzuna | Data Landscaping Analytics, Real World Evidence | IA: Presencial fora do RS.
+IA CORTOU | adzuna | Agile Scrum Master - Home Office | IA: Vaga de Scrum Master em São Paulo.
+IA CORTOU | adzuna | Data Product Owner - Home Office | IA: Vaga de Product Owner em São Paulo.
+IA CORTOU | adzuna | Financial Controller | IA: Vaga da area financeira, fora do perfil.
+IA CORTOU | adzuna | Analista de FP&A (Financial Planning & Analysis) com In | IA: Vaga de FP&A financeiro, fora do objetivo.
+IA CORTOU | adzuna | Analista de Treinamento e Desenvolvimento | Português e | IA: Vaga comercial em Sao Paulo, fora da regiao.
