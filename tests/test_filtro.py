@@ -882,3 +882,41 @@ def test_repescagem_exige_sinal_de_dados_na_descricao():
                 descricao="Montar dashboards de preco em Power BI e SQL.")
     assert not filtro.avaliar(mecanico) and not mecanico.repescagem
     assert not filtro.avaliar(pricing) and pricing.repescagem
+
+
+# --------------------------------------------------- nov/2026: "a confirmar" nao e remoto
+def test_marca_a_confirmar_nao_aprova_vaga_com_cidade_no_titulo():
+    vaga = v("Analista Pleno em Power BI (Ribeirão Preto, SP)",
+             local="Qualquer lugar (Google marcou remoto, a confirmar)",
+             descricao="Construir dashboards em Power BI para a area comercial.")
+    assert not filtro.avaliar(vaga)
+
+
+def test_marca_a_confirmar_passa_com_remoto_na_descricao_ou_no_titulo():
+    desc = v("Analista de BI", local="São Paulo, SP (LinkedIn marcou remoto, a confirmar)",
+             descricao="Vaga 100% remota, de qualquer lugar do Brasil.")
+    titulo = v("Analista de BI - Remoto", local="São Paulo, SP (LinkedIn marcou remoto, a confirmar)",
+               descricao="Construir dashboards.")
+    assert filtro.avaliar(desc) and filtro.avaliar(titulo)
+
+
+def test_marca_a_confirmar_sem_descricao_fica_pendente():
+    vaga = v("Analista de BI", local="São Paulo, SP (LinkedIn marcou remoto, a confirmar)")
+    assert filtro.avaliar(vaga)
+
+
+@pytest.mark.parametrize("titulo", [
+    "Consultor de Vendas - Caxias do Sul", "Assistente de Vendas", "Promotor de Vendas",
+    "Analista de Pré-Vendas BDR - SMB", "SDR Junior", "Executivo de Contas",
+    "Servente de Limpeza", "Ajudante de Limpeza",
+])
+def test_vendas_e_limpeza_bloqueadas_no_titulo(titulo):
+    vaga = v(titulo, local="Caxias do Sul, RS")
+    assert not filtro.avaliar(vaga) and not vaga.repescagem
+
+
+@pytest.mark.parametrize("titulo", [
+    "Analista de Dados de Vendas", "Analista de BI - Performance Comercial",
+])
+def test_dados_de_vendas_segue_passando(titulo):
+    assert filtro.avaliar(v(titulo, local="Remoto"))

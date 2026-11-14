@@ -74,9 +74,13 @@ AREA (campo "area", escolha uma):
   ser de dados.
 
 MODALIDADE (campo "modalidade"): "remoto", "hibrido", "presencial" ou "nao_informado",
-pelo que a DESCRICAO diz. O campo "local" pode estar errado: o LinkedIn marca vaga
-hibrida como remota. Se a descricao fala em dias no escritorio, modelo hibrido ou
-presencial, e isso que vale. "Auxilio home office" e beneficio, nao modalidade.
+pelo titulo e pela DESCRICAO inteira. "Remoto" so quando o anuncio diz isso com
+clareza. O campo "local" pode estar errado: LinkedIn e Google marcam vaga hibrida ou
+presencial como remota ("marcou remoto, a confirmar" e chute da fonte, nao prova).
+Dias no escritorio, modelo hibrido ou presencial: e isso que vale. Cidade no titulo
+ou na descricao como local de trabalho ("Analista de BI (Ribeirao Preto, SP)",
+"atuacao em Joinville") sem o anuncio dizer remoto: "presencial". "Auxilio home
+office" e beneficio, nao modalidade. Fora da regiao de Caxias, so "remoto" passa.
 
 SENIORIDADE
 - Junior, estagio, trainee ou sem nivel: aceito.
@@ -157,8 +161,10 @@ def aplicar_veredito(vaga, veredito: dict) -> tuple[bool, str]:
         return False, motivo
     if area in AREAS_CORTADAS:
         return False, f"area {area}: {motivo}"
-    if modalidade in ("hibrido", "presencial") and not _na_regiao(vaga):
-        return False, f"{modalidade} fora da regiao: {motivo}"
+    # fora da regiao, so passa remoto CONFIRMADO: "nao_informado" deixava passar vaga
+    # com "(Ribeirao Preto, SP)" no titulo
+    if not _na_regiao(vaga) and modalidade != "remoto":
+        return False, f"{modalidade or 'modalidade'} fora da regiao: {motivo}"
     try:
         nota = float(veredito.get("nota", vaga.score))
     except (TypeError, ValueError):
