@@ -885,19 +885,22 @@ def test_repescagem_exige_sinal_de_dados_na_descricao():
 
 
 # --------------------------------------------------- nov/2026: "a confirmar" nao e remoto
-def test_marca_a_confirmar_nao_aprova_vaga_com_cidade_no_titulo():
+def test_marca_a_confirmar_cai_com_presencial_na_descricao():
     vaga = v("Analista Pleno em Power BI (Ribeirão Preto, SP)",
              local="Qualquer lugar (Google marcou remoto, a confirmar)",
-             descricao="Construir dashboards em Power BI para a area comercial.")
+             descricao="Atuacao presencial na unidade de Ribeirao Preto.")
     assert not filtro.avaliar(vaga)
 
 
-def test_marca_a_confirmar_passa_com_remoto_na_descricao_ou_no_titulo():
-    desc = v("Analista de BI", local="São Paulo, SP (LinkedIn marcou remoto, a confirmar)",
-             descricao="Vaga 100% remota, de qualquer lugar do Brasil.")
-    titulo = v("Analista de BI - Remoto", local="São Paulo, SP (LinkedIn marcou remoto, a confirmar)",
-               descricao="Construir dashboards.")
-    assert filtro.avaliar(desc) and filtro.avaliar(titulo)
+def test_marca_a_confirmar_sem_prova_fica_para_a_ia():
+    """Sem hibrido/presencial escrito, segue para a IA, que tem de confirmar remoto."""
+    vaga = v("Analista Pleno em Power BI (Ribeirão Preto, SP)",
+             local="Qualquer lugar (Google marcou remoto, a confirmar)",
+             descricao="Construir dashboards em Power BI para a area comercial.")
+    assert filtro.avaliar(vaga)
+    from triagem import aplicar_veredito
+    assert not aplicar_veredito(vaga, {"vale": True, "area": "bi",
+                                       "modalidade": "presencial", "nota": 7})[0]
 
 
 def test_marca_a_confirmar_sem_descricao_fica_pendente():

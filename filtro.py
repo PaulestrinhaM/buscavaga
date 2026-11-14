@@ -164,14 +164,14 @@ def local_aceito(vaga: Vaga) -> bool:
     # regime so na descricao. Exige expressao inequivoca.
     if remoto_no_corpo:
         return True
-    # remoto so pela marcacao da fonte: vale se o titulo disser remoto, senao nao.
-    # Sem descricao ainda (LinkedIn, que busca o anuncio depois da regra), passa
-    # pendente: main.enriquecer_linkedin busca o texto e reavalia, e vaga que fica sem
-    # descricao nao segue no ciclo.
+    # Remoto so pela marcacao da fonte: passa PENDENTE para quem le o anuncio. A IA
+    # recebe a descricao inteira e o codigo so aceita fora da regiao se ela devolver
+    # modalidade "remoto" (triagem.aplicar_veredito). Sem descricao ainda (LinkedIn,
+    # que busca o anuncio depois da regra), main.enriquecer_linkedin busca o texto e
+    # reavalia; vaga que fica sem descricao nao segue no ciclo. Nao pode cair no teste
+    # de "remoto" abaixo: a propria marcacao contem a palavra.
     if a_confirmar:
-        if not corpo.strip():
-            return True
-        return _contem(normalizar(vaga.titulo), config.TERMOS_REMOTO)
+        return True
     # regiao internacional que alcanca o Brasil
     if _contem(alvo, config.REGIOES_ACEITAS):
         return True
