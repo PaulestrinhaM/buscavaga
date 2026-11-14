@@ -1,0 +1,39 @@
+  [google] 'analista de BI remoto': 10 vagas
+  [google] 'analista de dados remoto': 10 vagas
+REGRA CORTOU | google | Analista de BI Sênior Remoto - BA | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | google | ANALISTA DE WEB ANALYTICS SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | google | Consultor Power BI SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | google | Analista de BI Sênior Remoto - BA | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | google | Analista de Dados e Negócios | Comercial | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Job for Full-time employee:
+Analista de Dados III | bloqueada: senioridade acima do alvo (iii)
+REGRA CORTOU | google | Analista Dados Jr - Exclusivo para Pessoas com Deficiên | bloqueada: vaga afirmativa exclusiva (exclusivo para pessoas
+[triagem] cortada: Hitss | Analista de Dados PL -> Exige pós-graduação completa em TI.
+[triagem] cortada: Hitss | Analista de Dados PL -> Exige pós-graduação completa em TI.
+
+IA: 11 mantidas, 2 cortadas
+
+MANTIDA s=9 | google | Pessoa Analista de Dados Júnior |  [dados] Analista de dados júnior em analytics engineering.
+    trechos: Sessões extras saem por R$ 70 e o benefício também pode incluir dependentes.
+MANTIDA s=8 | google | Vaga home office de Analista de Dados Junior na Oportun |  [dados] Analista de dados júnior, bom encaixe técnico.
+    trechos: Analista de Dados Junior na Oportunidades: vaga 100% remota, com contratação CLT (efetivo). | Benefícios citados: Abono Assiduidade, Auxílio Educação, Auxílio Home Office, Auxílio-Creche, entre outros. | Auxílio Home Office: Um valor extra mensal para te ajudar com os custos do trabalho remoto | Vale Transporte: Facilite sua rotina com economia e apenas 6% de desconto no salário para garantir seu deslocamento diário | O trabalho remoto é comum, desde que haja acesso seguro às bases da empresa.
+MANTIDA s=8 | google | Business Intelligence Analyst |  [bi] BI Analyst com SQL e ferramentas de BI.
+    trechos: We offer the convenience of remote work, allowing you to craft a work-life balance that suits your personal and professional needs. | We're looking for candidates who are passionate about technology, proficient in English, and excited to engage in remote collaboration for a worldwide presence. | 1–3+ years of experience in business intelligence, data analysis, or similar analytical rolesExperience writing SQL (queries, joins, aggregations) or similar query languagesHands‑on experience with BI tools (Metabase, Ta | Home officeCompetitive compensation based on experienceCareer plans to allow for
+MANTIDA s=8 | google | CAS | Analista de Dados, Automação e Inteligência Artif |  [dados] Analista de dados, automação e IA, bom perfil.
+    trechos: 14º e 15º salários fixos; | Previdência Privada até 8% do salário;
+MANTIDA s=8 | google | Vaga home office de Analista de Dados Junior na Oportun |  [dados] Analista de dados júnior remoto.
+    trechos: Analista de Dados Junior na Oportunidades: vaga 100% remota, com contratação CLT (efetivo). | Benefícios citados: Abono Assiduidade, Auxílio Educação, Auxílio Home Office, Auxílio-Creche, entre outros. | Auxílio Home Office: Um valor extra mensal para te ajudar com os custos do trabalho remoto | Vale Transporte: Facilite sua rotina com economia e apenas 6% de desconto no salário para garantir seu deslocamento diário | O trabalho remoto é comum, desde que haja acesso seguro às bases da empresa.
+MANTIDA s=7 | google | Analista de Negócios / Desenvolvedor de Power BI |  [bi] Vaga de BI com Power BI, gaps aceitáveis.
+    trechos: 
+MANTIDA s=7 | google | Analista Pleno em Power BI e Power Apps |  [bi] Analista pleno de BI, exige Power BI.
+    trechos: Localização: NBS - Ribeirão Preto | Modalidade: Teletrabalho
+MANTIDA s=7 | google | Analista Pleno em Power BI (Ribeirão Preto, SP, BR, 140 |  [bi] Analista pleno de BI, focado em Power BI.
+    trechos: Em nosso site você tem acesso a um pouco mais da nossa história, valores e compromissos sociais: [https://www.nestle.com](#) Resumo da posição Localização: NBS – Ribeirão Preto Área/Stream: DOT Reporte: Gerente de Busine
+MANTIDA s=7 | google | Analista Pleno em Power BI |  [bi] Analista pleno de BI, focado em Power BI.
+    trechos: Localização: NBS – Ribeirão Preto | Modalidade: Teletrabalho
+MANTIDA s=6 | google | Analista de Dados de Customer Service |  [bi] Analista de dados em customer service, BI.
+    trechos: 
+MANTIDA s=6 | google | Analista de Dados de Customer Service |  [bi] Analista de dados de Customer Service.
+    trechos: 
+IA CORTOU | google | Hitss | Analista de Dados PL | IA: Exige pós-graduação completa em TI.
+IA CORTOU | google | Hitss | Analista de Dados PL | IA: Exige pós-graduação completa em TI.
