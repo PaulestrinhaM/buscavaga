@@ -203,3 +203,17 @@ def test_google_hibrido_no_titulo_cai_mesmo_marcado_remoto():
                            "location": "Qualquer lugar", "detected_extensions":
                            {"work_from_home": True}}, agora)
     assert not filtro.avaliar(v)
+
+
+def test_google_vagas_com_link_de_busca_tem_ids_diferentes():
+    """Link 'google.com/search?...' sem query string era igual para todas."""
+    agora = datetime.now(timezone.utc)
+    a = google._converter({"title": "A", "job_id": "x1",
+                           "share_link": "https://www.google.com/search?q=a"}, agora)
+    b = google._converter({"title": "B", "job_id": "x2",
+                           "share_link": "https://www.google.com/search?q=b"}, agora)
+    c = google._converter({"title": "C", "job_id": "x3", "apply_options": [
+        {"link": "https://br.indeed.com/viewjob?jk=111"}]}, agora)
+    d = google._converter({"title": "D", "job_id": "x4", "apply_options": [
+        {"link": "https://br.indeed.com/viewjob?jk=222"}]}, agora)
+    assert len({a.id, b.id, c.id, d.id}) == 4

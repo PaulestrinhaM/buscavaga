@@ -10,7 +10,7 @@ config.TERMOS_LINKEDIN_REGIAO = ["dados"]
 config.PAGINAS_LINKEDIN = 1
 config.TERMOS_GOOGLE = [("analista de BI remoto", "Brazil"), ("analista de dados remoto", "Brazil")]
 config.LINKEDIN_DETALHES = 25
-coletadas = google.coletar(forcar=True)
+coletadas = list({v.id: v for v in google.coletar(forcar=True)}.values())
 novas, rep = [], []
 for v in coletadas:
     if filtro.avaliar(v):

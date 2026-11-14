@@ -52,7 +52,7 @@ def _converter(item: dict, agora: datetime) -> Vaga:
         descricao=(item.get("description") or "")[:8000],
         publicada_em=publicada,
         salario=ext.get("salary", ""),
-        extras={"via": item.get("via", "")},
+        extras={"via": item.get("via", ""), "id_fonte": item.get("job_id") or ""},
     )
 
 
