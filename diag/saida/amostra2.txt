@@ -1,0 +1,28 @@
+  [google] 'analista de BI remoto': 10 vagas
+  [google] 'analista de dados remoto': 10 vagas
+REGRA CORTOU | google | Analista de BI Sênior Remoto - BA | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | google | ANALISTA DE WEB ANALYTICS SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | google | Consultor Power BI SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | google | Analista de BI Sênior Remoto - BA | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | google | Analista de Dados e Negócios | Comercial | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Job for Full-time employee:
+Analista de Dados III | bloqueada: senioridade acima do alvo (iii)
+REGRA CORTOU | google | Analista Dados Jr - Exclusivo para Pessoas com Deficiên | bloqueada: vaga afirmativa exclusiva (exclusivo para pessoas
+[triagem] cortada: Hitss | Analista de Dados PL -> Exige pos-graduacao completa em TI (ele termina em 2027).
+[triagem] cortada: Hitss | Analista de Dados PL -> Exige pos-graduacao completa em TI (ele termina em 2027).
+
+IA: 11 mantidas, 2 cortadas
+
+MANTIDA s=8 | google | Analista Pleno em Power BI | Qualquer lugar (Google marco |  [dados] Analista de dados junior em Analytics Engineering com SQL e GCP.
+MANTIDA s=8 | google | Business Intelligence Analyst | Qualquer lugar (Google marco |  [bi] BI Analyst com SQL e ferramentas de BI, encaixe excelente.
+MANTIDA s=8 | google | Pessoa Analista de Dados Júnior | Qualquer lugar (Google marco |  [dados] Analista de dados junior em Analytics Engineering com SQL e GCP.
+MANTIDA s=7 | google | Analista de Negócios / Desenvolvedor de Power BI | Qualquer lugar (Google marco |  [bi] Boa vaga de BI com Snowflake, gap aceitavel em Power BI.
+MANTIDA s=7 | google | Analista Pleno em Power BI e Power Apps | Qualquer lugar (Google marco |  [dados] Analista de dados e automacao com SQL, Python e Power BI.
+MANTIDA s=7 | google | Vaga home office de Analista de Dados Junior na Oportun | Qualquer lugar (Google marco |  [bi] Analista de dados junior com BI, SQL e modelagem dimensional.
+MANTIDA s=7 | google | CAS | Analista de Dados, Automação e Inteligência Artif | Qualquer lugar (Google marco |  [dados] Analista de dados e automacao com SQL, Python e Power BI.
+MANTIDA s=7 | google | Vaga home office de Analista de Dados Junior na Oportun | Qualquer lugar (Google marco |  [bi] Analista de dados junior com BI, SQL e modelagem dimensional.
+MANTIDA s=6 | google | Analista Pleno em Power BI (Ribeirão Preto, SP, BR, 140 | Qualquer lugar (Google marco |  [bi] Analista pleno de BI, exige Power BI e SQL.
+MANTIDA s=6 | google | Analista de Dados de Customer Service | Qualquer lugar (Google marco |  [bi] Analista de dados em Customer Service com BI e SQL.
+MANTIDA s=6 | google | Analista de Dados de Customer Service | Qualquer lugar (Google marco |  [bi] Analista de dados em Customer Service com BI e SQL.
+IA CORTOU | google | Hitss | Analista de Dados PL | IA: Exige pos-graduacao completa em TI (ele termina em 2027).
+IA CORTOU | google | Hitss | Analista de Dados PL | IA: Exige pos-graduacao completa em TI (ele termina em 2027).
