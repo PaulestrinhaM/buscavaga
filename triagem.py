@@ -80,7 +80,11 @@ presencial como remota ("marcou remoto, a confirmar" e chute da fonte, nao prova
 Dias no escritorio, modelo hibrido ou presencial: e isso que vale. Cidade no titulo
 ou na descricao como local de trabalho ("Analista de BI (Ribeirao Preto, SP)",
 "atuacao em Joinville") sem o anuncio dizer remoto: "presencial". "Auxilio home
-office" e beneficio, nao modalidade. Fora da regiao de Caxias, so "remoto" passa.
+office" e beneficio, nao modalidade. "Teletrabalho" sozinho NAO confirma remoto: pela
+CLT inclui regime hibrido. "Modalidade: Teletrabalho" com localizacao num escritorio
+("Localizacao: Ribeirao Preto") e "nao_informado"; so vale "remoto" com "100%",
+"integral", "de qualquer lugar" ou equivalente. Fora da regiao de Caxias, so "remoto"
+passa.
 
 SENIORIDADE
 - Junior, estagio, trainee ou sem nivel: aceito.
@@ -186,7 +190,7 @@ def _chamar_modelo(modelo: str, prompt: str, chave: str) -> str:
     corpo = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
-            "temperature": 0.1,
+            "temperature": 0,   # mesma vaga, mesma resposta: com 0.1 o veredito oscilava
             "maxOutputTokens": 16000,
             "responseMimeType": "application/json",
             "thinkingConfig": {"thinkingLevel": "low"},
@@ -219,7 +223,10 @@ def _chamar(prompt: str) -> str:
     erros = []
     for modelo in (config.MODELO_IA, config.MODELO_IA_RESERVA):
         try:
-            return _chamar_modelo(modelo, prompt, chave)
+            resposta = _chamar_modelo(modelo, prompt, chave)
+            # o reserva (flash-lite) julga diferente: o log diz quem julgou cada lote
+            print(f"[triagem] lote julgado por {modelo}")
+            return resposta
         except (RuntimeError, requests.RequestException) as e:
             erros.append(str(e))
     raise RuntimeError("; ".join(erros))
