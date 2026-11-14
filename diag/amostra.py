@@ -10,14 +10,14 @@ config.TERMOS_LINKEDIN_REGIAO = ["dados"]
 config.PAGINAS_LINKEDIN = 1
 config.TERMOS_GOOGLE = [("analista de BI remoto", "Brazil"), ("analista de dados remoto", "Brazil")]
 config.LINKEDIN_DETALHES = 25
-coletadas = linkedin.coletar() + google.coletar(forcar=True) + adzuna()
+coletadas = google.coletar(forcar=True)
 novas, rep = [], []
 for v in coletadas:
     if filtro.avaliar(v):
         novas.append(v)
     elif v.repescagem:
         rep.append(v)
-    elif "local" in v.motivo or "bloqueada" in v.motivo:
+    else:
         print(f"REGRA CORTOU | {v.fonte[:8]} | {v.titulo[:55]} | {v.motivo[:60]}")
 main.db.registrar = lambda con, v, notificada: print(f"DESCRICAO CORTOU | {v.titulo[:55]} | {v.motivo[:60]}")
 novas, rep = main.enriquecer_linkedin(None, novas, rep, [])
