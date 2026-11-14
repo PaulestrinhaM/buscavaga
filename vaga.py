@@ -36,7 +36,16 @@ class Vaga:
 
     @property
     def id(self) -> str:
-        """Identidade por link; fallback em empresa+titulo para republicacao."""
+        """Identidade por link; fallback em empresa+titulo para republicacao.
+
+        Fonte com id proprio (Google Jobs: job_id) usa ele: o link do Google e do Indeed
+        e "google.com/search?..." e "indeed.com/viewjob?jk=...", e sem a query string
+        todas as vagas ficavam com o mesmo id. Isso trocava o veredito da IA entre
+        vagas do mesmo lote e fazia vaga nova passar por ja vista.
+        """
+        if self.extras.get("id_fonte"):
+            base = f"{self.fonte}:{self.extras['id_fonte']}"
+            return hashlib.sha256(base.encode()).hexdigest()[:16]
         base = self.link.split("?")[0].rstrip("/") if self.link else ""
         if not base:
             base = f"{normalizar(self.empresa)}|{normalizar(self.titulo)}"
