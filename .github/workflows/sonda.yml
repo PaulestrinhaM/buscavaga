@@ -1,0 +1,29 @@
+name: Sonda de triagem (diagnostico)
+on:
+  push:
+    branches: ["diag/**"]
+permissions:
+  contents: write
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+      ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+      ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: |
+          mkdir -p diag/saida
+          python diag/amostra.py 2>&1 | sed 's/api_key=[^& ]*/api_key=***/g; s/app_key=[^& ]*/app_key=***/g' | tee diag/saida/amostra.txt
+      - run: |
+          git config user.name "jobradar"
+          git config user.email "actions@github.com"
+          git add -f diag/saida
+          git commit -qm "sonda: amostra" && git push
