@@ -169,6 +169,10 @@ def aplicar_veredito(vaga, veredito: dict) -> tuple[bool, str]:
         nota = float(veredito.get("nota", vaga.score))
     except (TypeError, ValueError):
         nota = vaga.score
+    # "vale" com nota 0 a 2 e a IA se contradizendo (veio "vale" para vaga afirmativa
+    # exclusiva com nota 0): vale a nota
+    if nota <= 2:
+        return False, f"nota {nota:.0f}: {motivo}"
     teto = TETO_NOTA_POR_AREA.get(area)
     if teto is not None:
         nota = min(nota, teto)

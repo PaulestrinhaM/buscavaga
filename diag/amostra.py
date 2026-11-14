@@ -24,6 +24,7 @@ novas, rep = main.enriquecer_linkedin(None, novas, rep, [])
 mantidas, cortadas, _ = triagem.triar(novas[:40] + rep[:10])
 print(f"\nIA: {len(mantidas)} mantidas, {len(cortadas)} cortadas\n")
 for v in sorted(mantidas, key=lambda v: -v.score):
-    print(f"MANTIDA s={v.score} | {v.fonte[:8]} | {v.titulo[:55]} | {v.local[:28]} | {v.motivo.split('IA:')[-1][:80]}")
+    print(f"MANTIDA s={v.score} | {v.fonte[:8]} | {v.titulo[:55]} | {v.motivo.split('IA:')[-1][:80]}")
+    print(f"    trechos: {triagem.destaques(v.descricao)[:600]}")
 for v in cortadas:
     print(f"IA CORTOU | {v.fonte[:8]} | {v.titulo[:55]} | {v.motivo[:80]}")
