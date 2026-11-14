@@ -1,0 +1,31 @@
+  [google] 'analista de BI remoto': 10 vagas
+  [google] 'analista de dados remoto': 10 vagas
+REGRA CORTOU | google | Analista de BI Sênior Remoto - BA | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | google | ANALISTA DE WEB ANALYTICS SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | google | Consultor Power BI SR | bloqueada: senioridade acima do alvo (sr)
+REGRA CORTOU | google | Analista de BI Sênior Remoto - BA | bloqueada: senioridade acima do alvo (senior)
+REGRA CORTOU | google | Analista de Dados e Negócios | Comercial | local fora do alvo: Qualquer lugar (Google marcou remoto, a 
+REGRA CORTOU | google | Job for Full-time employee:
+Analista de Dados III | bloqueada: senioridade acima do alvo (iii)
+REGRA CORTOU | google | Analista Dados Jr - Exclusivo para Pessoas com Deficiên | bloqueada: vaga afirmativa exclusiva (exclusivo para pessoas
+[triagem] cortada: Analista de Negócios / Desenvolvedor de Power -> Modalidade remota não confirmada no anúncio.
+[triagem] cortada: Analista de Dados de Customer Service -> Modalidade remota não confirmada na descrição.
+[triagem] cortada: Pessoa Analista de Dados Júnior -> Modalidade remota não declarada explicitamente no anúncio.
+[triagem] cortada: Hitss | Analista de Dados PL -> Modalidade remota não especificada no corpo da vaga.
+[triagem] cortada: CAS | Analista de Dados, Automação e Inteligê -> Modalidade não confirmada (apenas cita auxílio teletrabalho condicional).
+[triagem] cortada: Analista de Dados de Customer Service -> Modalidade remota não confirmada na descrição.
+
+IA: 6 mantidas, 6 cortadas
+
+MANTIDA s=8 | google | Vaga home office de Analista de Dados Junior na Oportun | Qualquer lugar (Google marco |  [bi] Remoto Júnior com BI, modelagem dimensional e Delta Lake que favorece.
+MANTIDA s=8 | google | Business Intelligence Analyst | Qualquer lugar (Google marco |  [bi] Remoto internacional em inglês; ótima aderência a SQL, dashboards e métric
+MANTIDA s=7 | google | Analista Pleno em Power BI (Ribeirão Preto, SP, BR, 140 | Qualquer lugar (Google marco |  [bi] Teletrabalho confirmado; vaga de BI Pleno com gap aceitável em Power BI.
+MANTIDA s=7 | google | Hitss | Analista de Dados PL | Qualquer lugar (Google marco |  [bi] Full remote confirmado; vaga de BI Pleno com pós-graduação e DAX.
+MANTIDA s=6 | google | Analista Pleno em Power BI e Power Apps | Qualquer lugar (Google marco |  [bi] Teletrabalho confirmado; foco em Power BI e Power Apps, gap superável.
+MANTIDA s=0 | google | Analista Pleno em Power BI | Qualquer lugar (Google marco |  [bi] Vaga afirmativa exclusiva para mulheres (#WomanTech).
+IA CORTOU | google | Analista de Negócios / Desenvolvedor de Power BI | IA: Modalidade remota não confirmada no anúncio.
+IA CORTOU | google | Analista de Dados de Customer Service | IA: Modalidade remota não confirmada na descrição.
+IA CORTOU | google | Pessoa Analista de Dados Júnior | IA: Modalidade remota não declarada explicitamente no anúncio.
+IA CORTOU | google | Hitss | Analista de Dados PL | IA: Modalidade remota não especificada no corpo da vaga.
+IA CORTOU | google | CAS | Analista de Dados, Automação e Inteligência Artif | IA: Modalidade não confirmada (apenas cita auxílio teletrabalho condicional).
+IA CORTOU | google | Analista de Dados de Customer Service | IA: Modalidade remota não confirmada na descrição.
