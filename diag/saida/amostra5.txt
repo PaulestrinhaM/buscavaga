@@ -1,0 +1,115 @@
+  [linkedin] 'analista de dados' remoto: 10 vagas
+  [linkedin] 'engenheiro de dados' remoto: 10 vagas
+  [linkedin] 20 unicas (descricao vem depois da deduplicacao)
+  [google] 'analista de BI remoto': 10 vagas
+  [google] 'engenheiro de dados remoto': 10 vagas
+  [adzuna] 'analista de dados': 100 vagas
+  [adzuna] 'engenheiro de dados': 100 vagas
+regra: 54 aprovadas, 1 repescagem
+DESCRICAO DERRUBOU | linkedin | Analista de Dados Pleno | local fora do alvo: São Caetano do Sul, SP (LinkedIn marcou 
+DESCRICAO DERRUBOU | linkedin | Data Engineer | local fora do alvo: São Paulo, Brasil (LinkedIn marcou remot
+[linkedin] 10 novas: 8 seguem, 2 derrubadas pela descricao, 0 sem descricao (voltam no proximo ciclo)
+DESCRICAO DERRUBOU | adzuna | Analista de Dados Júnior | local fora do alvo: Brasil
+DESCRICAO DERRUBOU | adzuna | Analista de Dados Fiscais | local fora do alvo: Brasil
+DESCRICAO DERRUBOU | adzuna | Engenheiro de Dados | bloqueada: senioridade no anuncio (nivel senior)
+DESCRICAO DERRUBOU | adzuna | Engenheiro de Dados AWS [Banco de Talentos] | local fora do alvo: Brasil
+DESCRICAO DERRUBOU | adzuna | Engenheiro de Dados Azure [Banco de Talentos] | bloqueada: senioridade no anuncio (5+ anos)
+DESCRICAO DERRUBOU | adzuna | Engenheiro(a) de Dados Pleno | bloqueada: vaga afirmativa exclusiva (afirmativas para pesso
+[adzuna] 32 novas: 28 com descricao inteira, 6 derrubadas por ela
+descricao media enviada: 2912 caracteres
+[triagem] lote julgado por gemini-flash-lite-latest
+[triagem] lote julgado por gemini-flash-lite-latest
+[triagem] lote julgado por gemini-flash-lite-latest
+[triagem] cortada: Analista de Dados - GMO -> Presencial em Itajaí/SC, fora da regiao do candidato.
+[triagem] cortada: Analista de Dados | Araras -> Presencial em Araras/SP, fora da regiao do candidato.
+[triagem] cortada: Analista Pleno em Power BI e Power Apps -> Teletrabalho com localizacao fixa em Ribeirao Preto/SP.
+[triagem] cortada: ANALISTA DE DADOS EPIDEMIOLÓGICOS -> Presencial em Brasilia, fora da regiao aceita.
+[triagem] cortada: Analista de Dados - CRM e BI -> Presencial em Brasilia, fora da regiao permitida.
+[triagem] cortada: Engenheiro Dados -> Vaga sênior em engenharia de dados, excede a experiência.
+[triagem] cortada: Pessoa Engenheira de Dados (Big Data) -> Vaga sênior em Big Data com exigência de Airflow e Spark.
+[triagem] cortada: Engenheiro de Dados Snowflake [Banco de Talen -> Vaga sênior em Snowflake com exigência de Airflow e dbt.
+[triagem] cortada: [Banco de Talentos] Pessoa Engenheira de Dado -> Exige 5 anos de experiência direta em engenharia de dados.
+[triagem] cortada: Engenheiro(a) de Dados Pleno -> Exige Airflow como requisito central (gap difícil).
+[triagem] cortada: Engenheiro(a) de Dados | TI -> Exige Apache Airflow e Azure DevOps obrigatoriamente.
+
+IA: 34 mantidas, 11 cortadas
+
+MANTIDA s=9 | linkedin | ENGENHEIRO DADOS PL (REMOTO)
+    🏠 Remoto: "ENGENHEIRO DADOS PL (REMOTO)" · Campinas, SP
+MANTIDA s=9 | google | Engenheiro de Dados Azure Júnior - Remoto
+    🏠 Remoto: "Remoto" · Qualquer lugar
+MANTIDA s=9 | google | Engenheiro de Dados Azure Júnior - Remoto
+    🏠 Remoto: "Remoto" · Qualquer lugar
+MANTIDA s=9 | adzuna | Analista De Dados Academico Pleno
+    🏠 Remoto: "100% remota" · Brasil
+MANTIDA s=8 | linkedin | Engenheiros de Dados (Databricks)
+    🏠 Remoto: "Localidade da vaga: Brasil" · São Paulo, SP
+MANTIDA s=8 | linkedin | Engenheiro de Dados
+    ❓ Remoto nao confirmado pelo anuncio · São Paulo, SP
+MANTIDA s=8 | google | Vaga home office de Analista de Dados Junior na Op
+    🏠 Remoto: "vaga 100% remota" · Qualquer lugar
+MANTIDA s=8 | google | 11618915 - ANALISTA DE BI PLENO
+    🏠 Remoto: "Horário de atuaçãoDas 09:00 às 18:00 (Remoto)" · Qualquer lugar
+MANTIDA s=8 | google | Business Intelligence Analyst
+    🏠 Remoto: "We offer the convenience of remote work" · Qualquer lugar
+MANTIDA s=8 | google | Engenheiro de Integração de Dados - Trabalho Remot
+    🏠 Remoto: "Modalidade 100% remota" · Qualquer lugar
+MANTIDA s=8 | adzuna | Engenheiro(a) de Dados
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=8 | adzuna | Pessoa Engenheira de Dados Pleno
+    🏠 Remoto: "#LI-Remote" · Brasil
+MANTIDA s=7 | linkedin | Analista de Dados
+    ❓ Remoto nao confirmado pelo anuncio · Rio de Janeiro e Região
+MANTIDA s=7 | linkedin | Analista de Dados Pleno
+    ❓ Remoto nao confirmado pelo anuncio · São Paulo, SP
+MANTIDA s=7 | google | Analista de Negócios / Desenvolvedor de Power BI
+    ❓ Remoto nao confirmado pelo anuncio · Qualquer lugar
+MANTIDA s=7 | google | Hitss | Engenheiro de Dados Multicloud
+    🏠 Remoto: "This a Full Remote job" · Qualquer lugar
+MANTIDA s=7 | adzuna | Engenheiro Dados Pl
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=7 | adzuna | Engenheiro(a) de Dados
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=6 | google | Analista de Dados de Customer Service
+    ❓ Remoto nao confirmado pelo anuncio · Qualquer lugar
+MANTIDA s=6 | google | ANALISTA BI PL
+    ❓ Remoto nao confirmado pelo anuncio · Qualquer lugar
+MANTIDA s=6 | google | Hitss | Engenheiro de Dados Multicloud
+    ❓ Remoto nao confirmado pelo anuncio · Qualquer lugar
+MANTIDA s=6 | google | Engenheiro(a) de Dados Pleno – Big Data / Spark
+    🏠 Remoto: "Atuação 100% remota" · Qualquer lugar
+MANTIDA s=6 | adzuna | Analista de Dados
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=6 | adzuna | Analista de Dados
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=6 | adzuna | Analista De Dados Junior
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=6 | adzuna | Analista de Dados Pleno
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=6 | adzuna | Engenheiro de Dados Pleno
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=6 | adzuna | Hitss | Engenheiro de Dados Multicloud
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=5 | linkedin | Analista de Dados Pleno - CRM PME
+    ❓ Remoto nao confirmado pelo anuncio · São Paulo, SP
+MANTIDA s=5 | adzuna | Analista de Dados
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=5 | adzuna | Analista de Dados
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=5 | adzuna | Analista de Dados Operacionais Ii
+    ❓ Remoto nao confirmado pelo anuncio · Brasilia, Distrito Federal
+MANTIDA s=5 | adzuna | Engenheiro de Dados
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+MANTIDA s=4 | adzuna | Analista de Dados e Relacionamento
+    ❓ Remoto nao confirmado pelo anuncio · Brasil
+IA CORTOU | linkedin | Analista de Dados - GMO | IA: Presencial em Itajaí/SC, fora da regiao do candidato.
+IA CORTOU | linkedin | Analista de Dados | Araras | IA: Presencial em Araras/SP, fora da regiao do candidato.
+IA CORTOU | google | Analista Pleno em Power BI e Power Apps | IA: Teletrabalho com localizacao fixa em Ribeirao Preto/SP.
+IA CORTOU | adzuna | ANALISTA DE DADOS EPIDEMIOLÓGICOS | IA: Presencial em Brasilia, fora da regiao aceita.
+IA CORTOU | adzuna | Analista de Dados - CRM e BI | IA: Presencial em Brasilia, fora da regiao permitida.
+IA CORTOU | adzuna | Engenheiro Dados | IA: Vaga sênior em engenharia de dados, excede a experiência.
+IA CORTOU | adzuna | Pessoa Engenheira de Dados (Big Data) | IA: Vaga sênior em Big Data com exigência de Airflow e Spark.
+IA CORTOU | adzuna | Engenheiro de Dados Snowflake [Banco de Talentos] | IA: Vaga sênior em Snowflake com exigência de Airflow e dbt.
+IA CORTOU | adzuna | [Banco de Talentos] Pessoa Engenheira de Dados | IA: Exige 5 anos de experiência direta em engenharia de dados.
+IA CORTOU | adzuna | Engenheiro(a) de Dados Pleno | IA: Exige Airflow como requisito central (gap difícil).
+IA CORTOU | adzuna | Engenheiro(a) de Dados | TI | IA: Exige Apache Airflow e Azure DevOps obrigatoriamente.
