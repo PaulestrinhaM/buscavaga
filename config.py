@@ -264,6 +264,7 @@ LINKEDIN_CIDADE = "Caxias do Sul, Rio Grande do Sul, Brasil"   # raio de 25 km
 LINKEDIN_HORAS = 48          # so vaga publicada nas ultimas 48 h: o radar roda 3x/dia
 PAGINAS_LINKEDIN = 2         # ~10 vagas por pagina
 LINKEDIN_DETALHES = 40       # descricoes por ciclo, so de vaga nova que passou na regra
+ADZUNA_DETALHES = 40         # idem para a Adzuna (a API so entrega 500 caracteres)
 
 # Vagas.com: termo com filtro 100% home office, e cidade da regiao sem termo.
 TERMOS_VAGASCOM = ["dados", "analista de dados", "engenheiro de dados", "BI",
@@ -318,7 +319,7 @@ STANDBY_LOTE = 20                    # lote menor que o normal: prompt curto fal
 # sobrecarregar a cota; o excedente fica para o ciclo seguinte.
 REPESCAGEM = True
 MAX_REPESCAGEM = 80                  # acima disso, a repescagem vai para o stand-by
-DESCRICAO_IA = 3500                  # caracteres da descricao por vaga (era 1200: a modalidade
+DESCRICAO_IA = 6000                  # caracteres da descricao por vaga (era 1200: a modalidade
                                      # costuma estar no fim do anuncio e ficava de fora)
 MAX_VAGAS_IA = 15                    # vagas por chamada: lote grande com descricao longa
                                      # faz o modelo ler por cima

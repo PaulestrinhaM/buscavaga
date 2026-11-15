@@ -35,6 +35,7 @@ from fontes import TODAS
 
 # o __init__ de fontes exporta a funcao coletar com o nome "linkedin"; aqui e o modulo
 linkedin = importlib.import_module("fontes.linkedin")
+adzuna = importlib.import_module("fontes.adzuna")
 
 
 def rodar_ciclo(con, apenas=None) -> dict:
@@ -78,6 +79,7 @@ def rodar_ciclo(con, apenas=None) -> dict:
         print(f"[{nome}] {len(resultado)} coletadas, {aprovadas_fonte} aprovadas")
 
     novas, repescagem = enriquecer_linkedin(con, novas, repescagem, registros)
+    novas, repescagem = enriquecer_adzuna(con, novas, repescagem, registros)
 
     # metade ou mais das fontes quebrou: e problema de arquitetura, nao de mercado
     if fontes and len(falhas) >= len(fontes) / 2:
@@ -142,6 +144,38 @@ def enriquecer_linkedin(con, novas: list, repescagem: list, registros: list) -> 
     fora = sem_descricao | derrubadas
     return ([v for v in novas if id(v) not in fora],
             [v for v in repescagem if id(v) not in fora])
+
+
+def enriquecer_adzuna(con, novas: list, repescagem: list, registros: list) -> tuple[list, list]:
+    """Troca o trecho de 500 caracteres da API pela descricao inteira e reavalia.
+
+    Diferente do LinkedIn, a vaga da Adzuna ja tem um trecho: se a pagina falhar,
+    ela segue com ele (e a IA provavelmente devolve "remoto nao confirmado").
+    """
+    alvo = [v for v in novas + repescagem if v.fonte == "adzuna"]
+    if not alvo:
+        return novas, repescagem
+    completas, derrubadas = 0, set()
+    for vaga in alvo[:config.ADZUNA_DETALHES]:
+        try:
+            ok = adzuna.detalhar(vaga)
+            time.sleep(adzuna.PAUSA_DETALHE)
+        except Exception as e:
+            print(f"[adzuna] detalhe falhou ({e}): {vaga.titulo[:40]}")
+            continue
+        if not ok:
+            continue
+        completas += 1
+        era_repescagem = vaga.repescagem
+        if filtro.avaliar(vaga) or (era_repescagem and vaga.repescagem):
+            continue
+        derrubadas.add(id(vaga))
+        db.registrar(con, vaga, notificada=db.CORTADA_IA)
+        registros.append((auditoria.DESCARTADA_REGRA, vaga))
+    print(f"[adzuna] {len(alvo)} novas: {completas} com descricao inteira, "
+          f"{len(derrubadas)} derrubadas por ela")
+    return ([v for v in novas if id(v) not in derrubadas],
+            [v for v in repescagem if id(v) not in derrubadas])
 
 
 def _aplicar_vereditos(con, mantidas, cortadas, nao_avaliadas) -> list[tuple[str, object]]:

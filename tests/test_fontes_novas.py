@@ -217,3 +217,42 @@ def test_google_vagas_com_link_de_busca_tem_ids_diferentes():
     d = google._converter({"title": "D", "job_id": "x4", "apply_options": [
         {"link": "https://br.indeed.com/viewjob?jk=222"}]}, agora)
     assert len({a.id, b.id, c.id, d.id}) == 4
+
+
+# ------------------------------------------------------------------ adzuna: descricao inteira
+adzuna_mod = importlib.import_module("fontes.adzuna")
+
+
+def test_adzuna_le_descricao_inteira_do_json_ld():
+    texto = adzuna_mod.descricao_da_pagina(_ler("adzuna_detalhe.html.gz"))
+    assert len(texto) > 3000
+    assert texto.startswith("Description No Grupo Stefanini")
+
+
+def test_enriquecer_adzuna_troca_trecho_e_derruba_hibrido(monkeypatch):
+    import main
+    gravadas = []
+    monkeypatch.setattr(main.db, "registrar", lambda con, v, notificada: gravadas.append(v.titulo))
+    monkeypatch.setattr(main.adzuna, "PAUSA_DETALHE", 0)
+    paginas = {"https://a/1": "Atuar com SQL. Modelo hibrido, 3x por semana em Barueri. " * 20,
+               "https://a/2": "Vaga 100% remota. Atuar com SQL e Python. " * 20}
+
+    def detalhar(v):
+        if v.link not in paginas:
+            return False
+        v.descricao = paginas[v.link]
+        return True
+    monkeypatch.setattr(main.adzuna, "detalhar", detalhar)
+
+    def nova(i):
+        v = Vaga(titulo=f"Analista de Dados {i}", empresa="X", local="Brasil",
+                 link=f"https://a/{i}", fonte="adzuna", descricao="Trecho curto da API.",
+                 publicada_em=datetime.now(timezone.utc))
+        return v
+    novas = [nova(1), nova(2), nova(3)]
+    import filtro
+    for v in novas:
+        assert filtro.avaliar(v)
+    ficam, _ = main.enriquecer_adzuna(None, novas, [], [])
+    assert [v.titulo for v in ficam] == ["Analista de Dados 2", "Analista de Dados 3"]
+    assert gravadas == ["Analista de Dados 1"]
