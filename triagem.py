@@ -74,17 +74,23 @@ AREA (campo "area", escolha uma):
   ser de dados.
 
 MODALIDADE (campo "modalidade"): "remoto", "hibrido", "presencial" ou "nao_informado",
-pelo titulo e pela DESCRICAO inteira. "Remoto" so quando o anuncio diz isso com
-clareza. O campo "local" pode estar errado: LinkedIn e Google marcam vaga hibrida ou
-presencial como remota ("marcou remoto, a confirmar" e chute da fonte, nao prova).
-Dias no escritorio, modelo hibrido ou presencial: e isso que vale. Cidade no titulo
-ou na descricao como local de trabalho ("Analista de BI (Ribeirao Preto, SP)",
-"atuacao em Joinville") sem o anuncio dizer remoto: "presencial". "Auxilio home
-office" e beneficio, nao modalidade. "Teletrabalho" sozinho NAO confirma remoto: pela
-CLT inclui regime hibrido. "Modalidade: Teletrabalho" com localizacao num escritorio
-("Localizacao: Ribeirao Preto") e "nao_informado"; so vale "remoto" com "100%",
-"integral", "de qualquer lugar" ou equivalente. Fora da regiao de Caxias, so "remoto"
-passa.
+decidida pelo TITULO e pela DESCRICAO inteira, nesta ordem de confianca:
+1. O que o anuncio escreve: "100% remoto", "de qualquer lugar", "modelo hibrido, 3x na
+   semana", "presencial na unidade X", "Modalidade: ...", "Local de trabalho: ...".
+2. Cidade como local de trabalho no titulo ou na descricao ("Analista de BI (Ribeirao
+   Preto, SP)", "atuacao em Joinville", "Localizacao: NBS - Ribeirao Preto") sem o
+   anuncio dizer remoto: "presencial".
+3. Nada disso no texto: "nao_informado". NAO chute "remoto".
+Os campos "local_da_fonte" e "fonte_diz_remoto" vem do site de vagas, nao do anuncio, e
+erram muito (LinkedIn e Google marcam vaga hibrida como remota): use so como pista,
+nunca como prova. "Auxilio home office" e beneficio, nao modalidade. "Teletrabalho"
+sozinho NAO prova remoto (pela CLT inclui hibrido): com localizacao num escritorio e
+"nao_informado"; vira "remoto" so com "100%", "integral", "de qualquer lugar".
+
+EVIDENCIA (campo "evidencia"): copie, LITERALMENTE e sem mudar uma letra, o trecho do
+titulo ou da descricao (ate 20 palavras) que sustenta a modalidade. Para
+"nao_informado", deixe "". O codigo confere se o trecho existe no anuncio: trecho que
+nao esta no texto anula o "remoto".
 
 SENIORIDADE
 - Junior, estagio, trainee ou sem nivel: aceito.
@@ -111,7 +117,7 @@ ELIMINATORIO (vale=false):
 - Area "marketing" ou "outra".
 - Modalidade hibrido ou presencial fora de Caxias do Sul e vizinhas (Farroupilha,
   Bento Goncalves, Flores da Cunha, Garibaldi, Sao Marcos). Porto Alegre e Sao Paulo
-  inclusive.
+  inclusive. "nao_informado" NAO e eliminatorio: a vaga segue com aviso.
 - Senioridade fora do aceito, ou gap dificil como requisito central.
 - Remuneracao DECLARADA abaixo de R$ 4.000 por mes, CLT ou PJ (bolsa inclusive). Sem
   salario informado NAO e corte.
@@ -125,8 +131,8 @@ preenche os requisitos.
 Descricao vazia ou curta demais para julgar: nota no maximo 5.
 
 Responda APENAS um JSON valido, sem markdown, no formato:
-{"vagas": [{"id": "<id>", "area": "...", "modalidade": "...", "vale": true|false,
-"nota": 0-10, "motivo": "<ate 12 palavras>"}]}"""
+{"vagas": [{"id": "<id>", "area": "...", "modalidade": "...", "evidencia": "<trecho literal>",
+"vale": true|false, "nota": 0-10, "motivo": "<ate 12 palavras>"}]}"""
 
 # Trechos que decidem a vaga e costumam estar no fim do anuncio, depois do corte de
 # tamanho: vao separados no campo "destaques", para a IA nunca deixar de ver.
@@ -165,10 +171,17 @@ def aplicar_veredito(vaga, veredito: dict) -> tuple[bool, str]:
         return False, motivo
     if area in AREAS_CORTADAS:
         return False, f"area {area}: {motivo}"
-    # fora da regiao, so passa remoto CONFIRMADO: "nao_informado" deixava passar vaga
-    # com "(Ribeirao Preto, SP)" no titulo
-    if not _na_regiao(vaga) and modalidade != "remoto":
-        return False, f"{modalidade or 'modalidade'} fora da regiao: {motivo}"
+    evidencia = str(veredito.get("evidencia") or "").strip()
+    # "remoto" sem prova vira "nao_informado": o trecho tem de existir no anuncio
+    if modalidade == "remoto" and not evidencia_no_anuncio(vaga, evidencia):
+        modalidade, evidencia = "nao_informado", ""
+    if modalidade not in ("remoto", "hibrido", "presencial"):
+        modalidade = "nao_informado"
+    vaga.extras["modalidade"], vaga.extras["evidencia"] = modalidade, evidencia
+    regiao = _na_regiao(vaga)
+    if modalidade in ("hibrido", "presencial") and not regiao:
+        prova = f' ("{evidencia}")' if evidencia else ""
+        return False, f"{modalidade} fora da regiao{prova}: {motivo}"
     try:
         nota = float(veredito.get("nota", vaga.score))
     except (TypeError, ValueError):
@@ -180,8 +193,50 @@ def aplicar_veredito(vaga, veredito: dict) -> tuple[bool, str]:
     teto = TETO_NOTA_POR_AREA.get(area)
     if teto is not None:
         nota = min(nota, teto)
-    vaga.score = round(nota)
+    # sem confirmacao de remoto fora da regiao: segue, com aviso e um ponto a menos
+    if modalidade == "nao_informado" and not regiao:
+        nota -= 1
+    vaga.score = max(round(nota), 0)
+    vaga.local = rotulo_modalidade(vaga)
     return True, f"[{area or '?'}] {motivo}"
+
+
+def evidencia_no_anuncio(vaga, evidencia: str) -> bool:
+    """O trecho citado pela IA esta mesmo no titulo ou na descricao?"""
+    from vaga import normalizar
+    alvo = normalizar(evidencia)
+    if len(alvo) < 4:
+        return False
+    texto = normalizar(f"{vaga.titulo} {vaga.descricao}")
+    # e o trecho tem de falar de remoto: "Localidade da vaga: Brasil" existe no texto,
+    # mas nao prova nada (o flash-lite aceitou isso como evidencia)
+    return alvo in texto and any(t in alvo for t in PALAVRAS_DE_REMOTO)
+
+
+PALAVRAS_DE_REMOTO = ("remot", "home office", "home-office", "anywhere", "qualquer lugar",
+                      "teletrabalho", "work from home", "wfh", "a distancia")
+
+
+def local_limpo(local: str) -> str:
+    """Local sem a marcacao "(... marcou remoto, a confirmar)"."""
+    return re.sub(r"\s*\([^)]*" + re.escape(config.MARCA_REMOTO_A_CONFIRMAR) + r"\)", "",
+                  local or "").strip()
+
+
+def rotulo_modalidade(vaga) -> str:
+    """O que aparece no Telegram: o que a IA concluiu, com o trecho que prova."""
+    modalidade = vaga.extras.get("modalidade", "nao_informado")
+    evidencia = vaga.extras.get("evidencia", "")
+    lugar = local_limpo(vaga.local)
+    if modalidade == "remoto":
+        rotulo = f'🏠 Remoto: "{evidencia[:90]}"'
+    elif modalidade in ("hibrido", "presencial"):
+        rotulo = f"📍 {modalidade.capitalize()} na regiao"
+    elif _na_regiao(vaga):
+        rotulo = "📍 Regiao de Caxias"
+    else:
+        rotulo = "❓ Remoto nao confirmado pelo anuncio"
+    return f"{rotulo} · {lugar}" if lugar else rotulo
 
 
 def _chamar_modelo(modelo: str, prompt: str, chave: str) -> str:
@@ -253,7 +308,10 @@ def triar(vagas: list, lote_max: int | None = None) -> tuple[list, list, list]:
     for inicio in range(0, len(vagas), lote_max):
         lote = [
             {"id": v.id, "origem": "repescagem" if v.repescagem else "regra",
-             "titulo": v.titulo, "empresa": v.empresa, "local": v.local,
+             "titulo": v.titulo, "empresa": v.empresa,
+             "local_da_fonte": local_limpo(v.local),
+             "fonte_diz_remoto": config.MARCA_REMOTO_A_CONFIRMAR in v.local
+                                 or bool(v.extras.get("remoto")),
              "destaques": destaques(v.descricao),
              "descricao": v.descricao[:config.DESCRICAO_IA]}
             for v in vagas[inicio:inicio + lote_max]

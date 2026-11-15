@@ -44,19 +44,23 @@ def test_sem_lembrete_com_perfil_novo_ou_fora_de_hora(monkeypatch):
 from vaga import Vaga  # noqa: E402
 
 
-def _vaga(local="Remoto"):
-    return Vaga(titulo="x", empresa="", local=local, link="", fonte="t", score=4)
+def _vaga(local="Remoto", descricao="Vaga 100% remota para todo o Brasil."):
+    return Vaga(titulo="x", empresa="", local=local, link="", fonte="t", score=4,
+                descricao=descricao)
+
+
+REMOTO = {"modalidade": "remoto", "evidencia": "Vaga 100% remota"}
 
 
 def test_crm_com_nota_10_vira_6():
     v = _vaga()
-    vale, _ = triagem.aplicar_veredito(v, {"vale": True, "area": "operacoes_tecnicas", "modalidade": "remoto", "nota": 10})
+    vale, _ = triagem.aplicar_veredito(v, {"vale": True, "area": "operacoes_tecnicas", **REMOTO, "nota": 10})
     assert vale and v.score == 6
 
 
 def test_dados_mantem_a_nota():
     v = _vaga()
-    triagem.aplicar_veredito(v, {"vale": True, "area": "dados", "modalidade": "remoto", "nota": 9})
+    triagem.aplicar_veredito(v, {"vale": True, "area": "dados", **REMOTO, "nota": 9})
     assert v.score == 9
 
 
@@ -78,10 +82,37 @@ def test_destaques_traz_modalidade_e_salario_do_fim_do_anuncio():
     assert "hibrido" in d and "R$ 5.000" in d
 
 
-def test_modalidade_nao_informada_fora_da_regiao_cai():
-    vale, _ = triagem.aplicar_veredito(_vaga("Qualquer lugar"), {
+def test_modalidade_nao_informada_fora_da_regiao_passa_com_aviso():
+    v = _vaga("Qualquer lugar (Google marcou remoto, a confirmar)", descricao="Dashboards.")
+    vale, _ = triagem.aplicar_veredito(v, {
         "vale": True, "area": "bi", "modalidade": "nao_informado", "nota": 7})
-    assert not vale
+    assert vale and v.score == 6
+    assert v.local == "❓ Remoto nao confirmado pelo anuncio · Qualquer lugar"
+
+
+def test_remoto_sem_trecho_no_anuncio_vira_nao_confirmado():
+    v = _vaga("São Paulo, SP", descricao="Atuar com dashboards de vendas.")
+    vale, _ = triagem.aplicar_veredito(v, {"vale": True, "area": "bi", "modalidade": "remoto",
+                                           "evidencia": "trabalho 100% remoto", "nota": 8})
+    assert vale and v.extras["modalidade"] == "nao_informado" and v.score == 7
+    assert v.local.startswith("❓")
+
+
+def test_remoto_com_trecho_real_mostra_a_prova():
+    v = _vaga("São Paulo, SP (LinkedIn marcou remoto, a confirmar)",
+              descricao="Sobre a vaga. Modelo de trabalho: 100% remoto, de qualquer lugar.")
+    vale, _ = triagem.aplicar_veredito(v, {"vale": True, "area": "dados", "modalidade": "remoto",
+                                           "evidencia": "Modelo de trabalho: 100% remoto", "nota": 8})
+    assert vale and v.score == 8
+    assert v.local == '🏠 Remoto: "Modelo de trabalho: 100% remoto" · São Paulo, SP'
+
+
+def test_cidade_no_anuncio_presencial_cai_com_a_prova_no_motivo():
+    v = _vaga("Qualquer lugar (Google marcou remoto, a confirmar)",
+              descricao="Localizacao: NBS - Ribeirao Preto | Modalidade: Teletrabalho")
+    vale, motivo = triagem.aplicar_veredito(v, {"vale": True, "area": "bi", "modalidade": "presencial",
+                                                "evidencia": "Localizacao: NBS - Ribeirao Preto", "nota": 7})
+    assert not vale and "Ribeirao Preto" in motivo
 
 
 def test_modalidade_nao_informada_na_regiao_passa():
@@ -94,3 +125,10 @@ def test_vale_com_nota_zero_cai():
     vale, _ = triagem.aplicar_veredito(_vaga(), {"vale": True, "area": "bi",
                                                   "modalidade": "remoto", "nota": 0})
     assert not vale
+
+
+def test_trecho_sem_palavra_de_remoto_nao_prova():
+    v = _vaga("São Paulo, SP", descricao="Localidade da vaga: Brasil. Atuar com SQL.")
+    triagem.aplicar_veredito(v, {"vale": True, "area": "dados", "modalidade": "remoto",
+                                 "evidencia": "Localidade da vaga: Brasil", "nota": 8})
+    assert v.extras["modalidade"] == "nao_informado"

@@ -86,3 +86,41 @@ def coletar() -> list[Vaga]:
         print(f"  [adzuna] '{termo}': {total} vagas")
 
     return vagas
+
+
+# A API devolve so os primeiros 500 caracteres da descricao, e a modalidade quase
+# sempre esta depois disso. A pagina do redirect_url (com os utm_ da propria API)
+# abre sem verificacao e traz a vaga inteira num JobPosting em JSON-LD, medido em
+# 2026-11-14. Sem os utm_, a mesma pagina cai num desafio anti-robo (405).
+NAVEGADOR = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126 Safari/537.36",
+             "Accept-Language": "pt-BR,pt;q=0.9"}
+PAUSA_DETALHE = 1.5
+
+
+def descricao_da_pagina(pagina: str) -> str:
+    import html as _html
+    import json as _json
+    import re as _re
+    for bloco in _re.findall(r'<script type="application/ld\+json">(.*?)</script>', pagina, _re.S):
+        try:
+            dados = _json.loads(bloco)
+        except ValueError:
+            continue
+        if isinstance(dados, dict) and dados.get("@type") == "JobPosting":
+            texto = _re.sub(r"<[^>]+>", " ", _html.unescape(dados.get("description") or ""))
+            return _re.sub(r"\s+", " ", texto).strip()
+    return ""
+
+
+def detalhar(vaga: Vaga) -> bool:
+    """Troca o trecho da API pela descricao inteira. False se a pagina nao veio."""
+    if not vaga.link:
+        return False
+    r = requests.get(vaga.link, headers=NAVEGADOR, timeout=TIMEOUT)
+    if r.status_code != 200:
+        return False
+    texto = descricao_da_pagina(r.text)
+    if len(texto) <= len(vaga.descricao or ""):
+        return False
+    vaga.descricao = texto[:8000]
+    return True
