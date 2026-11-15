@@ -215,7 +215,11 @@ TERMOS_BUSCA = [
 PAIS_ADZUNA = "br"
 # Repescagem (IA lendo vaga de titulo nao reconhecido) so para fonte brasileira: nas
 # gringas ela so trazia ruido (engenheiro de software, medico, advogado) e gastava cota.
-FONTES_SEM_REPESCAGEM = ["himalayas", "jobicy", "remotive", "remoteok"]
+# Job boards (Greenhouse/Lever/Ashby) trazem o catalogo inteiro da empresa (a Stone
+# tem ~350 vagas): sem repescagem, so entra titulo que ja bate com cargo do perfil. Em
+# 13/11 eles mandaram 151 vagas de vendas e atendimento de uma vez para a IA.
+FONTES_SEM_REPESCAGEM = ["himalayas", "jobicy", "remotive", "remoteok",
+                         "greenhouse", "lever", "ashby"]
 # Repescagem so para quem cita algo de dados no anuncio: a busca por cidade da Gupy
 # traz mecanico, repositor e operador de prensa, e cada um gastava cota da IA.
 SINAIS_REPESCAGEM = [
