@@ -26,7 +26,8 @@ def test_linkedin_le_os_cards_da_busca():
     v = vagas[1]
     assert v.titulo == "Analista de Dados - Trabalho Remoto"
     assert v.empresa == "BairesDev"
-    assert "LinkedIn marcou remoto" in v.local
+    assert v.local == "Salvador, BA"
+    assert v.extras["modalidade_a_confirmar"]
     assert v.link == "https://www.linkedin.com/jobs/view/4489037187"
     assert v.publicada_em.date().isoformat() == "2026-11-11"
 
@@ -49,9 +50,10 @@ def test_linkedin_429_encerra_sem_erro(monkeypatch):
 
 
 def test_linkedin_nao_afirma_remoto_na_coleta():
+    """A busca publica ignora o f_WT: nenhuma vaga do LinkedIn sai marcada remota."""
     vagas = linkedin._cards(_ler("linkedin_busca.html.gz"), remoto=True)
-    assert all("a confirmar" in v.local for v in vagas)
-    assert all(not v.local.lower().startswith("remoto") for v in vagas)
+    assert all("remoto" not in v.local.lower() for v in vagas)
+    assert all(v.extras["modalidade_a_confirmar"] for v in vagas)
 
 
 # ------------------------------------------------------------------ vagas.com
@@ -115,7 +117,7 @@ def test_google_converte_item():
         "detected_extensions": {"posted_at": "há 3 dias", "work_from_home": True},
         "apply_options": [{"title": "LinkedIn", "link": "https://exemplo/vaga"}],
     }, agora)
-    assert "Google marcou remoto" in v.local
+    assert v.local == "Qualquer lugar" and v.extras["fonte_diz_remoto"]
     assert v.link == "https://exemplo/vaga"
     assert v.publicada_em == agora - timedelta(days=3)
 

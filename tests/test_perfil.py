@@ -87,15 +87,15 @@ def test_modalidade_nao_informada_fora_da_regiao_passa_com_aviso():
     vale, _ = triagem.aplicar_veredito(v, {
         "vale": True, "area": "bi", "modalidade": "nao_informado", "nota": 7})
     assert vale and v.score == 6
-    assert v.local == "❓ Remoto nao confirmado pelo anuncio · Qualquer lugar"
+    assert v.local == "❓ Anuncio nao diz a modalidade; local: Brasil todo · Qualquer lugar"
 
 
 def test_remoto_sem_trecho_no_anuncio_vira_nao_confirmado():
     v = _vaga("São Paulo, SP", descricao="Atuar com dashboards de vendas.")
     vale, _ = triagem.aplicar_veredito(v, {"vale": True, "area": "bi", "modalidade": "remoto",
                                            "evidencia": "trabalho 100% remoto", "nota": 8})
-    assert vale and v.extras["modalidade"] == "nao_informado" and v.score == 7
-    assert v.local.startswith("❓")
+    assert vale and v.extras["modalidade"] == "nao_informado" and v.score == 6
+    assert "provavel presencial" in v.local
 
 
 def test_remoto_com_trecho_real_mostra_a_prova():
@@ -132,3 +132,20 @@ def test_trecho_sem_palavra_de_remoto_nao_prova():
     triagem.aplicar_veredito(v, {"vale": True, "area": "dados", "modalidade": "remoto",
                                  "evidencia": "Localidade da vaga: Brasil", "nota": 8})
     assert v.extras["modalidade"] == "nao_informado"
+
+
+
+def test_ey_rio_anuncio_mudo_com_cidade_chega_como_provavel_presencial():
+    """O caso de 15/11: LinkedIn, 'Rio de Janeiro, RJ', anuncio sem modalidade."""
+    v = _vaga("Rio de Janeiro, RJ", descricao="Engenheiro de dados com Python, SQL e PySpark.")
+    vale, _ = triagem.aplicar_veredito(v, {"vale": True, "area": "dados",
+                                           "modalidade": "nao_informado", "nota": 9})
+    assert vale and v.score == 7
+    assert v.local.startswith("❓ Anuncio nao diz a modalidade; vaga com cidade, provavel presencial")
+
+
+def test_local_brasil_e_generico():
+    assert not triagem._local_com_cidade("Brasil")
+    assert not triagem._local_com_cidade("Qualquer lugar")
+    assert triagem._local_com_cidade("São Paulo, SP")
+    assert triagem._local_com_cidade("Rio de Janeiro, RJ")
