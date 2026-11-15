@@ -1,0 +1,24 @@
+name: Sonda LinkedIn modalidade (diagnostico)
+on:
+  push:
+    branches: ["diag/**"]
+permissions:
+  contents: write
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests
+      - run: |
+          mkdir -p diag/saida
+          python diag/li.py 2>&1 | tee diag/saida/li.txt
+      - run: |
+          git config user.name "jobradar"
+          git config user.email "actions@github.com"
+          git add -f diag/saida
+          git commit -qm "sonda: li" && git push
