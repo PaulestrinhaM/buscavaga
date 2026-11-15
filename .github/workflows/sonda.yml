@@ -1,0 +1,27 @@
+name: Sonda Adzuna (diagnostico)
+on:
+  push:
+    branches: ["diag/**"]
+permissions:
+  contents: write
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+      ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests
+      - run: |
+          mkdir -p diag/saida
+          python diag/adzuna.py 2>&1 | sed 's/app_key=[^& ]*/app_key=***/g; s/app_id=[^& ]*/app_id=***/g' | tee diag/saida/adzuna.txt
+      - run: |
+          git config user.name "jobradar"
+          git config user.email "actions@github.com"
+          git add -f diag/saida
+          git commit -qm "sonda: adzuna" && git push
