@@ -1,19 +1,14 @@
-"""A Adzuna da a descricao inteira em alguma pagina publica? Nao grava nada."""
-import os, re, requests, html
+"""Salva paginas de detalhe da Adzuna (pelo redirect_url da API) como amostra."""
+import os, gzip, requests
 NAV = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126 Safari/537.36", "Accept-Language": "pt-BR"}
 r = requests.get("https://api.adzuna.com/v1/api/jobs/br/search/1", params={
     "app_id": os.environ["ADZUNA_APP_ID"], "app_key": os.environ["ADZUNA_APP_KEY"],
-    "what": "analista de dados", "results_per_page": 3, "content-type": "application/json"}, timeout=30)
-for item in r.json().get("results", [])[:3]:
-    print("== id", item.get("id"), "| api desc:", len(item.get("description", "")), "chars")
-    print("   redirect:", item.get("redirect_url", "")[:120])
-    for url in [f"https://www.adzuna.com.br/details/{item['id']}", item.get("redirect_url", "")]:
-        try:
-            p = requests.get(url, headers=NAV, timeout=25, allow_redirects=True)
-            texto = html.unescape(re.sub(r"<[^>]+>", " ", p.text))
-            texto = re.sub(r"\s+", " ", texto)
-            i = texto.find((item.get("description") or "")[:40].strip()[:30])
-            print(f"   {p.status_code} {len(p.text)}b final={p.url[:90]}")
-            print(f"   achou trecho da api na pagina: {i >= 0}; contexto: {texto[max(i,0):max(i,0)+700] if i >= 0 else texto[:300]}")
-        except Exception as e:
-            print("   ERRO", url[:60], e)
+    "what": "engenheiro de dados", "results_per_page": 4, "content-type": "application/json"}, timeout=30)
+os.makedirs("diag/saida", exist_ok=True)
+for i, item in enumerate(r.json().get("results", [])[:4]):
+    p = requests.get(item["redirect_url"], headers=NAV, timeout=25)
+    print(i, p.status_code, len(p.text), item["title"], "|", item["description"][:80])
+    with gzip.open(f"diag/saida/adzuna_{i}.html.gz", "wt", encoding="utf-8") as f:
+        f.write(p.text)
+    with open(f"diag/saida/adzuna_{i}.api.txt", "w", encoding="utf-8") as f:
+        f.write(item["description"])
