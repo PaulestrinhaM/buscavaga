@@ -923,3 +923,49 @@ def test_vendas_e_limpeza_bloqueadas_no_titulo(titulo):
 ])
 def test_dados_de_vendas_segue_passando(titulo):
     assert filtro.avaliar(v(titulo, local="Remoto"))
+
+
+# --------------------------------------------------- nov/2026: stand-by que ninguem tentava
+def test_standby_expirado_de_repescagem_sai_calado_e_fica_gravado(tmp_path, monkeypatch):
+    import db as _db
+    import main as _main
+    from vaga import Vaga
+    monkeypatch.setattr(_db, "CAMINHO", tmp_path / "t.db")
+    monkeypatch.setattr(_main.triagem, "triar", lambda vs, lote=None: ([], [], vs))
+    alertas = []
+    monkeypatch.setattr(_main.notificador, "alerta", lambda t: alertas.append(t) or True)
+    con = _db.conectar()
+    vaga = Vaga("Agente Stone - Executivo de Contas", "stone", "Remoto", "http://a/9", "f",
+                publicada_em=datetime.now(timezone.utc) - timedelta(days=1), repescagem=True)
+    _db.standby_guardar(con, vaga)
+    quatro_dias = (datetime.now(timezone.utc) - timedelta(days=4)).isoformat()
+    con.execute("UPDATE standby SET entrou_em = ?", (quatro_dias,))
+    r = _main.processar_standby(con)
+    gravada = con.execute("SELECT notificada FROM vagas WHERE link = 'http://a/9'").fetchone()
+    con.close()
+    assert r["expiradas"] == 1 and alertas == []
+    assert gravada is not None and gravada["notificada"] == _db.CORTADA_IA
+
+
+def test_job_board_nao_vai_para_repescagem():
+    vaga = v("Analista de Operacoes", local="Remoto", descricao="Indicadores, dados e CRM.")
+    vaga.fonte = "greenhouse:stone"
+    assert not filtro.avaliar(vaga) and not vaga.repescagem
+
+
+def test_coleta_tenta_o_standby_no_fim(tmp_path, monkeypatch):
+    import db as _db
+    import main as _main
+    monkeypatch.setattr(_db, "CAMINHO", tmp_path / "t.db")
+    chamadas = []
+    monkeypatch.setattr(_main, "ciclo_pendente", lambda con: True)
+    monkeypatch.setattr(_main, "lembrar_perfil", lambda: False)
+    monkeypatch.setattr(_main, "rodar_ciclo", lambda con: {"coletadas": 0, "aprovadas": 0,
+                                                            "novas": 0, "urgentes": 0})
+    monkeypatch.setattr(_main, "enviar_resumo", lambda con: None)
+    monkeypatch.setattr(_main.db, "standby_total", lambda con: 3)
+    monkeypatch.setattr(_main, "processar_standby", lambda con: chamadas.append(1))
+    con = _db.conectar()
+    _main.rodar_agendado(con)
+    con.close()
+    assert chamadas == [1]

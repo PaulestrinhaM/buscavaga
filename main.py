@@ -222,14 +222,22 @@ def processar_standby(con) -> dict:
         if agora - v.extras["standby_desde"] > timedelta(days=config.STANDBY_DIAS_MAX)
         or (v.dias_desde_publicacao or 0) > config.DIAS_MAX_ANUNCIO
     ]
+    # Expirou: sai do stand-by e fica gravada, para nao voltar no proximo ciclo. So a
+    # que passou na regra de titulo vai para o usuario olhar na mao; repescagem so
+    # existe com o aval da IA, entao sai calada (antes ia tudo para o alerta, e o
+    # alerta virava lista de "Executivo de Contas").
+    avisar = []
     for vaga in expiradas:
         db.standby_remover(con, vaga)
-    if expiradas:
-        linhas = "\n".join(f"- {v.titulo} | {v.empresa}\n  {v.link}" for v in expiradas[:15])
-        resto = f"\n(e mais {len(expiradas) - 15})" if len(expiradas) > 15 else ""
-        notificador.alerta(f"{len(expiradas)} vagas ficaram {config.STANDBY_DIAS_MAX} dias em "
-                           f"stand-by sem a IA conseguir avaliar. Vale olhar na mao:\n"
-                           f"{linhas}{resto}")
+        db.registrar(con, vaga, notificada=db.CORTADA_IA)
+        if not vaga.repescagem:
+            avisar.append(vaga)
+    if avisar:
+        linhas = "\n".join(f"- {v.titulo} | {v.empresa}\n  {v.link}" for v in avisar[:15])
+        resto = f"\n(e mais {len(avisar) - 15})" if len(avisar) > 15 else ""
+        notificador.alerta(f"{len(avisar)} vagas que passaram no filtro de titulo ficaram "
+                           f"{config.STANDBY_DIAS_MAX} dias sem a IA conseguir avaliar. "
+                           f"Vale olhar na mao:\n{linhas}{resto}")
 
     pendentes = [v for v in vagas if v not in expiradas]
     if config.USAR_IA:
@@ -293,6 +301,11 @@ def rodar_agendado(con) -> None:
         r = rodar_ciclo(con)
         print(f"\nciclo: {r['coletadas']} coletadas | {r['aprovadas']} aprovadas | "
               f"{r['novas']} novas | {r['urgentes']} notificadas na hora")
+        # O GitHub roda ~4 dos 24 disparos agendados por dia, e todos caem em turno de
+        # coleta: a rodada "so stand-by" quase nunca acontecia, e o stand-by so saia por
+        # expiracao. Por isso ele e tentado de novo no fim de toda coleta.
+        if config.USAR_IA and db.standby_total(con):
+            processar_standby(con)
         enviar_resumo(con)
     else:
         print("coleta deste turno ja rodou: so o stand-by")
