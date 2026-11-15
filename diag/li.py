@@ -1,19 +1,21 @@
-"""Onde a pagina publica do LinkedIn diz Presencial/Hibrido/Remoto? Nao grava nada."""
-import re, json, html, requests
+"""Em qual filtro de modalidade (f_WT) a vaga aparece? Nao grava nada."""
+import re, time, requests
 NAV = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) Chrome/126 Safari/537.36", "Accept-Language": "pt-BR,pt;q=0.9"}
-for jid in ["4401831058", "4388869393"]:
-    for nome, url in [("detalhe", f"https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/{jid}"),
-                      ("pagina", f"https://www.linkedin.com/jobs/view/{jid}")]:
-        r = requests.get(url, headers=NAV, timeout=25)
-        t = r.text
-        print(f"== {jid} {nome}: {r.status_code} {len(t)}b")
-        for p in ["Presencial", "On-site", "Híbrido", "Hybrid", "Remoto", "Remote", "TELECOMMUTE",
-                  "jobLocationType", "workplaceType", "workplace", "WorkplaceType"]:
-            for m in list(re.finditer(re.escape(p), t))[:2]:
-                ctx = re.sub(r"\s+", " ", t[max(0, m.start()-150):m.end()+80])
-                print(f"   [{p}] ...{ctx}...")
-        for m in re.finditer(r'<script type="application/ld\+json">(.*?)</script>', t, re.S):
-            try:
-                d = json.loads(m.group(1)); print("   LD:", {k: d.get(k) for k in ("@type", "jobLocationType", "applicantLocationRequirements", "jobLocation")})
-            except Exception as e:
-                print("   LD err", e)
+URL = "https://www.linkedin.com/jobs-guest/jobs/api/seeMoreJobPostings/search"
+alvo = {"4401831058": "EY RJ (presencial no app)", "4388869393": "EY SP"}
+achados = {}
+for wt, nome in [("1", "presencial"), ("2", "remoto"), ("3", "hibrido")]:
+    for kw in ["engenheiro de dados", "Banco de Talentos Engenheiro de Dados"]:
+        for start in (0, 10, 20):
+            r = requests.get(URL, headers=NAV, timeout=25, params={
+                "keywords": kw, "geoId": "106057199", "f_WT": wt, "f_TPR": "r604800", "start": start})
+            ids = re.findall(r"urn:li:jobPosting:(\d+)", r.text)
+            locs = re.findall(r'job-search-card__location">\s*(.*?)\s*</span>', r.text, re.S)
+            print(f"f_WT={wt} {nome:10} '{kw[:20]}' start={start}: {r.status_code} {len(ids)} vagas; locais: {sorted(set(l.strip()[:20] for l in locs))[:6]}")
+            for i in ids:
+                achados.setdefault(i, set()).add(nome)
+            time.sleep(6)
+for jid, desc in alvo.items():
+    print(jid, desc, "->", achados.get(jid, "nao apareceu"))
+multi = {k: v for k, v in achados.items() if len(v) > 1}
+print(f"vagas que aparecem em mais de um filtro: {len(multi)} de {len(achados)}")
