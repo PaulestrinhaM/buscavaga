@@ -208,7 +208,13 @@ def evidencia_no_anuncio(vaga, evidencia: str) -> bool:
     if len(alvo) < 4:
         return False
     texto = normalizar(f"{vaga.titulo} {vaga.descricao}")
-    return alvo in texto
+    # e o trecho tem de falar de remoto: "Localidade da vaga: Brasil" existe no texto,
+    # mas nao prova nada (o flash-lite aceitou isso como evidencia)
+    return alvo in texto and any(t in alvo for t in PALAVRAS_DE_REMOTO)
+
+
+PALAVRAS_DE_REMOTO = ("remot", "home office", "home-office", "anywhere", "qualquer lugar",
+                      "teletrabalho", "work from home", "wfh", "a distancia")
 
 
 def local_limpo(local: str) -> str:

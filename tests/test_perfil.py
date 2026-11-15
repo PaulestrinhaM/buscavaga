@@ -125,3 +125,10 @@ def test_vale_com_nota_zero_cai():
     vale, _ = triagem.aplicar_veredito(_vaga(), {"vale": True, "area": "bi",
                                                   "modalidade": "remoto", "nota": 0})
     assert not vale
+
+
+def test_trecho_sem_palavra_de_remoto_nao_prova():
+    v = _vaga("São Paulo, SP", descricao="Localidade da vaga: Brasil. Atuar com SQL.")
+    triagem.aplicar_veredito(v, {"vale": True, "area": "dados", "modalidade": "remoto",
+                                 "evidencia": "Localidade da vaga: Brasil", "nota": 8})
+    assert v.extras["modalidade"] == "nao_informado"
