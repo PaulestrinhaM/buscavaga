@@ -81,9 +81,9 @@ decidida pelo TITULO e pela DESCRICAO inteira, nesta ordem de confianca:
    Preto, SP)", "atuacao em Joinville", "Localizacao: NBS - Ribeirao Preto") sem o
    anuncio dizer remoto: "presencial".
 3. Nada disso no texto: "nao_informado". NAO chute "remoto".
-Os campos "local_da_fonte" e "fonte_diz_remoto" vem do site de vagas, nao do anuncio, e
-erram muito (LinkedIn e Google marcam vaga hibrida como remota): use so como pista,
-nunca como prova. "Auxilio home office" e beneficio, nao modalidade. "Teletrabalho"
+Os campos "local_da_fonte" e "fonte_diz_remoto" vem do site de vagas, nao do anuncio:
+use so como pista, nunca como prova. O LinkedIn nao informa modalidade nenhuma; o
+Google ja marcou vaga hibrida como remota. "Auxilio home office" e beneficio, nao modalidade. "Teletrabalho"
 sozinho NAO prova remoto (pela CLT inclui hibrido): com localizacao num escritorio e
 "nao_informado"; vira "remoto" so com "100%", "integral", "de qualquer lugar".
 
@@ -193,9 +193,11 @@ def aplicar_veredito(vaga, veredito: dict) -> tuple[bool, str]:
     teto = TETO_NOTA_POR_AREA.get(area)
     if teto is not None:
         nota = min(nota, teto)
-    # sem confirmacao de remoto fora da regiao: segue, com aviso e um ponto a menos
+    # sem confirmacao de remoto fora da regiao: segue, com aviso. Vaga com cidade
+    # especifica e anuncio mudo costuma ser presencial (a EY no Rio era, e so o LinkedIn
+    # logado mostrava): perde dois pontos; anuncio para o Brasil todo perde um.
     if modalidade == "nao_informado" and not regiao:
-        nota -= 1
+        nota -= 2 if _local_com_cidade(vaga.local) else 1
     vaga.score = max(round(nota), 0)
     vaga.local = rotulo_modalidade(vaga)
     return True, f"[{area or '?'}] {motivo}"
@@ -234,9 +236,22 @@ def rotulo_modalidade(vaga) -> str:
         rotulo = f"📍 {modalidade.capitalize()} na regiao"
     elif _na_regiao(vaga):
         rotulo = "📍 Regiao de Caxias"
+    elif _local_com_cidade(lugar):
+        rotulo = "❓ Anuncio nao diz a modalidade; vaga com cidade, provavel presencial"
     else:
-        rotulo = "❓ Remoto nao confirmado pelo anuncio"
+        rotulo = "❓ Anuncio nao diz a modalidade; local: Brasil todo"
     return f"{rotulo} · {lugar}" if lugar else rotulo
+
+
+LOCAIS_GENERICOS = {"", "brasil", "brazil", "qualquer lugar", "anywhere", "latam",
+                    "america latina", "latin america", "remoto", "remote", "home office"}
+
+
+def _local_com_cidade(local: str) -> bool:
+    """O local aponta uma cidade (ou regiao metropolitana), e nao o pais inteiro?"""
+    from vaga import normalizar
+    lugar = normalizar(local_limpo(local))
+    return lugar not in LOCAIS_GENERICOS and not lugar.startswith("brasil")
 
 
 def _chamar_modelo(modelo: str, prompt: str, chave: str) -> str:
@@ -310,8 +325,8 @@ def triar(vagas: list, lote_max: int | None = None) -> tuple[list, list, list]:
             {"id": v.id, "origem": "repescagem" if v.repescagem else "regra",
              "titulo": v.titulo, "empresa": v.empresa,
              "local_da_fonte": local_limpo(v.local),
-             "fonte_diz_remoto": config.MARCA_REMOTO_A_CONFIRMAR in v.local
-                                 or bool(v.extras.get("remoto")),
+             "fonte_diz_remoto": bool(v.extras.get("fonte_diz_remoto")
+                                      or v.extras.get("remoto")),
              "destaques": destaques(v.descricao),
              "descricao": v.descricao[:config.DESCRICAO_IA]}
             for v in vagas[inicio:inicio + lote_max]

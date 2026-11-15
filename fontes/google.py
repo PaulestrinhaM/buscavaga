@@ -46,13 +46,14 @@ def _converter(item: dict, agora: datetime) -> Vaga:
     return Vaga(
         titulo=item.get("title") or "",
         empresa=item.get("company_name") or "",
-        local=f"{local} (Google {config.MARCA_REMOTO_A_CONFIRMAR})" if remoto else local,
+        local=local,
         link=link,
         fonte="google",
         descricao=(item.get("description") or "")[:8000],
         publicada_em=publicada,
         salario=ext.get("salary", ""),
-        extras={"via": item.get("via", ""), "id_fonte": item.get("job_id") or ""},
+        extras={"via": item.get("via", ""), "id_fonte": item.get("job_id") or "",
+                "modalidade_a_confirmar": bool(remoto), "fonte_diz_remoto": bool(remoto)},
     )
 
 

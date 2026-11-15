@@ -13,8 +13,9 @@ Formato medido:
   GET /jobs-guest/jobs/api/jobPosting/<id> -> HTML do anuncio, com descricao e
     "Nivel de experiencia". Custa uma chamada por vaga.
 
-O filtro f_WT=2 (remoto) NAO e confiavel: o LinkedIn devolve vaga hibrida e
-presencial junto. Por isso a coleta nao afirma remoto. A descricao e buscada depois
+O filtro f_WT NAO funciona na busca publica: f_WT=1, 2 e 3 (presencial, remoto,
+hibrido) devolvem exatamente as mesmas vagas (medido em 2026-11-15). E a pagina sem
+login nao mostra a modalidade da vaga (o selo "Presencial" so aparece logado). Por isso a coleta nao afirma remoto. A descricao e buscada depois
 da deduplicacao, so para vaga nova que passou na regra (main.enriquecer_linkedin), e
 e ela que decide a modalidade. Sem descricao, a vaga nao segue no ciclo.
 """
@@ -70,14 +71,14 @@ def _cards(pagina: str, remoto: bool) -> list[Vaga]:
         vagas.append(Vaga(
             titulo=titulo,
             empresa=_campo(card, r'base-search-card__subtitle">(.*?)</h4>'),
-            # o f_WT=2 nao garante remoto: so registra o que o LinkedIn disse, e a
-            # descricao confirma ou derruba (filtro.local_aceito)
-            local=f"{local} (LinkedIn {config.MARCA_REMOTO_A_CONFIRMAR})" if remoto else local,
+            # a busca publica ignora o f_WT: o LinkedIn nao disse nada sobre modalidade.
+            # O local e so a cidade do anuncio; a descricao decide (IA).
+            local=local,
             link=f"https://www.linkedin.com/jobs/view/{id_vaga.group(1)}",
             fonte="linkedin",
             publicada_em=(datetime.fromisoformat(data.group(1)).replace(tzinfo=timezone.utc)
                           if data else None),
-            extras={"linkedin_id": id_vaga.group(1)},
+            extras={"linkedin_id": id_vaga.group(1), "modalidade_a_confirmar": True},
         ))
     return vagas
 

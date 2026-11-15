@@ -142,7 +142,7 @@ def bloqueada(vaga: Vaga) -> str | None:
 def local_aceito(vaga: Vaga) -> bool:
     """Remoto em qualquer lugar do Brasil, ou qualquer modalidade na regiao de Caxias."""
     marca = normalizar(config.MARCA_REMOTO_A_CONFIRMAR)
-    a_confirmar = marca in normalizar(vaga.local)
+    a_confirmar = bool(vaga.extras.get("modalidade_a_confirmar")) or marca in normalizar(vaga.local)
     # o aviso "marcou remoto, a confirmar" sai do texto avaliado: ele contem a palavra
     # "remoto" e, ate nov/2026, era ele que aprovava vaga presencial em Ribeirao Preto
     alvo = normalizar(f"{vaga.local} {vaga.titulo}").replace(marca, "")

@@ -153,8 +153,12 @@ TERMOS_HIBRIDO = ["hibrido", "hibrida", "hybrid", "semipresencial", "semi-presen
 # ("USA Only", "Europe"). So interessa o que alcanca o Brasil.
 # Expressoes que realmente indicam trabalho remoto no corpo do anuncio.
 # "remoto" solto nao serve: aparece em "nao e remoto", "remoto nao disponivel".
-# Fonte que marca remoto por filtro proprio (LinkedIn f_WT, Google work_from_home)
-# escreve isso no local. NAO e confirmacao: so a descricao ou o titulo confirmam.
+# Vaga de fonte que nao informa modalidade de forma confiavel leva
+# extras["modalidade_a_confirmar"]: o filtro deixa passar pendente e a IA decide lendo o
+# anuncio. LinkedIn: a busca publica IGNORA o filtro f_WT (presencial, remoto e hibrido
+# devolvem as mesmas vagas, medido em 2026-11-15), entao toda vaga dele e a confirmar.
+# Google: work_from_home ja veio verdadeiro para vaga hibrida.
+# A marca abaixo e do formato antigo (ate 15/11), mantida so para limpar o local.
 MARCA_REMOTO_A_CONFIRMAR = "marcou remoto, a confirmar"
 
 # "home office" sozinho saiu em nov/2026: aparece em "auxilio home office", beneficio
